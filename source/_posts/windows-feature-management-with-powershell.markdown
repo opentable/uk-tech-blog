@@ -3,7 +3,8 @@ layout: post
 title: "Windows Feature Management with PowerShell"
 date: 2013-06-14 20:31
 comments: true
-author: pstack
+
+authorId: pstack
 
 categories: [PowerShell, Automation, DevOps]
 ---
