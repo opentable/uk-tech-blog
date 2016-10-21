@@ -1,0 +1,78 @@
+navbar-links:
+    Archive: /archives
+    Github: https://github.com/opentable
+    About: /about/
+
+avatar: /opentable.png
+favicon: /favicon.png
+
+header:
+    title: "OpenTable Tech UK Blog"
+    motto: The technology blog for OpenTable UK.
+    bigimgs:
+        - src: /bigimgs/01.jpg
+          desc: beautiful island
+        - src: /bigimgs/02.jpg
+          desc: Tropical Fish
+        - src: /bigimgs/03.jpg
+          desc: ocean
+
+rss: /atom.xml
+googlefonts:
+  - "Lora:400,700,400italic,700italic"
+  - "Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+
+highlight:
+  enable: true
+# or use any highlight.js style
+#  style_path: "//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/default.min.css"
+  style_path: "/css/highlight.css"
+
+footer:
+  facebook:
+    link: ''
+    title: Facebook
+    icon: fa-facebook
+    enable: false
+  weibo:
+    link: ''
+    title: Weibo
+    icon: fa-weibo
+    enable: false
+  github:
+    link: 'https://github.com/opentable'
+    title: GitHub
+    icon: fa-github
+    enable: true
+  rss:
+    link: '/atom.xml'
+    title: RSS
+    icon: fa-rss
+    enable: false
+  twitter:
+    link: 'https://twitter.com/opetabletechuk'
+    title: Twitter
+    icon: fa-twitter
+    enable: true
+  mail:
+    link: 'mailto:bisyao@gmail.com'
+    title: Email me
+    icon: fa-envelope
+    enable: false
+  linkin:
+    link: 'https://www.linkedin.com/company/12181'
+    title: LinkedIn
+    icon: fa-linkedin
+    enable: true
+  stackoverflow:
+    link: # your link here e.g. http...
+    title: StackOverflow
+    icon: fa-stack-overflow
+    enable: false
+
+google_analytics: UA-2621903-16
+
+comment:
+  enable: false
+  disqus: twoyao
+
