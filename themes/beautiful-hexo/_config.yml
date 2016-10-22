@@ -2,6 +2,7 @@ navbar-links:
     Archive: /archives
     Github: https://github.com/opentable
     About: /about/
+    Authors: /authors/
 
 avatar: /opentable.png
 favicon: /favicon.png
