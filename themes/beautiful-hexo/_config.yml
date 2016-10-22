@@ -1,7 +1,6 @@
 navbar-links:
-    Archive: /archives
-    Github: https://github.com/opentable
     About: /about/
+    Archive: /archives/
     Authors: /authors/
 
 avatar: /opentable.png
@@ -66,10 +65,10 @@ footer:
     icon: fa-linkedin
     enable: true
   stackoverflow:
-    link: # your link here e.g. http...
+    link: http://stackoverflow.com/jobs/companies/opentable
     title: StackOverflow
     icon: fa-stack-overflow
-    enable: false
+    enable: true
 
 google_analytics: UA-2621903-16
 
