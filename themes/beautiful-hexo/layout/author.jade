@@ -1,11 +1,13 @@
+config.title =  'John Catterfeld- OpenTable Tech UK Blog'
+
 extends partial/base
 
 block header
     header.header-section
         .intro-header.no-img
             .page-heading
-                h1!= "Posts by "+page.fullname
-                p.twitter!= "@"+page.twitter
+                h1!= 'Posts by ' + page.fullname
+                p.twitter!= '<a href="https://www.twitter.com/' + page.twitter + '" target="_blank">@' + page.twitter + '</a>'
                 if page.subtitle
                     hr.small
                     span.page-subheading!= page.subtitle
