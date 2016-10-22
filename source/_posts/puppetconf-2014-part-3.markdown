@@ -9,7 +9,7 @@ categories: [Puppet, PuppetConf 2014, Conferences]
 
 ## Day 2
 
-This is our summary of PuppetConf 2014. In our [previous post](http://tech.opentable.co.uk/blog/2014/10/06/puppetconf-2014-part-2/) we gave an overview of the first day of the conference. This post will provide an
+This is our summary of PuppetConf 2014. In our [previous post](/blog/2014/10/06/puppetconf-2014-part-2/) we gave an overview of the first day of the conference. This post will provide an
 overview of the final day.
 
 There were even more inspiring keynotes and lots more talks which have given us plenty of ideas to go home and think about.

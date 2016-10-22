@@ -8,7 +8,7 @@ categories: [Puppet, PuppetConf 2014, Conferences]
 ---
 
 ## Day 1
-This is our summary of PuppetConf 2014. In our [previous post](http://tech.opentable.co.uk/blog/2014/10/06/puppetconf-2014-part-1/) we gave an overview of the contributor summit. This post will provide an overview
+This is our summary of PuppetConf 2014. In our [previous post](/blog/2014/10/06/puppetconf-2014-part-1/) we gave an overview of the contributor summit. This post will provide an overview
 of the first day of PuppetConf.
 
 As you might expect there were great keynotes with plenty of announcements and too many talks for us to attend. We have provided an outline for all the talks
@@ -146,7 +146,7 @@ Interesting tool, has some cross-over with the Beaker testing tool. PDK is more 
 #### Beaker: Automated, Cloud-Based Acceptance Testing - Alice Nodelman ([@alicenode](https://twitter.com/alicenode)), Puppet Labs - [Slides](http://www.slideshare.net/PuppetLabs/beaker-automated-cloudbased-acceptance-testing-puppetconf-2014)
 
 Having contributed to this tool, I was a little bias in attending this talk. Still plenty of interesting new things that came up though.
-If you haven’t heard of beaker yet you will also be interested in our [previous blog post](http://tech.opentable.co.uk/blog/2014/04/04/testing-puppet-with-beaker/).
+If you haven’t heard of beaker yet you will also be interested in our [previous blog post](/blog/2014/04/04/testing-puppet-with-beaker/).
 
  * basic introduction to what beaker is and how to use it.
  * rspec vs test dsl - both are still supported methods of writing tests.

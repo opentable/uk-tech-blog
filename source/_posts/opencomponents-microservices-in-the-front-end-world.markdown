@@ -252,7 +252,7 @@ After more than a year in production, OC is still evolving. These are some of th
 
 If you wish to try or know more about OpenComponents, visit [OC's github page][2] or have a look at [some component examples][3]. If you would give us some feedback, asks us question, or contribute to the project get in touch via the [gitter chat][4] or via [e-mail][5]. We would love to hear your thoughts about this project.
 
-[1]: http://tech.opentable.co.uk/blog/2015/02/09/dismantling-the-monolith-microsites-at-opentable/
+[1]: /blog/2015/02/09/dismantling-the-monolith-microsites-at-opentable/
 [2]: https://github.com/opentable/oc
 [3]: https://github.com/matteofigus/oc-components-examples
 [4]: https://gitter.im/opentable/oc

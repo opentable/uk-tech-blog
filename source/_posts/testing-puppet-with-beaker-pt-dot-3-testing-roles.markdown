@@ -62,7 +62,7 @@ You may have a more complicated configuration that you wish to test and this all
 
 We can now use these nodeset roles to configure our master and agent.
 
-In parts [[1]](http://tech.opentable.co.uk/blog/2014/04/04/testing-puppet-with-beaker/) and [[2]](http://tech.opentable.co.uk/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-2-the-windows-story) of this series we saw what a basic spec_acceptence file looks like. So let's start with that:
+In parts [[1]](/blog/2014/04/04/testing-puppet-with-beaker/) and [[2]](/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-2-the-windows-story) of this series we saw what a basic spec_acceptence file looks like. So let's start with that:
 
     require 'beaker-rspec/spec_helper'
     require 'beaker-rspec/helpers/serverspec'

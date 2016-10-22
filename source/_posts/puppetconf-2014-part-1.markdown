@@ -53,8 +53,8 @@ This is how the boxen project works and it seems to work pretty well.
 #### Beaker Testing Windows Environments (Liam Bennett [@liamjbennett](https://twitter.com/liamjbennett)) - me!!
 My talk on hacking beaker to work better for testing windows environments.
 
-Demos and PRs. Discussed more in some of our earlier posts: [Testing Puppet with Beaker pt.2 - The Windows story](http://tech.opentable.co.uk/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-2-the-windows-story/)
-and [Testing Puppet with Beaker pt.3 - Testing Roles](http://tech.opentable.co.uk/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-3-testing-roles/)
+Demos and PRs. Discussed more in some of our earlier posts: [Testing Puppet with Beaker pt.2 - The Windows story](/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-2-the-windows-story/)
+and [Testing Puppet with Beaker pt.3 - Testing Roles](/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-3-testing-roles/)
 
 
 #### Module Anti-Patterns (Peter Souter [@petems](https://twitter.com/petems)) - [Slides](http://www.slideshare.net/petems/puppet-module-anti-patterns)

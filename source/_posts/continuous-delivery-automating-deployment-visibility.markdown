@@ -16,7 +16,7 @@ The image below shows at a high level what our teams current deployment pipeline
 
 ##Kicking off a deployment
 
-I wrote previously that we started [using chatops](http://tech.opentable.co.uk/blog/2013/11/22/beginning-a-journey-to-chatops-with-hubot/) to increase visibility operationally. Hubot is central to this and we wrote a small script to kick off deployments within [Hipchat](https://www.hipchat.com/)
+I wrote previously that we started [using chatops](/blog/2013/11/22/beginning-a-journey-to-chatops-with-hubot/) to increase visibility operationally. Hubot is central to this and we wrote a small script to kick off deployments within [Hipchat](https://www.hipchat.com/)
 
 {% img /images/posts/hubot-deploy-restaurant.png 350 350 'image' 'images' %}
 

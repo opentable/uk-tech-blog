@@ -7,7 +7,7 @@ author: lbennett
 categories: [Puppet, Acceptance tests, Beaker, Vagrant, Windows]
 ---
 
-In [part one](http://tech.opentable.co.uk/blog/2014/04/04/testing-puppet-with-beaker/) we discussed our first steps into the world of acceptance testing our Puppet manifests.
+In [part one](/blog/2014/04/04/testing-puppet-with-beaker/) we discussed our first steps into the world of acceptance testing our Puppet manifests.
 By using Beaker we able to test managing local users on our Linux boxes. This was a positive experience for us. It allowed us to get to grips with the basics of configuring
 Beaker to run tests and configuring our node sets to run those tests against. In this post, we will be discussing how we went about getting Beaker working with Windows.
 
@@ -36,7 +36,7 @@ the [cross-platform module puppet-puppetversion](http://github.com/opentable/pup
 
 ##The First Example
 Let's take a more detailed look at those puppetversion tests, how we configured Beaker to run and how it changed for the Windows support. I am going to assume at this point that
-you already have some familiarity with Beaker; if not and this is your first steps into the testing tool then I would suggest going back and read [part one](http://tech.opentable.co.uk/blog/2014/04/04/testing-puppet-with-beaker/) of this series which contains a little bit of background to this and some useful resources for getting started.
+you already have some familiarity with Beaker; if not and this is your first steps into the testing tool then I would suggest going back and read [part one](/blog/2014/04/04/testing-puppet-with-beaker/) of this series which contains a little bit of background to this and some useful resources for getting started.
 
 The first thing that we needed to change for Windows was our [spec_accepentance.rb file](https://raw.githubusercontent.com/opentable/puppet-puppetversion/master/spec/spec_helper_acceptance.rb).
 
