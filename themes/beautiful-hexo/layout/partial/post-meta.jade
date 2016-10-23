@@ -1,11 +1,13 @@
-mixin post_meta(date, tags)
-    p.author!= 'Posted by <a href="/authors/' + page.author + '.html">' + page.author + '</a>'
-    p.post-meta Posted on #{full_date(date, "MMM D YYYY")}
-      if tags
-        - tags.each(function(tag) {
-            = ' · '
-            a.tag.post-meta(href=url_for(tag.path))= tag.name
-        - })
+mixin post_meta(author, date, tags)
+    if page.author
+      p.post-meta!= 'Posted by <a href="/authors/' + page.author + '.html">' + page.author + '</a>, ' + full_date(date, "D MMMM YYYY")
+    else
+      p.post-meta Posted on #{full_date(date, "D MMMM YYYY")}
+        if tags
+          - tags.each(function(tag) {
+              = ' · '
+              a.tag.post-meta(href=url_for(tag.path))= tag.name
+          - })
 
 
 
