@@ -4,7 +4,7 @@ title: "When to performance test in production"
 date: 2014-03-20 09:56
 comments: true
 author: ametcalfe
-categories: [Performance, Scaring Operations]
+tags: [Performance]
 ---
 In [my last post](/blog/2014/03/19/performance-testing-our-search-api/) about performance testing I wrote about how we decided to do it in production as the ultimate test of success. Performance testing in production is enough to make some operations guys have a panic attack and a few odd looks were dished my way when I raised it on behalf of the team.
 

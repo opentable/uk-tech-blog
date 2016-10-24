@@ -4,7 +4,7 @@ title: "Using Vagrant to work with ElasticSearch on your local machine"
 date: 2013-08-05 08:45
 comments: true
 author: pstack
-categories: [Vagrant, ElasticSearch, DevOps]
+tags: [Vagrant, ElasticSearch, DevOps]
 ---
 Recently, I have started to work a lot more with [Vagrant](http://www.vagrantup.com/) as a tool for creating a standard development environment across my team. This essentially means that regardless what the developers' machine is set up or running as, they can still reproduce the same environment as their colleagues just by entering a command. 
 

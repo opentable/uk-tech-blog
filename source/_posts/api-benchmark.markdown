@@ -4,7 +4,7 @@ title: "Benchmarking APIs - why it’s important, and how"
 date: 2014-02-28 09:00
 comments: true
 author: mfigus
-categories: [Benchmarks, SOA, Node.js, API, REST, Performance, Continuous delivery] 
+tags: [Benchmarks, SOA, Node.js, API, REST, Performance, Continuous delivery] 
 ---
 
 Since I joined OpenTable I’ve been experimenting with performance monitoring, specifically on web services. One of the projects my team is responsible for is a REST API that provides UI elements for HTML5 applications, shaped as HTML snippets and static resources. Our consumers are websites deployed in multiple parts of the world, so our service needs to be fast and reliable.

@@ -4,7 +4,7 @@ title: "Effective prioritisation"
 date: 2014-04-28 14:51:51 +0100
 comments: true
 author: mbarrett
-categories: [Coaching, Leadership, Work smarter, Culture]
+tags: [Coaching, Leadership, Work smarter, Culture]
 ---
 
 Prioritisation is a huge part of modern life.

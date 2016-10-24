@@ -3,11 +3,10 @@ layout: post
 title: "Windows Feature Management with PowerShell"
 date: 2013-06-14 20:31
 comments: true
-
-authorId: pstack
-
-categories: [PowerShell, Automation, DevOps]
+author: pstack
+tags: [PowerShell, Automation, DevOps]
 ---
+
 In late 2012, our development team started to move towards our systems being much more automated. Long gone are the days of developers creating runbooks in Word and giving them to our operations team to use to set up our production servers. 
 
 When building our webservers on Windows, in order to install / activate Windows features, this was the general set of instructions that was needed to be followed:

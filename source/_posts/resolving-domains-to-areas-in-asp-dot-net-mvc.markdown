@@ -4,7 +4,7 @@ title: "Resolving domains to areas in ASP.NET MVC"
 date: 2013-09-25 19:28
 comments: true
 author: pstack
-categories: [ASP.NET MVC, Routing, Hackiness]
+tags: [ASP.NET MVC, Routing, Hackiness]
 ---
 When building a previous project, I created an ASP.NET MVC application that would allow subdomains to resolve to different areas of the project and thus show different views. I wanted to be able to extend this functionality. I wanted to allow different domains to point to different areas. This would allow me to deploy the application just once and then have different headers on the web server rather than regional variances. Whilst on a flight to San Francisco, I was able to hack together some code that allows just that. The details of that hackiness are below.
 

@@ -4,7 +4,7 @@ title: "Counting in ElasticSearch"
 date: 2013-09-11 15:48
 comments: true
 author: mbazydlo
-categories: [ElasticSearch, Count, Search, PlainElastic.Net]
+tags: [ElasticSearch, Count, Search, PlainElastic.Net]
 ---
 
 > Counting is the religion of this generation it is its hope and its salvation.

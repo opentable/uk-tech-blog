@@ -4,7 +4,7 @@ title: "The DNS ABC"
 date: 2015-03-05 15:00
 author: fmaffei
 comments: true
-categories: [Engineering, DNS, Theory]
+tags: [Engineering, DNS, Theory]
 ---
 
 ## Introduction to DNS ##

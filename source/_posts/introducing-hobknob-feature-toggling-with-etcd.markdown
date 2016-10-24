@@ -4,7 +4,7 @@ title: "Introducing Hobknob: Feature toggling with etcd"
 date: 2014-09-04 20:09:52 +0100
 comments: true
 author: rtomlinson
-categories: [Hobknob]
+tags: [Hobknob]
 ---
 The ability to dynamically turn features on/off in software without the need to redeploy code is extremely beneficial. Whether you are trialing a new feature or using branch by abstraction to avoid creating feature branches, the use of feature toggles can aid continuous delivery and provide a mechanism to reduce mean time to resolution when an issue occurs.
 

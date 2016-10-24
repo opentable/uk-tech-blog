@@ -4,7 +4,7 @@ title: "NDC Oslo"
 date: 2013-06-18 11:59
 comments: true
 author: ametcalfe
-categories: [Conferences, Buffoons]
+tags: [Conferences]
 ---
 
 Three OpenTable heroes took to Norway last week to attend NDC Oslo. For two of us it was our first major conference and for one, Paul Stack, he had to speak.

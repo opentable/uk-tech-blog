@@ -4,7 +4,7 @@ title: "On Strongly Typed Logging"
 date: 2015-01-23 13:13:13 +0000
 author: mbazydlo
 comments: true
-categories: [Logs, Kibana, ElasticSearch, Architecture]
+tags: [Logs, Kibana, ElasticSearch, Architecture]
 ---
 
 Logging is a crucial element of monitoring highly available systems. It allows not only to find out about errors but also quickly identify their cause. Logs are often used to generate metrics that help business and engineering make informative decisions on future development directions. 

@@ -4,7 +4,7 @@ title: "What can I do?"
 date: 2014-08-08 13:52:30 +0100
 comments: true
 author: mbarrett
-categories: [Coaching, Leadership, Work smarter, Culture]
+tags: [Coaching, Leadership, Work smarter, Culture]
 ---
 
 I've noticed recently a lot of content in my social media network is based on the current escalating problems in the Middle East.

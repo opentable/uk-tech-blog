@@ -4,7 +4,7 @@ title: "Acceptance Now"
 date: 2014-05-20 15:00:00 +0100
 comments: true
 author: ssalisbury
-categories: [Testing, Engineering, Acceptance tests, Innovation]
+tags: [Testing, Engineering, Acceptance tests, Innovation]
 ---
 _When is acceptance-only testing a good idea, and how can its problems be overcome?_
 

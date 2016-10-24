@@ -4,7 +4,7 @@ title: "A Beginner's guide to REST services"
 date: 2015-02-02 11:53:25 +0000
 author: fmaffei
 comments: true
-categories: [Architecture, Engineering, REST, API, Theory]
+tags: [Architecture, Engineering, REST, API, Theory]
 ---
 
 ## Why this post? ##

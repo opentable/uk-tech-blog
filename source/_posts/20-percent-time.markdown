@@ -4,7 +4,7 @@ title: "20% time: Why, as a manager, you should love your engineers to be doing 
 date: 2014-02-06 17:12
 comments: true
 author: ametcalfe
-categories: [Leadership, Understanding percentages]
+tags: [Leadership]
 ---
 
 We allow all our UK based developers to have some time to explore new technologies, try out prototypes and clean-up things that escape the day-to-day process. Two days out of ten, seems a lot doesn't it?

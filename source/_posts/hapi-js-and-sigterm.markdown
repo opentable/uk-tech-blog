@@ -4,7 +4,7 @@ title: "Hapi.js and SIGTERM"
 date: 2015-02-16 10:32:42 +0000
 comments: true
 author: aroyle
-categories: [Hapi.js, Microservices, SIGTERM]
+tags: [Hapi.js, Microservices, SIGTERM]
 ---
 When we first stood up our hapi.js APIs, we wrote init scripts to start/stop them. Stopping the server, was simply a case of sending SIGKILL (causing the app to immediately exit).
 

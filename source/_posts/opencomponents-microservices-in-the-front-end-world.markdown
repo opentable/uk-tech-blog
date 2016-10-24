@@ -4,7 +4,7 @@ title: "OpenComponents - microservices in the front-end world"
 date: 2016-04-27 10:10:00 +0000
 comments: true
 author: mfigus
-categories: [SOA, Microsites, Microservices, OpenComponents, OC] 
+tags: [SOA, Microsites, Microservices, OpenComponents, OC] 
 ---
 
 Many engineers work every day on opentable.com from our offices located in Europe, America, and Asia, pushing changes to production multiple times a day. Usually, this is very hard to achieve, in fact it took years for us to get to this point. [I described in a previous article][1] how we dismantled our monolith in favour of a Microsites architecture. Since the publication of that blog post we have been working on something I believe to be quite unique, called **OpenComponents**.

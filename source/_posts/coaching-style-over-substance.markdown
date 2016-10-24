@@ -4,7 +4,7 @@ title: "Coaching style over substance"
 date: 2014-02-03 11:12
 comments: true
 author: mbarrett
-categories: [Coaching, Leadership]
+tags: [Coaching, Leadership]
 ---
 
 Have you ever been lucky enough to mentor someone who really got it? Maybe you've had the opposite experience and the session ended up being a failure for both of you?

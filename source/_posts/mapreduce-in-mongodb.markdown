@@ -4,7 +4,7 @@ title: "MapReduce in MongoDB"
 date: 2013-08-07 10:40
 comments: true
 author: rhopton
-categories: [MapReduce, MongoDB, JavaScript, Innovation]
+tags: [MapReduce, MongoDB, JavaScript, Innovation]
 ---
 One of the first things I took on when joining OpenTable was building a new endpoint in our reviews API to aggregate and summarise restaurant review data. Thankfully, at the time, all the data I needed was cached in memory so building the response object was a simple set of linq queries over the cached reviews.
 

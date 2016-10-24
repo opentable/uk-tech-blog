@@ -4,7 +4,7 @@ title: "Beginning a journey to chatops with Hubot"
 date: 2013-11-22 09:34
 comments: true
 author: rtomlinson
-categories: [Hubot, Hipchat, Chatops]
+tags: [Hubot, Hipchat, Chatops]
 ---
 
 {% img center /images/posts/hubot_pug_me.png %}

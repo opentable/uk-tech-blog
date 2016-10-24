@@ -4,7 +4,7 @@ title: "Grunt + Vagrant = Acceptance Test Heaven"
 date: 2013-08-16 15:32
 comments: true
 author: aroyle
-categories: [Grunt, Vagrant, Acceptance tests, Automation]
+tags: [Grunt, Vagrant, Acceptance tests, Automation]
 ---
 My continued love affair with Grunt reached a new high the other day, when I combined [Vagrant][2] with my [Grunt deployment tasks][1] and test runners.
 

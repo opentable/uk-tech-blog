@@ -4,7 +4,7 @@ title: "Puppet-Community"
 date: 2015-05-06 09:00:0 +0100
 comments: true
 author: lbennett
-categories: [Puppet, Puppet-community]
+tags: [Puppet, Puppet-community]
 ---
 
 Puppet is an important tool to us at OpenTable; we couldn’t operate as efficiently without it but Puppet is more than a tool or a vendor, it is a community of people trying to help
