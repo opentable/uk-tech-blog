@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><meta name="author" content="OpenTable"><link rel="icon" href="/favicon.png"><title>OpenTable Tech UK Blog</title><meta name="description"><link rel="alternate" type="application/rss+xml" title="OpenTable Tech UK Blog" href="/atom.xml"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/bootstrap.min.css"><link rel="stylesheet" href="/css/main.css"><script src="//fonts.otstatic.com/zys4lfz.js"></script><link rel="stylesheet" href="/css/highlight.css">
+</head><body><nav class="navbar navbar-default navbar-fixed-top navbar-custom"><div class="container-fluid"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#main-navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">OpenTable Tech UK Blog</a></div><div id="main-navbar" class="collapse navbar-collapse"><ul class="nav navbar-nav navbar-right"><li><a href="/about/">About</a></li><li><a href="/archives/">Archive</a></li><li><a href="/blog/authors/">Authors</a></li></ul></div><div class="avatar-container"><div class="avatar-img-border"><a href="/"><img src="/opentable.png" class="avatar-img"></a></div></div></div></nav><header class="header-section"><div class="intro-header no-img"><div class="container"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class="post-heading"><h1>The DNS ABC</h1><p class="post-meta">Posted by <a href="/authors/fmaffei.html">fmaffei</a>, 5 March 2015 · <a href="/blog/categories/Engineering/" class="tag post-meta">Engineering</a> · <a href="/blog/categories/Theory/" class="tag post-meta">Theory</a> · <a href="/blog/categories/DNS/" class="tag post-meta">DNS</a></p></div></div></div></div></div></header><div class="container"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><article role="main" class="blog-post"><h2 id="Introduction-to-DNS"><a href="#Introduction-to-DNS" class="headerlink" title="Introduction to DNS"></a>Introduction to DNS</h2><p>Before joining OpenTable I was looking for a software engineer job and I’ve done my fair share of interviews. A question that has popped out a lot, and when I say a lot I mean <em>always</em>, is:</p>
+<p><em>Could you tell me what happens when I type an URL in a web browser on my computer and press enter?</em></p>
+<p>Of course the possible answers could range from “MMMHHH, wellll, I’m not sure where to start…” to a whole book on computer networks.</p>
+<p>After a number of attempts to answer briefly and correctly, I’ve concluded that mentioning <strong>DNS</strong> can make a reasonable start.</p>
+<p>Let’s think about it. When we type the address of the resource we want to browse, we use the alphabet, right? With letters and names easily readable and retainable by a human being.</p>
+<p>But a machine needs an <strong>IP address</strong> to recognize another machine connected to a network. An IP address is numerical, for example 192.168.0.1. Less readable, it seems.</p>
+<p>And here is where DNS comes to play. DNS stands for <strong>Domain Name System</strong>, and that represents exactly what it is: a system that translates <strong>domain names</strong> (e.g <em>www.opentable.co.uk</em>), into IP addresses. I think of it as a phone book. It is queried with a domain name and, after a lookup, returns an IP.</p>
+<p>How does the magic happen? Let’s look into it.</p>
+<h2 id="The-ABC"><a href="#The-ABC" class="headerlink" title="The ABC"></a>The ABC</h2><h3 id="Some-definitions"><a href="#Some-definitions" class="headerlink" title="Some definitions"></a>Some definitions</h3><p>So we can define a domain name as a string composed by one or more parts, called <strong>labels</strong>, concatenated and delimited by dots with a <strong>hierarchical</strong> logic.</p>
+<p>In the case of www.opentable.co.uk, for instance, we have four labels:</p>
+<ul>
+<li><p><em>uk</em> is the <strong>top-level</strong> domain. This should sound familiar. Famous top-level domains are also <em>.net</em>, <em>.org</em>, <em>.uk</em>, <em>.it</em>, <em>.gov</em>, etc.</p>
+</li>
+<li><p><em>co</em> is the <strong>second level</strong> domain, which in this case specifies the commercial nature of the company.</p>
+</li>
+<li><p>Hierarchy goes from right to left, so then we can say that <em>opentable</em> is a <strong>subdomain</strong> of <em>co</em>. And so on.</p>
+</li>
+<li><p>A name that can be associated to a specific machine connected to a network with an IP address is called <strong>hostname</strong>. Let’s say it’s the leftmost label in the domain name.</p>
+</li>
+</ul>
+<h3 id="Questions-that-pop-out-at-this-point"><a href="#Questions-that-pop-out-at-this-point" class="headerlink" title="Questions that pop out at this point"></a>Questions that pop out at this point</h3><p>Q: So all the host names reachable via a specific domain have a specific IP address! There must be BILLIONS of them. How do we make sure everyone is unique?</p>
+<p>A: There are entities that have the authority to assign and register names under one or more top-level domain, called <strong>registrars</strong>. The registered name then becomes part of a central database known as the <em>whois database</em>.</p>
+<p>Q: Now, how do we retrieve this infamous IP address by just knowing a domain name? Who can <strong>resolve</strong> this request?</p>
+<p>A: Well, the domain name is resolved into an IP address by querying <strong>authoritative name servers</strong>. These machines are the endpoints of a database that can map domain names to IPs. The authoritative name servers of the top level domain are also called <a href="https://www.iana.org/domains/root/servers" target="_blank" rel="external"><strong>root level servers</strong></a>.</p>
+<p>Q: OK, but wait a second. How in the heavens does my machine know the address of the name server to query? I thought I just entered an address in the browser!</p>
+<p>A: Every client machine has a default <strong>DNS resolver</strong>, which is responsible of initiating the sequence of queries that will ultimately lead to the resolution.<br>It is very important to note that the system’s DNS setting can be also overridden by the <a href="http://www.ispreview.co.uk/list.shtml" target="_blank" rel="external"><strong>Internet Service Provider</strong></a> (ISP) settings, so the DNS lookup process can be very OS-specific and ISP-specific. This would deserve a whole post apart.</p>
+<h3 id="How-to-resolve-an-address-ideally"><a href="#How-to-resolve-an-address-ideally" class="headerlink" title="How to resolve an address (ideally)"></a>How to resolve an address (ideally)</h3><p>Resolving an address via DNS is also called <strong>lookup</strong>, and it is a recursive process. Now that we know the purpose of DNS, and the concepts involved in the process, we can dig a little deeper into its basic mechanism, which is roughly:</p>
+<ol>
+<li><p>The resolver has knowledge of the addresses of root name servers, from where the search can start.</p>
+</li>
+<li><p>The root name server will return a name server which is authoritative for the top-level domain.</p>
+</li>
+<li><p>This server will give the address of the name server authoritative for the second level domain.</p>
+</li>
+<li><p>If the hostname is resolved, an IP address is returned. Otherwise step 3) is repeated for all the labels of the domain name in sequence, until a result is reached.</p>
+</li>
+</ol>
+<p>I made a diagram that shows that.</p>
+<p><img src="http://federicomaffei.github.io/public/images/dnsbasic.jpg" class="center-image"></p>
+<h3 id="Real-life-problems"><a href="#Real-life-problems" class="headerlink" title="Real life problems"></a>Real life problems</h3><p>The mechanism explained above is great, but if applied in a real life application, it will lead to a bottleneck. Every lookup would involve root servers and authoritative servers, which would be hit by gazillions of queries every day, putting a huge burden on the system since the start.</p>
+<p>To solve this, of course a <a href="http://blog.catchpoint.com/2014/07/15/world-dns-cache-king/" target="_blank" rel="external"><strong>caching</strong></a> system comes to help. Yes, DNS allows and encourages caching. This way another class of DNS servers comes into play, the <strong>recursive name servers</strong>. They can perform recursive lookups and cache results, returning them when queried even if they don’t have the authority to generate the results themselves.</p>
+<p>Caching recursive DNS server are usually managed by Internet Service Providers, and are able to resolve addresses without waiting for the “authorities”. This means that a query will rarely have to hit the root name servers, since there is a very high likelihood that the hostname/IP request is already cached by one of the delegated DNS servers that are called by recursion.</p>
+<p>We could say that in reality a root server will be hit as a last resort to track down an authoritative server for a given domain.</p>
+<p>The amount of time for which a lookup result is stored on a server is called <a href="http://en.wikipedia.org/wiki/Time_to_live" target="_blank" rel="external"><strong>time-to-live (TTL)</strong></a> and can vary with the configuration.</p>
+<p>One side effect of the heavy caching that involves the DNS is that when a new domain is registered, or there is a change in any domain-related settings, there will be a time lag for the propagation of it to all the cached results.</p>
+<p>It is noteworthy that cached DNS results from your browsing could be stored in your router, or somewhere within you browser memory as well. These IP addresses seem to be everywhere these days!</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>I barely scratched the surface of the Domain Name System topic, and that alone took a good day of research and writing.</p>
+<p>So I decided to avoid making this post too long, so that beginners that are going to find it will profit, and be encouraged to research on these key concepts. This will allow me to decide which part of DNS is worth more digging, and maybe write a sequel. Stay tuned!</p>
+</article><ul class="pager blog-pager"><li class="previous"><a href="/blog/2015/05/06/puppet-community/" data-toggle="tooltip" data-placement="top" title="Puppet-Community">← Previous Post</a></li><li class="next"><a href="/blog/2015/02/16/hapi-js-and-sigterm/" data-toggle="tooltip" data-placement="top" title="Hapi.js and SIGTERM">Next Post →</a></li></ul></div></div></div><footer><div class="container beautiful-jekyll-footer"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href="https://github.com/opentable" title="GitHub"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-github"></i></span></a></li><li><a href="https://twitter.com/opetabletechuk" title="Twitter"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-twitter"></i></span></a></li><li><a href="https://www.linkedin.com/company/12181" title="LinkedIn"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-linkedin"></i></span></a></li><li><a href="http://stackoverflow.com/jobs/companies/opentable" title="StackOverflow"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-stack-overflow"></i></span></a></li></ul><p class="copyright text-muted">© OpenTable • 2016 • <a href="mailto:undefined"></a>
+</p><p class="theme-by text-muted">Theme by
+<a href="https://github.com/twoyao/beautiful-hexo">beautiful-hexo</a></p></div></div></div></footer><script src="/js/jquery-1.11.2.min.js"></script><script src="/js/bootstrap.min.js"></script><script src="/js/main.js"></script><script src="/js/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-2621903-16', 'auto');
+ga('send', 'pageview');</script></body></html>

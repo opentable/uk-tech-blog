@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><meta name="author" content="OpenTable"><link rel="icon" href="/favicon.png"><title>OpenTable Tech UK Blog</title><meta name="description"><link rel="alternate" type="application/rss+xml" title="OpenTable Tech UK Blog" href="/atom.xml"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/bootstrap.min.css"><link rel="stylesheet" href="/css/main.css"><script src="//fonts.otstatic.com/zys4lfz.js"></script><link rel="stylesheet" href="/css/highlight.css">
+</head><body><nav class="navbar navbar-default navbar-fixed-top navbar-custom"><div class="container-fluid"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#main-navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">OpenTable Tech UK Blog</a></div><div id="main-navbar" class="collapse navbar-collapse"><ul class="nav navbar-nav navbar-right"><li><a href="/about/">About</a></li><li><a href="/archives/">Archive</a></li><li><a href="/blog/authors/">Authors</a></li></ul></div><div class="avatar-container"><div class="avatar-img-border"><a href="/"><img src="/opentable.png" class="avatar-img"></a></div></div></div></nav><header class="header-section"><div class="intro-header no-img"><div class="container"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class="post-heading"><h1>Testing Puppet with Beaker pt.3 - Testing Roles</h1><p class="post-meta">Posted by <a href="/authors/lbennett.html">lbennett</a>, 1 September 2014</p></div></div></div></div></div></header><div class="container"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><article role="main" class="blog-post"><p>In the first two parts of this blog series we have focusing on testing puppet <em>modules</em> with beaker. As an open source contributor there is always<br>a large test matrix so this makes absolute sense. But what about the other large use-case for beaker - what about our day-to-day internal code base?<br>Not all of this is modules, in fact a large portion of it is other puppet code - roles, profiles, facts, hiera data etc. All of this needs testing<br>as well.</p>
+<p>In this blog post I will be showing how we have started using beaker to test our puppet roles and profiles for both Linux and Windows.</p>
+<h2 id="Master-vs-Masterless"><a href="#Master-vs-Masterless" class="headerlink" title="Master-vs-Masterless"></a>Master-vs-Masterless</h2><p>Prior to this post all our beaker testing has been master-less i.e. using using puppet agent apply. This is perfectly adequate for most use cases when<br>testing modules in isolation but doesn’t always work when testing an internal code base (unless you are masterless there as well then please skip to the next section).</p>
+<p>At OpenTable we do use a central puppet master to compile our catalogs. So when testing our puppet roles we wanted to make sure that we were also testing<br>with a master-agent configuration. It is worth mentioning here that if (like us) you are testing windows agents then you are going to need to test with master-agent<br>approach due to the lack of a windows master.</p>
+<p>Testing the master-agent configuration means configuring multi-node sets in beaker. There are not many examples of this but the principle is very much<br>the same as the single-node nodeset. Here is an example:</p>
+<pre><code>HOSTS:
+  ubuntu-server-12042-x64-master:
+    roles:
+      - master
+    platform: ubuntu-12.04-amd64
+    box: ubuntu-server-12042-x64-vbox4210-nocm
+    box_url: http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210-nocm.box
+    hypervisor: vagrant
+    ip: &apos;10.255.33.135&apos;
+  win-2008R2-std:
+    roles:
+      - default
+      - agent
+    platform: windows-server-amd64
+    box: opentable/win-2008r2-standard-amd64-nocm
+    box_version: = 1.0.0
+    box_check_update: false
+    hypervisor: vagrant
+    user: vagrant
+    ip: &apos;10.255.33.129&apos;
+    communicator: bitvise
+CONFIG:
+  log_level: verbose
+  type: git
+</code></pre><p>In this example you will see that we are specifying different ‘roles’ for each host in the nodeset. What a role is in in this context is a tag for that node that allows<br>us to reference it directly later when running commands on the host. To avoid any further confusion, from this point onwards if I am referring to the role defined in the<br>nodeset file I will call it the ‘nodeset role’ otherwise I am referring the the puppet role provided in the manifest. There are a couple of build-in nodeset roles that<br>Beaker already knows about: master, agent and default. The first two are pretty self explanatory but the last nodeset role - default - is the location where the tests<br>themselves run. In you don’t specify the ‘default’ nodeset role on any of your host definitions then the tests will run on the first host that you specified in in the<br>nodeset file (which in the case of the example above would be wrong).</p>
+<p>You may have a more complicated configuration that you wish to test and this allows you to specify arbitrary tags which can be very useful.</p>
+<p>We can now use these nodeset roles to configure our master and agent.</p>
+<p>In parts <a href="/blog/2014/04/04/testing-puppet-with-beaker/">[1]</a> and <a href="/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-2-the-windows-story">[2]</a> of this series we saw what a basic spec_acceptence file looks like. So let’s start with that:</p>
+<pre><code>require &apos;beaker-rspec/spec_helper&apos;
+require &apos;beaker-rspec/helpers/serverspec&apos;
+require &apos;winrm&apos;
+
+hosts.each do |host|
+
+  if host[&apos;platform&apos;] =~ /windows/
+    include Serverspec::Helper::Windows
+    include Serverspec::Helper::WinRM
+  end
+
+  version = ENV[&apos;PUPPET_VERSION&apos;] || &apos;3.5.1&apos;
+  install_puppet(:version =&gt; version)
+
+  if host[&apos;roles&apos;].include?(&apos;master&apos;)
+
+    ... # Install a master
+
+  else
+
+    ... # Install an agent
+
+  end
+end
+
+RSpec.configure do |c|
+
+  c.before :suite do
+
+    hosts.each do |host|
+      c.host = host
+
+      if host[&apos;platform&apos;] =~ /windows/
+        endpoint = &quot;http://127.0.0.1:5985/wsman&quot;
+        c.winrm = ::WinRM::WinRMWebService.new(endpoint, :ssl, :user =&gt; &apos;vagrant&apos;, :pass =&gt; &apos;vagrant&apos;, :basic_auth_only =&gt; true)
+        c.winrm.set_timeout 300
+      end
+    end
+  end
+end
+</code></pre><p>We can see here how we use the host[‘roles’] in order to select the appropriate code-path for configurting each nodeset role. Now let’s<br>move onto how we configure each of those nodeset roles.</p>
+<h2 id="Configuring-the-master"><a href="#Configuring-the-master" class="headerlink" title="Configuring the master"></a>Configuring the master</h2><p>There are a lot of things that go into building a puppetmaster:</p>
+<ul>
+<li>puppetmaster packages</li>
+<li>hiera backends</li>
+<li>gems for addditional dependencies (eyaml + puppetdbquery)</li>
+<li>downloading external modules</li>
+</ul>
+<p>Now let’s step through our new spec_acceptence file that supports this multi-node environment:</p>
+<p>###Deploying the codebase<br>Stage one is getting our puppet codebase onto the master, which includes all the files, internal modules and anything else we need to get the master up and<br>running. We do this like follows:</p>
+<pre><code>files = [ &apos;environments&apos;,&apos;facts&apos;,&apos;hiera&apos;,&apos;roles&apos;, &apos;profiles&apos;, &apos;keys&apos;, &apos;app_modules&apos;, &apos;auth.conf&apos;,&apos;autosign.conf&apos;,
+          &apos;fileserver.conf&apos;, &apos;Gemfile&apos;,&apos;hiera.yaml&apos;,&apos;Puppetfile&apos;
+        ]
+
+files.each do |file|
+  scp_to master, File.expand_path(File.join(File.dirname(__FILE__), &apos;..&apos;, file)), &quot;/etc/puppet/#{file}&quot;
+end
+
+# scp dist modules folder (this excludes stuff like spec and test folders)
+dist_modules = Dir[&quot;#{dist_modules_root}/*/&quot;].map { |a| File.basename(a) }
+dist_modules.each do |module_name|
+  dist_module_dir = &quot;#{dist_modules_root}/#{module_name}&quot;
+  copy_module_to(master, :source =&gt; dist_module_dir, :module_name =&gt; module_name)
+end
+</code></pre><p>Here we are selecting all the files that we want and calling the scp_to method which will scp any file or directory to the host of choice, in this case our<br>master.</p>
+<p>###The puppetmaster:</p>
+<pre><code>...
+
+on master, &quot;apt-get install -y rubygems git&quot;
+on master, &quot;apt-get install -y puppet-common=#{version}-1puppetlabs1 puppetmaster-common=#{version}-1puppetlabs1 puppetmaster=#{version}-1puppetlabs1 &quot;
+on master, &quot;echo &apos;*&apos; &gt; /etc/puppet/autosign.conf&quot;
+
+...
+</code></pre><p>So we have already installed puppet at a previous stage in our script. At this point we are performing all the steps required to install the<br>puppetmaster: git, rubygems (if on an older distro) and the puppetmaster packages. We also making sure that we auto-signing if configured to<br>save us some pain later on. This step should really be configured as another beaker method that we can just call but for now it is still manual.<br>It is at this point that we have first introduced the “on master” this does what you think it might, it executes the command you pass it onto<br>the host with the nodeset role on ‘master’.</p>
+<p>###Set the puppet.conf file:</p>
+<pre><code>...
+
+config = {
+  &apos;main&apos; =&gt; {
+    &apos;server&apos;   =&gt; master_name,
+    &apos;certname&apos; =&gt; master_name,
+    &apos;logdir&apos;   =&gt; &apos;/var/log/puppet&apos;,
+    &apos;vardir&apos;   =&gt; &apos;/var/lib/puppet&apos;,
+    &apos;ssldir&apos;   =&gt; &apos;/var/lib/puppet/ssl&apos;,
+    &apos;rundir&apos;   =&gt; &apos;/var/run/puppet&apos;
+  },
+  &apos;agent&apos; =&gt; {
+    &apos;environment&apos; =&gt; &apos;vagrant&apos;
+  }
+}
+
+configure_puppet(master, config)
+
+...
+</code></pre><p>Here we are configuring out puppet.conf file, making sure that it includes any customization we might need. This uses a configure_puppet method<br>that we have added to beaker to allow us to do this customization and in this case it is taking the hash to modify the puppet.conf file on the master<br>host.</p>
+<p>###Install the required ruby gems:</p>
+<pre><code>...
+
+on master, &quot;gem install bundler&quot;
+on master, &quot;gem install hiera-eyaml&quot;
+on master, &quot;cd /etc/puppet &amp;&amp; bundle install --without development&quot;
+
+...
+</code></pre><p>The average production-ready puppetmaster also requires a number of gems to function such as hiera-eyaml, deep_merge any many others<br>depending upon what backends and other custom puppet extensions you have implemented. Here we are installing all our dependencies from<br>the Gemfile we have already put onto the host.</p>
+<p>###Installing modules:</p>
+<pre><code>...
+
+on master, &quot;cd /etc/puppet &amp;&amp; bundle exec librarian-puppet install&quot;
+
+...
+</code></pre><p>The last major step is installing any external modules you have. You may be using librarian-puppet or r10k to do this. In our case it<br>is the former so we go ahead and make sure that our modules directory is full of all the modules we require.</p>
+<p>###Networking:</p>
+<pre><code>...
+
+master_name = &quot;#{master}.test.local&quot;
+on master, &quot;echo &apos;10.255.33.135   #{master_name}&apos; &gt;&gt; /etc/hosts&quot;
+on master, &quot;hostname #{master_name}&quot;
+on master, &quot;/etc/init.d/puppetmaster restart&quot;
+
+...
+</code></pre><p>This last step is a small hack that you will probably require if you are running on vagrant. It just configures the host file to make<br>sure that it’s hostname if configured correctly from certificate signing to work as expected. This might not be required in your<br>environment and I would try it without first but it’s worth noting anyway.</p>
+<h2 id="Configuring-the-agent"><a href="#Configuring-the-agent" class="headerlink" title="Configuring the agent"></a>Configuring the agent</h2><p>So if you’ve got to this point well done - most of the hard work is done. Configuring the agent(s) is pretty straightforward in comparison<br>to a puppetmaster and some of the steps are similiar:</p>
+<h3 id="Set-the-puppet-conf-file"><a href="#Set-the-puppet-conf-file" class="headerlink" title="Set the puppet.conf file:"></a>Set the puppet.conf file:</h3><pre><code>if host[&apos;roles&apos;].include?(&apos;master&apos;)
+  ...
+else
+  agent = host
+  master = only_host_with_role(hosts, &apos;master&apos;)
+  agent_name = agent.to_s.downcase
+  master_fqdn = &quot;#{master}.test.local&quot;
+  agent_fqdn = &quot;#{agent_name}.test.local&quot;
+
+  if agent[&apos;platform&apos;] =~ /windows/
+    config = {
+      &apos;main&apos; =&gt; {
+        &apos;server&apos;   =&gt; master_fqdn,
+        &apos;certname&apos; =&gt; agent_name,
+        &apos;logdir&apos;   =&gt; &apos;C:\\ProgramData\\PuppetLabs\\puppet\\var\\log&apos;,
+        &apos;vardir&apos;   =&gt; &apos;C:\\ProgramData\\PuppetLabs\\puppet\\var\\lib&apos;,
+        &apos;ssldir&apos;   =&gt; &apos;C:\\ProgramData\\PuppetLabs\\puppet\\var\\lib\\ssl&apos;,
+        &apos;rundir&apos;   =&gt; &apos;C:\\ProgramData\\PuppetLabs\\puppet\\var\\run&apos;
+      },
+      &apos;agent&apos; =&gt; {
+        &apos;environment&apos; =&gt; &apos;vagrant&apos;
+      }
+    }
+  else
+    config = {
+      &apos;main&apos; =&gt; {
+        &apos;server&apos;   =&gt; master_fqdn,
+        &apos;certname&apos; =&gt; agent_fqdn,
+        &apos;logdir&apos;   =&gt; &apos;/var/log/puppet&apos;,
+        &apos;vardir&apos;   =&gt; &apos;/var/lib/puppet&apos;,
+        &apos;ssldir&apos;   =&gt; &apos;/var/lib/puppet/ssl&apos;,
+        &apos;rundir&apos;   =&gt; &apos;/var/run/puppet&apos;
+      },
+      &apos;agent&apos; =&gt; {
+        &apos;environment&apos; =&gt; &apos;vagrant&apos;
+      }
+    }
+  end
+  ...
+
+  configure_puppet(agent, config)
+end
+
+...
+</code></pre><p>Again here we are again using the configure_puppet method, this time change the puppe.conf file on the agent.</p>
+<p>As you can see we are catering for both windows and linux hosts here. We are also making sure that the certname<br>and server are defined properly and match what we set-up for the master so that auto-signing works correctly.</p>
+<h2 id="Testing-the-Role"><a href="#Testing-the-Role" class="headerlink" title="Testing the Role"></a>Testing the Role</h2><p>At this point we have now does all our prerequisites and we can spin up two machines to test against - 1 master and<br>1 agent. But when we are testing a role what is it that we actually want to test and why is this not covered in<br>earlier less-expensive puppet-rspec unit tests?</p>
+<p>Well there are 3 key things that we wanted to test:</p>
+<ol>
+<li><p>Idempotence <br> This is pretty straight forward to test. Beaker provides a method run_agent_on that will run the puppet agent on a<br>given host. This means we can test idempotency like this:</p>
+<pre><code>run_agent_on(agent, :catch_failures =&gt; true)
+expect(run_agent_on(agent, :catch_failures =&gt; true).exit_code).to be_zero
+</code></pre></li>
+<li><p>Interaction of multiple modules and profiles <br> This is the big motivator - we want to test that and make sure that the combinations<br>of profiles that we are applying work together and do not either break the catalog or operate in a non-idempotent way. We are also gaining<br>the ability to test that updates in modules (many of which are external from the puppet forge) do not break our roles in any way.</p>
+</li>
+<li><p>Postivie/Negative testing - do we clean up after ourselves if we remove something. <br> This is not something that is often considered<br>very often, particularly in a world where machines are torn down and re-build so often but there still exists a use-case where this is not<br>always possible and we want to make sure that our roles and manifests are not littering our machines unnecessarily.</p>
+</li>
+</ol>
+<p>Below is a full example of one of our linux profiles:</p>
+<pre><code>require &apos;spec_helper_acceptance&apos;
+
+describe &apos;linux_base_profile&apos;, :if =&gt; fact(&apos;osfamily&apos;).eql?(&apos;Debian&apos;) do
+  context &apos;linux base profile&apos; do
+    it &apos;should should run successfully&apos; do
+
+      agent = only_host_with_role(hosts, &apos;agent&apos;)
+      master = only_host_with_role(hosts, &apos;master&apos;)
+
+      pp = &quot;node \&quot;#{agent}\&quot; { include profiles::linux::base }&quot;
+      on master, &quot;echo &apos;#{pp}&apos; &gt;&gt; /etc/puppet/manifests/site.pp&quot;
+
+      run_agent_on(agent, :catch_failures =&gt; true)
+      expect(run_agent_on(agent, :catch_failures =&gt; true).exit_code).to be_zero
+    end
+
+    context &apos;installation of ops tools&apos; do
+
+      describe package(&apos;sysstat&apos;) do
+        it { should be_installed }
+      end
+
+      describe package(&apos;iotop&apos;) do
+        it { should be_installed }
+      end
+
+      describe package(&apos;ngrep&apos;) do
+        it { should be_installed }
+      end
+
+      describe package(&apos;lsof&apos;) do
+        it { should be_installed }
+      end
+
+      describe package(&apos;unzip&apos;) do
+        it { should be_installed }
+      end
+    end
+
+    context &apos;managing puppet version&apos; do
+
+      describe file(&apos;/etc/apt/sources.list.d/puppetlabs.list&apos;) do
+        it { should be_file }
+        it { should be_owned_by &apos;root&apos; }
+        it { should be_mode 644 }
+      end
+
+      describe package(&apos;puppet&apos;) do
+        it { should be_installed.by(&apos;apt&apos;).with_version(&apos;3.6.1-1puppetlabs1&apos;) }
+      end
+    end
+
+    context &apos;manage sshd configuration&apos; do
+
+      describe process(&quot;sshd&quot;) do
+        it { should be_running }
+      end
+
+      describe port(22) do
+        it { should be_listening }
+      end
+
+      describe file(&apos;/etc/ssh/sshd_config&apos;) do
+        its(:content) { should match /PermitRootLogin no/ }
+        its(:content) { should match /PasswordAuthentication yes/ }
+        its(:content) { should match /UseDNS no/ }
+      end
+    end
+  end
+end
+</code></pre><p>We have a lot of roles and profiles that we would like to test. As you might imagine this could get quite verbose and repetitive pretty quickly. We are currently building<br>up <a href="https://www.relishapp.com/rspec/rspec-core/docs/example-groups/shared-context" target="_blank" rel="external">shared_contexts</a> for each of our profiles which we can<br>then wrap up into roles to easily reflect our roles/profiles structure in the main codebase.</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>We are just at the very beginning of this journey with Beaker. As well as testing all our modules we are looking to scale our to test the roles and profiles in our whole<br>code base. These examples here are how we are doing it at the moment for our mixed-platform environment. We will continue to expand upon it and build it into our pipeline.<br>At this moment we are looking to expand beyond vagrant and run these against AWS instances but perhaps that is for the next post …</p>
+<p>As usual for any questions or comments then please reach out to me on twitter <a href="https://twitter.com/liamjbennett" target="_blank" rel="external">@liamjbennett</a></p>
+</article><ul class="pager blog-pager"><li class="previous"><a href="/blog/2014/09/04/introducing-hobknob-feature-toggling-with-etcd/" data-toggle="tooltip" data-placement="top" title="Introducing Hobknob: Feature toggling with etcd">← Previous Post</a></li><li class="next"><a href="/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-2-the-windows-story/" data-toggle="tooltip" data-placement="top" title="Testing Puppet with Beaker pt.2 - The Windows story">Next Post →</a></li></ul></div></div></div><footer><div class="container beautiful-jekyll-footer"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href="https://github.com/opentable" title="GitHub"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-github"></i></span></a></li><li><a href="https://twitter.com/opetabletechuk" title="Twitter"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-twitter"></i></span></a></li><li><a href="https://www.linkedin.com/company/12181" title="LinkedIn"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-linkedin"></i></span></a></li><li><a href="http://stackoverflow.com/jobs/companies/opentable" title="StackOverflow"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-stack-overflow"></i></span></a></li></ul><p class="copyright text-muted">© OpenTable • 2016 • <a href="mailto:undefined"></a>
+</p><p class="theme-by text-muted">Theme by
+<a href="https://github.com/twoyao/beautiful-hexo">beautiful-hexo</a></p></div></div></div></footer><script src="/js/jquery-1.11.2.min.js"></script><script src="/js/bootstrap.min.js"></script><script src="/js/main.js"></script><script src="/js/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-2621903-16', 'auto');
+ga('send', 'pageview');</script></body></html>

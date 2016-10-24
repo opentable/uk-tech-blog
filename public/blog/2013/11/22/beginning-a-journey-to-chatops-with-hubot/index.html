@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><meta name="author" content="OpenTable"><link rel="icon" href="/favicon.png"><title>OpenTable Tech UK Blog</title><meta name="description"><link rel="alternate" type="application/rss+xml" title="OpenTable Tech UK Blog" href="/atom.xml"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/bootstrap.min.css"><link rel="stylesheet" href="/css/main.css"><script src="//fonts.otstatic.com/zys4lfz.js"></script><link rel="stylesheet" href="/css/highlight.css">
+</head><body><nav class="navbar navbar-default navbar-fixed-top navbar-custom"><div class="container-fluid"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#main-navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">OpenTable Tech UK Blog</a></div><div id="main-navbar" class="collapse navbar-collapse"><ul class="nav navbar-nav navbar-right"><li><a href="/about/">About</a></li><li><a href="/archives/">Archive</a></li><li><a href="/blog/authors/">Authors</a></li></ul></div><div class="avatar-container"><div class="avatar-img-border"><a href="/"><img src="/opentable.png" class="avatar-img"></a></div></div></div></nav><header class="header-section"><div class="intro-header no-img"><div class="container"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class="post-heading"><h1>Beginning a journey to chatops with Hubot</h1><p class="post-meta">Posted by <a href="/authors/rtomlinson.html">rtomlinson</a>, 22 November 2013 · <a href="/blog/categories/Hubot/" class="tag post-meta">Hubot</a> · <a href="/blog/categories/Hipchat/" class="tag post-meta">Hipchat</a> · <a href="/blog/categories/Chatops/" class="tag post-meta">Chatops</a></p></div></div></div></div></div></header><div class="container"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><article role="main" class="blog-post"><img src="/images/posts/hubot_pug_me.png" class="center">
+<p>As a part of our 30% time a few of our team, <a href="https://twitter.com/ajroyle" target="_blank" rel="external">@ajroyle</a>, <a href="https://twitter.com/stack72" target="_blank" rel="external">@stack72</a> and I (<a href="https://twitter.com/ryantomlinson" target="_blank" rel="external">@ryantomlinson</a>) decided to get together and look at <a href="http://hubot.github.com/" target="_blank" rel="external">Hubot</a> with <a href="https://www.hipchat.com/" target="_blank" rel="external">Hipchat</a> integration. There are several weird and wonderful scripts that ship with Hubot (see above) but the core concept of driving tooling via chat is one that we see value in.</p>
+<p>##What is Chatops?</p>
+<p><a href="https://speakerdeck.com/jnewland/chatops-at-github" target="_blank" rel="external">Chatops</a> is a term coined by Github to describe their growing culture of “putting tools in the middle of the conversation”. But what does that exactly mean?</p>
+<p>To move fast and maintain stability it’s important to have a culture of automation, measurement and sharing (<a href="http://www.opscode.com/blog/2010/07/16/what-devops-means-to-me/" target="_blank" rel="external">CAMS</a>). Tooling plays a key role in doing so and as your devops toolkit grows with the team there is an inherent learning and maintenance overhead. <a href="http://github.com/" target="_blank" rel="external">Github</a> made a move to centralise the conversation by driving everything they do into chat. By building tools and executing commands in a chat room that can be automated by a bot, communication doesn’t become an afterthought to operational processes but is core to how you operate. If I want to deploy code, I type a command into chat. If I want to take a server offline, I type a command into chat. If I want to merge a git pull request into master, I type in a command into chat, and so on. Communication is baked in.</p>
+<p>##What is Hubot?</p>
+<p>Hubot is a chat bot that sits in your chat room, listens for commands and executes them. It was written by Github in Coffeescript on Node.js and comes with a host of <a href="https://github.com/github/hubot-scripts/tree/master/src/scripts" target="_blank" rel="external">prewritten scripts</a> to get started with. Hubot also comes with a range of adaptors that allow it to plug-in to chat servers such as Campfire, IRC and Hipchat. We chose the latter.</p>
+<p>##How do you get started?</p>
+<p>I won’t re-write the readme because the getting started section <a href="https://github.com/github/hubot/tree/master/docs" target="_blank" rel="external">here</a> says it all. Using the node package manager it’s so easy to get up and running with <a href="https://github.com/blog/968-say-hello-to-hubot" target="_blank" rel="external">Hubot</a>. So many other people have documented this process that I won’t attempt to rewrite their <a href="http://net.tutsplus.com/tutorials/javascript-ajax/writing-hubot-plugins-with-coffeescript/" target="_blank" rel="external">good</a> <a href="https://github.com/blog/968-say-hello-to-hubot" target="_blank" rel="external">posts</a>.</p>
+<p>##How we want to use it and our first scripts<br>Although the core scripts that shipped with Hubot are helpful…</p>
+<img src="/images/posts/hubot_beer_me.png" class="center">
+<p>…we started to focus on commands that would be most useful to how we work at <a href="http://www.opentable.co.uk/" target="_blank" rel="external">OpenTable</a> and the tools and technologies that we employ. Specifically we got together and decided the following would be a useful starting point:</p>
+<ul>
+<li>Triggering TeamCity builds to ship to production</li>
+<li>Displaying the status of a JIRA ticket, adding comments and changing their status</li>
+<li>Checking London Underground tube lines for delays via Transport for London API</li>
+<li>Querying the status of our APIs (internal and external)</li>
+<li>Query ElasticSearch node and health cluster</li>
+</ul>
+<p>Within no time we had some useful scripts written:</p>
+<img src="/images/posts/hubot_tube_status.png" class="center">
+<img src="/images/posts/hubot_jira.png" class="center">
+<img src="/images/posts/hubot_teamcity.png" class="center"> 
+<p>Immediately as we were developing these scripts we realised the potential of what else we could automate into Hubot and we will continue to do so. Some of which are:</p>
+<ul>
+<li>Github interaction</li>
+<li>AWS interaction to see host health</li>
+<li>Teamcity integration to trigger builds</li>
+<li>Nagios interaction to trigger status checks</li>
+<li>More JIRA integration to comment on tickets</li>
+<li>Kibana integration to create dashboard URLs</li>
+<li>AppDynamics interaction to query response times etc. (and more)</li>
+</ul>
+<p>Driving operations in chat has huge benefits for us. Collaboration, deployment and automation of common tasks can be done from anywhere, in the office (UK or US) or remotely for those that work from home. Hipchat has mobile support and their mobile apps are great. We hope it will improve on-call visibility, triaging of issues and resolving them without the need for VPN.</p>
+<h2 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h2><ul>
+<li>Chatops: Augmented reality for Ops (Video) by Mark Imbriaco - <a href="http://www.youtube.com/watch?v=pCVvYCjvoZI" target="_blank" rel="external">http://www.youtube.com/watch?v=pCVvYCjvoZI</a></li>
+<li>Chatops at Github by Jesse Newland - <a href="http://www.youtube.com/watch?v=NST3u-GjjFw" target="_blank" rel="external">http://www.youtube.com/watch?v=NST3u-GjjFw</a></li>
+</ul>
+</article><ul class="pager blog-pager"><li class="previous"><a href="/blog/2014/02/03/coaching-style-over-substance/" data-toggle="tooltip" data-placement="top" title="Coaching style over substance">← Previous Post</a></li><li class="next"><a href="/blog/2013/10/21/linking-to-your-app-in-windows-8/" data-toggle="tooltip" data-placement="top" title="Linking to your app in Windows 8">Next Post →</a></li></ul></div></div></div><footer><div class="container beautiful-jekyll-footer"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href="https://github.com/opentable" title="GitHub"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-github"></i></span></a></li><li><a href="https://twitter.com/opetabletechuk" title="Twitter"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-twitter"></i></span></a></li><li><a href="https://www.linkedin.com/company/12181" title="LinkedIn"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-linkedin"></i></span></a></li><li><a href="http://stackoverflow.com/jobs/companies/opentable" title="StackOverflow"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-stack-overflow"></i></span></a></li></ul><p class="copyright text-muted">© OpenTable • 2016 • <a href="mailto:undefined"></a>
+</p><p class="theme-by text-muted">Theme by
+<a href="https://github.com/twoyao/beautiful-hexo">beautiful-hexo</a></p></div></div></div></footer><script src="/js/jquery-1.11.2.min.js"></script><script src="/js/bootstrap.min.js"></script><script src="/js/main.js"></script><script src="/js/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-2621903-16', 'auto');
+ga('send', 'pageview');</script></body></html>

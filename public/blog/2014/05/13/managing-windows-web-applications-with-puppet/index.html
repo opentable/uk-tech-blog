@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><meta name="author" content="OpenTable"><link rel="icon" href="/favicon.png"><title>OpenTable Tech UK Blog</title><meta name="description"><link rel="alternate" type="application/rss+xml" title="OpenTable Tech UK Blog" href="/atom.xml"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/bootstrap.min.css"><link rel="stylesheet" href="/css/main.css"><script src="//fonts.otstatic.com/zys4lfz.js"></script><link rel="stylesheet" href="/css/highlight.css">
+</head><body><nav class="navbar navbar-default navbar-fixed-top navbar-custom"><div class="container-fluid"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#main-navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">OpenTable Tech UK Blog</a></div><div id="main-navbar" class="collapse navbar-collapse"><ul class="nav navbar-nav navbar-right"><li><a href="/about/">About</a></li><li><a href="/archives/">Archive</a></li><li><a href="/blog/authors/">Authors</a></li></ul></div><div class="avatar-container"><div class="avatar-img-border"><a href="/"><img src="/opentable.png" class="avatar-img"></a></div></div></div></nav><header class="header-section"><div class="intro-header no-img"><div class="container"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class="post-heading"><h1>Managing Windows Web Applications with Puppet</h1><p class="post-meta">Posted by <a href="/authors/pstack.html">pstack</a>, 13 May 2014 · <a href="/blog/categories/Puppet/" class="tag post-meta">Puppet</a> · <a href="/blog/categories/PowerShell/" class="tag post-meta">PowerShell</a> · <a href="/blog/categories/DevOps/" class="tag post-meta">DevOps</a> · <a href="/blog/categories/Configuration-Management/" class="tag post-meta">Configuration Management</a> · <a href="/blog/categories/Windows/" class="tag post-meta">Windows</a> · <a href="/blog/categories/IIS/" class="tag post-meta">IIS</a></p></div></div></div></div></div></header><div class="container"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><article role="main" class="blog-post"><p>As part of our move towards a configuration management tool, we really wanted to start automating as much of our infrastructure as possible. This included our application configuration stack. IIS management is pretty easy with PowerShell. It would look something like this</p>
+<pre><code>Import-Module WebAdministration
+New-WebSite -Name &quot;DemoSite&quot; -Port 80 -IP * -PhysicalPath &quot;c:\inetpub\wwwroot&quot; -ApplicationPool &quot;MyAppPool&quot;
+</code></pre><p>This would of course set up a website called ‘DemoSite’ running on port 80 on the local machine. The cmdlets that come with PowerShell make this pretty easy. This is great if it is a one-off job to set up a site. We run our websites from a number of webservers, therefore, it would be silly to have to RDP into each webserver and run a script on it. This is why tools like Puppet, Chef, Ansible etc. exist. We needed a configuration management tool to do this work for us. It has a number of benefits:</p>
+<ul>
+<li>Orchestration</li>
+<li>Idempotency</li>
+<li>Makes sure that each server is configured in ‘exactly’ the same way as no human intervention is needed</li>
+<li>Developers can help the operations team by creating the scripts needed. This is great for collaboration between teams</li>
+</ul>
+<p>On investigating how we would do this with Puppet, we noticed that there were not many other people managing their site in this way. Therefore, we would have to turn our PowerShell scripts into Puppet modules to manage our system. </p>
+<p>We have since created a Puppet module to manage IIS. To manage IIS with Puppet, we can now write the following code:</p>
+<pre><code>iis::manage_site { &apos;DemoSite:
+   site_path     =&gt; &apos;c:\inetpub\wwwroot&apos;,
+   port          =&gt; &apos;80&apos;,
+   ip_address    =&gt; &apos;*&apos;,
+   app_pool      =&gt; &apos;MyAppPool&apos;
+}
+</code></pre><p>This would produce <strong>exactly</strong> the same results as the code from above. But it has 1 difference. There are checks in the code behind this module that will mean the code will only execute when it is needed, i.e. when the site_path isn’t correct or the app_pool isn’t correct. This is idempotency. The script can be run again and again and again….</p>
+<p>To create an application binding, we used to do this in PowerShell:</p>
+<pre><code>Import-Module WebAdministration
+New-WebBinding -Name &apos;DemoSite&apos; -Port &apos;8080&apos; -IPAddress &apos;*&apos;
+</code></pre><p>This would set up an extra binding on port 8080 for the site, DemoSite. We replaced this code with our puppet equivalent:</p>
+<pre><code>iis::manage_binding { &apos;DemoSite-8080&apos;:
+  site_name   =&gt; &apos;DemoSite&apos;,
+  protocol    =&gt; &apos;http&apos;,
+  port        =&gt; &apos;8080&apos;,
+  ip_address  =&gt; &apos;*&apos;,
+}
+</code></pre><p>To create a virtual application, we would write the PowerShell:</p>
+<pre><code>Import-Module WebAdministration
+New-WebApplication -Name &apos;VirtualApp&apos; -Site &apos;DemoSite&apos; -PhysicalPath &apos;c:\inetpub\wwwroot\MyVirtualApp&apos; -ApplicationPool &apos;MyAppPool&apos;
+</code></pre><p>This will create a VirtualApp folder on the DemoSite, use the same application pool and then set the path of the folder. I can do the same thing in Puppet as follows:</p>
+<pre><code>iis::manage_virtual_application {&apos;VirtualApp&apos;:
+  site_name   =&gt; &apos;DemoSite&apos;,
+  site_path   =&gt; &apos;C:\inetpub\wwwroot\MyVirtualApplication&apos;,
+  app_pool    =&gt; &apos;MyAppPool&apos;
+ }  
+</code></pre><p>We can therefore, chain a manifest together that does all this for us in 1 go. It would look as follows:</p>
+<pre><code>class mywebsite {
+  iis::manage_app_pool {&apos;MyAppPool&apos;:
+    enable_32_bit           =&gt; true,
+    managed_runtime_version =&gt; &apos;v4.0&apos;,
+  } -&gt;
+
+  iis::manage_site {&apos;DemoSite&apos;:
+    site_path   =&gt; &apos;C:\inetpub\wwwroot&apos;,
+    port        =&gt; &apos;80&apos;,
+    ip_address  =&gt; &apos;*&apos;,
+    app_pool    =&gt; &apos;MyAppPool&apos;
+  } -&gt;
+
+  iis::manage_virtual_application {&apos;VirtualApp&apos;:
+    site_name  =&gt; &apos;DemoSite&apos;,
+    site_path  =&gt; &apos;C:\inetpub\wwwroot\MyVirtualApp&apos;,
+    app_pool   =&gt; &apos;MyAppPool&apos;
+  } -&gt; 
+
+  iis::manage_binding {&apos;DemoSite-8080&apos;:
+    site_name  =&gt; &apos;DemoSite&apos;,
+    protocol   =&gt; &apos;http&apos;,
+    port       =&gt; &apos;8080&apos;,
+    ip_address =&gt; &apos;*&apos;
+  }
+}
+</code></pre><p>The module does more than just these tasks and I could give more and more examples of what we wrote, but you can find more about our IIS module on the <a href="http://github.com/opentable/puppet-iis" target="_blank" rel="external">github repo</a>. If you want to use the module, then you can install it using the Puppet Module tool via the <a href="http://forge.puppetlabs.com/opentable/iis" target="_blank" rel="external">Puppet forge</a>.</p>
+<p>We love to hear feedback on things that the module should support. We like Pull Requests even more :)</p>
+</article><ul class="pager blog-pager"><li class="previous"><a href="/blog/2014/05/15/managing-windows-features-with-puppet/" data-toggle="tooltip" data-placement="top" title="Managing Windows Features with Puppet">← Previous Post</a></li><li class="next"><a href="/blog/2014/04/29/remote-worker-notes-tools-and-setup/" data-toggle="tooltip" data-placement="top" title="Remote Worker Notes &amp;ndash; Tools and Setup">Next Post →</a></li></ul></div></div></div><footer><div class="container beautiful-jekyll-footer"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href="https://github.com/opentable" title="GitHub"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-github"></i></span></a></li><li><a href="https://twitter.com/opetabletechuk" title="Twitter"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-twitter"></i></span></a></li><li><a href="https://www.linkedin.com/company/12181" title="LinkedIn"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-linkedin"></i></span></a></li><li><a href="http://stackoverflow.com/jobs/companies/opentable" title="StackOverflow"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-stack-overflow"></i></span></a></li></ul><p class="copyright text-muted">© OpenTable • 2016 • <a href="mailto:undefined"></a>
+</p><p class="theme-by text-muted">Theme by
+<a href="https://github.com/twoyao/beautiful-hexo">beautiful-hexo</a></p></div></div></div></footer><script src="/js/jquery-1.11.2.min.js"></script><script src="/js/bootstrap.min.js"></script><script src="/js/main.js"></script><script src="/js/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-2621903-16', 'auto');
+ga('send', 'pageview');</script></body></html>
