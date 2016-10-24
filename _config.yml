@@ -20,9 +20,9 @@ permalink_defaults:
 # Directory
 source_dir: source
 public_dir: public
-tag_dir: tags
+tag_dir: blog/categories
 archive_dir: archives
-category_dir: categories
+# category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
@@ -43,10 +43,18 @@ highlight:
   auto_detect: false
   tab_replace:
 
+# Archives
+archive_generator:
+  per_page: 0
+  yearly: false
+  monthly: false
+  daily: false
+
 # Category & Tag
 default_category: uncategorized
 category_map:
-tag_map:
+# tag_map:
+#   OSS: Open Source Software
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
