@@ -583,4 +583,7 @@ table tr td :last-child {
   color: #0085a1
 }
 
-
+/* Prevents code snippets breaking responsive layout */
+.highlight.javascript {
+  overflow-x: auto;
+}
