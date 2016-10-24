@@ -1,7 +1,7 @@
 navbar-links:
     About: /about/
     Archive: /archives/
-    Authors: /authors/
+    Authors: /blog/authors/
 
 avatar: /opentable.png
 favicon: /favicon.png
