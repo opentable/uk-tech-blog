@@ -16,7 +16,7 @@ p {
 }
 p a {
   /* text-decoration: underline */
-  color: #008AFF;
+  color: #DA3743;
 }
 h1,h2,h3,h4,h5,h6 {
   font-family: 'rooney-web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -27,7 +27,7 @@ a {
 }
 a:hover,
 a:focus {
-  color: #0085a1;
+  color: #60B2D0;
 }
 blockquote {
   color: #808080;
@@ -65,12 +65,12 @@ hr.small {
 ::-moz-selection {
   color: white;
   text-shadow: none;
-  background: #0085a1;
+  background: #60B2D0;
 }
 ::selection {
   color: white;
   text-shadow: none;
-  background: #0085a1;
+  background: #60B2D0;
 }
 img::selection {
   color: white;
@@ -119,7 +119,7 @@ img {
 .navbar-custom .navbar-brand:focus ,
 .navbar-custom .nav li a:hover,
 .navbar-custom .nav li a:focus {
-  color: #0085a1;
+  color: #60B2D0;
 }
 
 @media only screen and (min-width: 768px) {
@@ -259,11 +259,12 @@ footer .list-inline {
   margin: 0;
   padding: 0;
 }
+
 footer .copyright {
-  font-family: rooney-web;
   text-align: center;
   margin-bottom: 0;
 }
+
 footer .theme-by {
   text-align: center;
   margin: 10px 0 0;
@@ -306,7 +307,7 @@ footer .theme-by {
 .post-preview a:focus,
 .post-preview a:hover {
   text-decoration: none;
-  color: #0085a1;
+  color: #60B2D0;
 }
 
 .post-preview .post-title {
@@ -511,8 +512,8 @@ footer .theme-by {
 .pager li a:hover,
 .pager li a:focus {
   color: #FFF;
-  background: #0085a1;
-  border: 1px solid #0085a1;
+  background: #60B2D0;
+  border: 1px solid #60B2D0;
 }
 
 .pager {
@@ -580,10 +581,10 @@ table tr td :last-child {
 
 .tag:focus, .tag:hover {
   text-decoration: none;
-  color: #0085a1
+  color: #60B2D0
 }
 
 /* Prevents code snippets breaking responsive layout */
-.highlight.javascript {
+.highlight {
   overflow-x: auto;
 }
