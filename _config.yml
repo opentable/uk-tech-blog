@@ -76,4 +76,6 @@ theme: beautiful-hexo
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: heroku
+  repo: it@heroku.com:uk-tech-blog.git
+  message: [message]
