@@ -10,12 +10,12 @@ header:
     title: "OpenTable Tech UK Blog"
     motto: The technology blog for OpenTable UK.
     bigimgs:
+        - src: /bigimgs/building.jpg
+          desc: Alphabeta Building
         - src: /bigimgs/kitchen.jpg
           desc: OpenTable London office
-        # - src: /bigimgs/02.jpg
-        #   desc: Tropical Fish
-        # - src: /bigimgs/03.jpg
-        #   desc: ocean
+        - src: /bigimgs/office.jpg
+          desc: OpenTable Engineers
 
 rss: /atom.xml
 googlefonts:
