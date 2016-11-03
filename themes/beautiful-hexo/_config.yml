@@ -50,7 +50,7 @@ footer:
     icon: fa-rss
     enable: false
   twitter:
-    link: 'https://twitter.com/opetabletechuk'
+    link: 'https://twitter.com/opentabletechuk'
     title: Twitter
     icon: fa-twitter
     enable: true
