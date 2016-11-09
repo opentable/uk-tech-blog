@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tech.opentable.co.uk/"/>
-  <updated>2016-10-24T12:49:12.467Z</updated>
+  <updated>2016-11-09T16:43:13.793Z</updated>
   <id>http://tech.opentable.co.uk/</id>
   
   <author>
@@ -14,6 +14,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>falcor-postman</title>
+    <link href="http://tech.opentable.co.uk//blog/2016/11/09/falcor-postman/"/>
+    <id>http://tech.opentable.co.uk//blog/2016/11/09/falcor-postman/</id>
+    <published>2016-11-09T16:40:22.000Z</published>
+    <updated>2016-11-09T16:43:13.793Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h2><p>At OpenTable, we have an engineering culture that empowers us to research, experiment and learn. </p>
+<p>In an effort to foster innovation and to try new ideas, Chris Cartlidge, Nick Balestra, Tom Martin and myself started to work on a side project nicknamed big-mars. Our project is a mobile-first, responsive web application that uses Falcor by Netflix.</p>
+<p>Falcor, a JavaScript library for efficient data fetching, is an implementation of the Backend for Frontend (BFF) or the API Gateway pattern.</p>
+<p>One powerful concept that Falcor has is its query model, in which you access your data as if it was a single JSON model in memory.  You can navigate your data structure the way you would navigate a JSON object; either with a “dot notation” (e.g. restaurant.address.city) or with an “array notation” (e.g. restaurant[‘address’][‘city’]). </p>
+<p>Really easy and intuitive.</p>
+<p>However, while experimenting and learning how to properly use its query model, we noticed that it was quite hard to “visualise” the expected result from the API calls without using, for instance, our beloved in-browser Developer Tools console.<br>falcor-postman<br>The Falcor project released many additional packages in order to facilitate developers who are willing to use this technology (e.g. falcor-express) but in this ecosystem we noticed a lack of tools with a GUI on top.</p>
+<p>We also noticed that the GraphQL, another project that shares with Falcor the same core concepts, has tools with visual interfaces (e.g. express-graphql and GraphiQL).</p>
+<p>So as a spin-off of our big-mars project, Nick and I decided to build a tool with a nice and intuitive GUI responsible for exercising the Falcor endpoint in order to help us to validate our queries, and we named this tool falcor-postman.</p>
+<p>So we decided to build falcor-postman as an Express.js middleware, making it easy to plug into an existing Falcor project that uses Express.js as a web application framework. We are releasing it as an Open Source Software project so that others can take advantage of it and hopefully speed up their own development lifecycle.</p>
+<h2 id="The-features"><a href="#The-features" class="headerlink" title="The features"></a>The features</h2><p>When plugged into an existing Express.js application it will be possible to access a specific configurable route, showing a web page in which you can write Falcor queries and send them to your Falcor endpoint. Then the result of the query will be presented.</p>
+<p>It will be also possible to resend previous queries and modify them, as they will be saved for you into your browser’s local storage.</p>
+<h2 id="Under-the-hood"><a href="#Under-the-hood" class="headerlink" title="Under the hood"></a>Under the hood</h2><p>Falcor-postman is composed by an Express.js middleware responsible for serving the UI which is a React.js application. Webpack is our module bundler. We take advantage of hot reloading in development mode while for the production release we create a physical file containing the bundle.</p>
+<p>In addition we are using (Pure.css)[<a href="https://www.google.com/url?q=http://purecss.io/&amp;sa=D&amp;ust=1478712977463000&amp;usg=AFQjCNGphk7heIMv-7mOTvwgUiWIrqUfXQ" target="_blank" rel="external">https://www.google.com/url?q=http://purecss.io/&amp;sa=D&amp;ust=1478712977463000&amp;usg=AFQjCNGphk7heIMv-7mOTvwgUiWIrqUfXQ</a>] and Codemirror that are helping us with the UI, and we are also using eslint-config-opentable (another OpenTable open source project) as our .eslintrc config.</p>
+<h2 id="What’s-next"><a href="#What’s-next" class="headerlink" title="What’s next?"></a>What’s next?</h2><p>falcor-postman v1.0.0 has just been released on npm and we’re awaiting feedback. Also, we have some issues in our GitHub repository which we will use to build our own product roadmap.</p>
+<p>In the short term we would like to fix some outstanding minor issues that we are aware of (polishing the UI, enhancing the query history) but in the long term we would also like to enable data update; at the moment, our middleware only enables fetches but we’d like to better reflect the full functionality of Falcor, which allows for updates as well.</p>
+<h2 id="One-final-comment"><a href="#One-final-comment" class="headerlink" title="One final comment"></a>One final comment</h2><p>At OpenTable we love OSS and we truly believe that sharing knowledge and experiences is one of the best ways for learning and growing as engineers. We highly encourage you to reach out to us if you would like to discuss your experience with us or simply would like to understand better what we do.</p>
+<h2 id="Links-and-resources"><a href="#Links-and-resources" class="headerlink" title="Links and resources"></a>Links and resources</h2><p>falcor-postman’s GitHub repository<br>Falcor’s website</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Context&quot;&gt;&lt;a href=&quot;#Context&quot; class=&quot;headerlink&quot; title=&quot;Context&quot;&gt;&lt;/a&gt;Context&lt;/h2&gt;&lt;p&gt;At OpenTable, we have an engineering culture that empowers us to research, experiment and learn. &lt;/p&gt;
+&lt;p&gt;In an effort to foster innovation and to try new ideas, Chris Cartlidge, Nick Balestra, Tom Martin and myself started to work on a side project nicknamed big-mars. Our project is a mobile-first, responsive web application that uses Falcor by Netflix.&lt;/p&gt;
+&lt;p&gt;Falcor, a JavaScript library for efficient data fetching, is an implementation of the Backend for Frontend (BFF) or the API Gateway pattern.&lt;/p&gt;
+&lt;p&gt;One powerful concept that Falcor has is its query model, in which you access your data as if it was a single JSON model in memory.  You can navigate your data structure the way you would navigate a JSON object; either with a “dot notation” (e.g. restaurant.address.city) or with an “array notation” (e.g. restaurant[‘address’][‘city’]). &lt;/p&gt;
+&lt;p&gt;Really easy and intuitive.&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Falcor" scheme="http://tech.opentable.co.uk/blog/categories/Falcor/"/>
+    
+  </entry>
   
   <entry>
     <title>OpenComponents - microservices in the front-end world</title>
@@ -1436,61 +1477,6 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
       <category term="Conferences" scheme="http://tech.opentable.co.uk/blog/categories/Conferences/"/>
     
       <category term="PuppetConf 2014" scheme="http://tech.opentable.co.uk/blog/categories/PuppetConf-2014/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Introducing Hobknob: Feature toggling with etcd</title>
-    <link href="http://tech.opentable.co.uk//blog/2014/09/04/introducing-hobknob-feature-toggling-with-etcd/"/>
-    <id>http://tech.opentable.co.uk//blog/2014/09/04/introducing-hobknob-feature-toggling-with-etcd/</id>
-    <published>2014-09-04T20:09:52.000Z</published>
-    <updated>2016-10-24T10:24:39.309Z</updated>
-    
-    <content type="html"><![CDATA[<p>The ability to dynamically turn features on/off in software without the need to redeploy code is extremely beneficial. Whether you are trialing a new feature or using branch by abstraction to avoid creating feature branches, the use of feature toggles can aid continuous delivery and provide a mechanism to reduce mean time to resolution when an issue occurs.</p>
-<p>With a relatively large engineering department with multiple teams spread across the US and UK the need to manage feature toggles has evolved to the point whereby individual teams have developed their own implementations. Most of these are simple config files.</p>
-<p>We decided to unify this effort by providing a central place to store feature toggles, provide a dashboard to be able to turn these toggles on/off and provide language specific clients to integrate into our software components.</p>
-<p>The results of this was <a href="https://github.com/opentable/hobknob" target="_blank" rel="external">Hobknob</a>.</p>
-<h2 id="Why-etcd"><a href="#Why-etcd" class="headerlink" title="Why etcd?"></a>Why etcd?</h2><p>We made the decision to use <a href="https://github.com/coreos/etcd" target="_blank" rel="external">etcd</a>. Etcd is “a highly-available key value store for shared configuration” (<a href="https://github.com/coreos/etcd#etcd" target="_blank" rel="external">https://github.com/coreos/etcd#etcd</a>). It provides a HTTP API to store and retrieve data. This is what makes it perfect for a feature toggling solution used by multiple components. It means that we didn’t have to write an intermediate API on top of a data store for consumers.</p>
-<p>So, for example, to store a feature toggle in etcd:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -L http://127.0.0.1:4001/v2/keys/v1/toggles/restaurant-api/testtoggle -XPUT -d value=&quot;true&quot;</div></pre></td></tr></table></figure>
-<p>To retrieve a feature toggle:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -L http://127.0.0.1:4001/v2/keys/v1/toggles/restaurant-api/testtoggle</div></pre></td></tr></table></figure>
-<h2 id="The-Hobknob-Clients"><a href="#The-Hobknob-Clients" class="headerlink" title="The Hobknob Clients"></a>The Hobknob Clients</h2><p>To aid adoption we created, and open sourced, several hobknob clients in multiple languages:</p>
-<ul>
-<li>NodeJs (NPM) - <a href="https://github.com/opentable/hobknob-client-nodejs" target="_blank" rel="external">https://github.com/opentable/hobknob-client-nodejs</a></li>
-<li>.NET (Nuget) - <a href="https://github.com/opentable/hobknob-client-net" target="_blank" rel="external">https://github.com/opentable/hobknob-client-net</a></li>
-<li>Go - <a href="https://github.com/opentable/hobknob-client-go" target="_blank" rel="external">https://github.com/opentable/hobknob-client-go</a></li>
-<li>Java (Maven) - <a href="https://github.com/opentable/hobknob-client-java" target="_blank" rel="external">https://github.com/opentable/hobknob-client-java</a></li>
-</ul>
-<p>The clients all store a configurable in-memory cache that is periodically updated on a polling interval. They are all read-only and updates only occur on the dashboard where they can be audited.</p>
-<p>We decided to create a simple <a href="https://github.com/opentable/hobknob-demo" target="_blank" rel="external">demo application</a> to show off how easy it is to use Hobknob in your applications. In order to try the demo you will need to start up Hobknob (see instructions below). The demo app uses the NodeJS client which is as simple as:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var client = new Client(&quot;hobknob-demo&quot;, &#123;</div><div class="line">  etcdHost: etcdHost,</div><div class="line">  etcdPort: etcdPort,</div><div class="line">  cacheIntervalMs: 5000</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>In the route definition it uses the client to request the toggle named <em>show-first-and-last-name-input</em> and passes the toggle value through to the view:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var result = hobknobClient.getOrDefault(&apos;show-first-and-last-name-input&apos;, true);</div><div class="line">res.render(&apos;server&apos;, &#123;</div><div class="line">       			page: &apos;server&apos;,</div><div class="line">        		useTwoFieldNameInput: value</div><div class="line">      		&#125;);</div></pre></td></tr></table></figure>
-<p>The view then uses the value to decide whether to display one or two textboxes on the page:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if useTwoFieldNameInput</div><div class="line">  input.form-control.demo-input-small(type=&apos;text&apos;, placeholder=&apos;First name&apos;, name=&apos;firstname&apos;)</div><div class="line">  input.form-control.demo-input-small(type=&apos;text&apos;, placeholder=&apos;Last name&apos;, name=&apos;lastname&apos;)</div><div class="line">else</div><div class="line">  input.form-control.demo-input-large(type=&apos;text&apos;, placeholder=&apos;Full name&apos;, name=&apos;fullname&apos;)</div></pre></td></tr></table></figure>
-<h2 id="The-Hobknob-Dashboard"><a href="#The-Hobknob-Dashboard" class="headerlink" title="The Hobknob Dashboard"></a>The Hobknob Dashboard</h2><p>Hobknob is a NodeJS/AngularJS app. If you want to play with Hobknob the simplest way to get started is to use Vagrant. If you don’t have it installed then get it from <a href="http://www.vagrantup.com/" target="_blank" rel="external">http://www.vagrantup.com/</a>.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/opentable/hobknob</div><div class="line">cd hobknob</div><div class="line">vagrant up</div></pre></td></tr></table></figure>
-<p>You should now be able to open the dashboard on <a href="http://127.0.0.1:3006" target="_blank" rel="external">http://127.0.0.1:3006</a></p>
-<p><img src="/images/posts/hobknob-dashboard.png" alt="Hobknob dashboard"></p>
-<p>All actions in the dashboard are audited. So when you create or update a toggle by turning it on/off an audit is written for that toggle. Clicking on a toggle in the dashboard takes you to the audit view:</p>
-<p><img src="/images/posts/hobknob-audit.png" alt="Hobknob audit"></p>
-<h3 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h3><p>By default Hobknob ships with authentication disabled. As a result all auditing will be recorded as “Anonymous”. Currently, we only support Google OAuth. To enable this follow the instructions <a href="https://github.com/opentable/hobknob/blob/master/README.md#configuring-authentication" target="_blank" rel="external">here</a></p>
-<h3 id="Session-Storage"><a href="#Session-Storage" class="headerlink" title="Session Storage"></a>Session Storage</h3><p>By default Hobknob ships using in-memory session storage. You don’t want to use this when you have a load balanced infrastructure. Hobknob supports both redis and etcd itself as a session store. To use either of these simply npm install the relevent connect middleware (<a href="https://github.com/visionmedia/connect-redis" target="_blank" rel="external">connect-redis</a> or <a href="https://github.com/opentable/connect-etcd" target="_blank" rel="external">connect-etcd</a>). To learn more follow the instructions <a href="https://github.com/opentable/hobknob/blob/master/README.md#configuring-session" target="_blank" rel="external">here</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;The ability to dynamically turn features on/off in software without the need to redeploy code is extremely beneficial. Whether you are trialing a new feature or using branch by abstraction to avoid creating feature branches, the use of feature toggles can aid continuous delivery and provide a mechanism to reduce mean time to resolution when an issue occurs.&lt;/p&gt;
-&lt;p&gt;With a relatively large engineering department with multiple teams spread across the US and UK the need to manage feature toggles has evolved to the point whereby individual teams have developed their own implementations. Most of these are simple config files.&lt;/p&gt;
-&lt;p&gt;We decided to unify this effort by providing a central place to store feature toggles, provide a dashboard to be able to turn these toggles on/off and provide language specific clients to integrate into our software components.&lt;/p&gt;
-&lt;p&gt;The results of this was &lt;a href=&quot;https://github.com/opentable/hobknob&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hobknob&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;Why-etcd&quot;&gt;&lt;a href=&quot;#Why-etcd&quot; class=&quot;headerlink&quot; title=&quot;Why etcd?&quot;&gt;&lt;/a&gt;Why etcd?&lt;/h2&gt;&lt;p&gt;We made the decision to use &lt;a href=&quot;https://github.com/coreos/etcd&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;etcd&lt;/a&gt;. Etcd is “a highly-available key value store for shared configuration” (&lt;a href=&quot;https://github.com/coreos/etcd#etcd&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/coreos/etcd#etcd&lt;/a&gt;). It provides a HTTP API to store and retrieve data. This is what makes it perfect for a feature toggling solution used by multiple components. It means that we didn’t have to write an intermediate API on top of a data store for consumers.&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Hobknob" scheme="http://tech.opentable.co.uk/blog/categories/Hobknob/"/>
     
   </entry>
   

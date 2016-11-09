@@ -1,6 +1,6 @@
 mixin post_meta(author, date, tags)
     if page.author
-      p.post-meta!= 'Posted by <a href="/authors/' + page.author + '.html">' + page.author + '</a>, ' + full_date(date, "D MMMM YYYY")
+      p.post-meta!= 'Posted by <a href="/blog/authors/' + page.author + '.html">' + page.author + '</a>, ' + full_date(date, "D MMMM YYYY")
         if tags
           - tags.each(function(tag) {
               = ' · '
