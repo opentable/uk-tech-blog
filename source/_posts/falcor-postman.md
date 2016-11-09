@@ -1,4 +1,5 @@
-layout: blog
+---
+layout: post
 title: falcor-postman
 date: 2016-11-09 16:40:22
 author: mrichetto
@@ -49,7 +50,7 @@ Falcor-postman is composed by an Express.js middleware responsible for serving t
 In addition we are using [Pure.css](http://purecss.io) and [Codemirror](https://codemirror.net) that are helping us with the UI, and we are also using eslint-config-opentable (another OpenTable open source project) as our .eslintrc config.
 
 ## What’s next?
-falcor-postman v1.0.0 has just been released on npm and we’re awaiting feedback. Also, we have some issues in our GitHub repository which we will use to build our own product roadmap.
+falcor-postman v2.0.0 has just been released on npm and we’re awaiting feedback. Also, we have some issues in our GitHub repository which we will use to build our own product roadmap.
 
 
 In the short term we would like to fix some outstanding minor issues that we are aware of (polishing the UI, enhancing the query history) but in the long term we would also like to enable data update; at the moment, our middleware only enables fetches but we’d like to better reflect the full functionality of Falcor, which allows for updates as well.
