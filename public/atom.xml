@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tech.opentable.co.uk/"/>
-  <updated>2016-11-09T22:07:47.049Z</updated>
+  <updated>2016-11-09T22:17:22.286Z</updated>
   <id>http://tech.opentable.co.uk/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://tech.opentable.co.uk//blog/2016/11/09/falcor-postman/"/>
     <id>http://tech.opentable.co.uk//blog/2016/11/09/falcor-postman/</id>
     <published>2016-11-09T16:40:22.000Z</published>
-    <updated>2016-11-09T22:07:47.049Z</updated>
+    <updated>2016-11-09T22:17:22.286Z</updated>
     
     <content type="html"><![CDATA[<p>At OpenTable, we have an engineering culture that empowers us to research, experiment and learn. </p>
 <p>In an effort to foster innovation and to try new ideas, <a href="/blog/authors/ccartlidge.html">Chris Cartlidge</a>, <a href="https://twitter.com/nickbalestra" target="_blank" rel="external">Nick Balestra</a>, <a href="https://twitter.com/tpgmartin" target="_blank" rel="external">Tom Martin</a> and <a href="/blog/authors/mrichetto.html">myself</a> started to work on a side project nicknamed big-mars. Our project is a mobile-first, responsive web application that uses Falcor by Netflix.</p>
@@ -58,7 +58,11 @@
     </summary>
     
     
+      <category term="JavaScript" scheme="http://tech.opentable.co.uk/blog/categories/JavaScript/"/>
+    
       <category term="Falcor" scheme="http://tech.opentable.co.uk/blog/categories/Falcor/"/>
+    
+      <category term="OSS" scheme="http://tech.opentable.co.uk/blog/categories/OSS/"/>
     
   </entry>
   
