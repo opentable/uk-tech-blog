@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tech.opentable.co.uk//blog/2016/11/18/testing-node-apps-with-docker-compose/</loc>
+    
+    <lastmod>2016-11-18T16:39:12.255Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/fmaffei.html</loc>
+    
+    <lastmod>2016-11-18T16:37:54.263Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/index.html</loc>
+    
+    <lastmod>2016-11-18T13:39:29.356Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tech.opentable.co.uk//blog/2016/11/09/falcor-postman/</loc>
     
     <lastmod>2016-11-09T22:17:22.286Z</lastmod>
@@ -79,13 +100,6 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/fmaffei.html</loc>
-    
-    <lastmod>2016-10-24T12:46:54.631Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://tech.opentable.co.uk/blog/authors/criddle.html</loc>
     
     <lastmod>2016-10-24T12:46:50.392Z</lastmod>
@@ -117,13 +131,6 @@
     <loc>http://tech.opentable.co.uk/blog/authors/mfigus.html</loc>
     
     <lastmod>2016-10-24T12:46:29.504Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/index.html</loc>
-    
-    <lastmod>2016-10-24T12:30:10.540Z</lastmod>
     
   </url>
   
