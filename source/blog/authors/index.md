@@ -23,6 +23,8 @@ title: Authors
 
 <a href="/blog/authors/mfigus.html">Matteo Figus</a>
 
+<a href="/blog/authors/mrichetto.html">Mattia Richetto</a>
+
 <a href="/blog/authors/pharrington.html">Paul Harrington</a>
 
 <a href="/blog/authors/pstack.html">Paul Stack</a>
