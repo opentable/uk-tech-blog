@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tech.opentable.co.uk/"/>
-  <updated>2016-11-18T16:39:12.255Z</updated>
+  <updated>2016-11-21T10:26:40.264Z</updated>
   <id>http://tech.opentable.co.uk/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://tech.opentable.co.uk//blog/2016/11/18/testing-node-apps-with-docker-compose/"/>
     <id>http://tech.opentable.co.uk//blog/2016/11/18/testing-node-apps-with-docker-compose/</id>
     <published>2016-11-18T16:40:22.000Z</published>
-    <updated>2016-11-18T16:39:12.255Z</updated>
+    <updated>2016-11-21T10:26:40.264Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Contents-of-this-post"><a href="#Contents-of-this-post" class="headerlink" title="Contents of this post"></a>Contents of this post</h2><ul>
 <li><a href="#purpose">Purpose</a>: the reason for this blog post.</li>
@@ -31,9 +31,9 @@
 </ul>
 <h2 id="Purpose"><a href="#Purpose" class="headerlink" title="Purpose"></a><a name="purpose"></a>Purpose</h2><p>As I am sure the audience of this post knows to some extent, <a href="https://www.docker.com/what-docker" target="_blank" rel="external">Docker</a> is a technology that has grown to become popular over the last few years, allowing developers to deploy pieces of software by packaging them into standardized containers, in a number of various ecosystems (Apache Mesos, Amazon Web Services and many more).</p>
 <p>So we can use Docker for our deployment needs, awesome. But let’s pay attention to a key word I used above. Docker grants <em>isolation</em>. And what do we like to perform on our application in isolation? Yeah, you guessed right &ndash; testing!</p>
-<p>Specifically, with this post, I aim to dig deeper into how to use <a href="https://docs.docker.com/compose/" target="_blank" rel="external">docker-compose</a> (a specific Docker-based tool that enbales creation of multi-container Docker applications) to build and run a Node.js application connected to MongoDB, to test their interaction and the interaction of the app with the external world, all inside containers running on your machine. All isolated and testable thanks to the usage of containers that we can spin up, hit with tests, and clean up with little effort. </p>
+<p>Specifically, with this post, I aim to dig deeper into how to use <a href="https://docs.docker.com/compose/" target="_blank" rel="external">docker-compose</a> (a specific Docker-based tool that enables creation of multi-container Docker applications) to build and run a Node.js application connected to MongoDB, to test their interaction and the interaction of the app with the external world, all inside containers running on your machine. All isolated and testable thanks to the usage of containers that we can spin up, hit with tests, and clean up with little effort. </p>
 <p>Interested? Let’s go!</p>
-<h2 id="Scenario"><a href="#Scenario" class="headerlink" title="Scenario"></a><a name="scenario"></a>Scenario</h2><p>In this scenario we wil use Docker and one of its functionalities, docker-compose, to build a container and spin up our app.  Then we build another container with a copy of the database where we can freely create and manipulate data, and finally we perform all the integration testing we want against those self-contained entities, which we can clean up after the tests ran. Total isolation and, very importantly, no need to pollute our development or pre-production environment with superfluous test data.</p>
+<h2 id="Scenario"><a href="#Scenario" class="headerlink" title="Scenario"></a><a name="scenario"></a>Scenario</h2><p>In this scenario we will use Docker and one of its functionalities, docker-compose, to build a container and spin up our app.  Then we build another container with a copy of the database where we can freely create and manipulate data, and finally we perform all the integration testing we want against those self-contained entities, which we can clean up after the tests ran. Total isolation and, very importantly, no need to pollute our development or pre-production environment with superfluous test data.</p>
 <p>Let’s imagine an app that we can build and test, for example a directory of soul music artists.</p>
 <p>Then let’s scope what our app needs to do, and how to test it. Our purpose is to:</p>
 <ul>
@@ -108,17 +108,7 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Contents-of-this-post&quot;&gt;&lt;a href=&quot;#Contents-of-this-post&quot; class=&quot;headerlink&quot; title=&quot;Contents of this post&quot;&gt;&lt;/a&gt;Contents of this post&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#purpose&quot;&gt;Purpose&lt;/a&gt;: the reason for this blog post.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#scenario&quot;&gt;Scenario&lt;/a&gt;: what this example of using docker-compose can be useful for.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#prerequisites&quot;&gt;Prerequisites&lt;/a&gt;: basic setup to be able to run the code contained in this post.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#example&quot;&gt;Code example&lt;/a&gt;: an actual step-by-step guide on how you can setup your test environment to run with docker-compose.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#improvements&quot;&gt;Improvements&lt;/a&gt;: a couple of ideas on how to expand this technique.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;Purpose&quot;&gt;&lt;a href=&quot;#Purpose&quot; class=&quot;headerlink&quot; title=&quot;Purpose&quot;&gt;&lt;/a&gt;&lt;a name=&quot;purpose&quot;&gt;&lt;/a&gt;Purpose&lt;/h2&gt;&lt;p&gt;As I am sure the audience of this post knows to some extent, &lt;a href=&quot;https://www.docker.com/what-docker&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Docker&lt;/a&gt; is a technology that has grown to become popular over the last few years, allowing developers to deploy pieces of software by packaging them into standardized containers, in a number of various ecosystems (Apache Mesos, Amazon Web Services and many more).&lt;/p&gt;
-&lt;p&gt;So we can use Docker for our deployment needs, awesome. But let’s pay attention to a key word I used above. Docker grants &lt;em&gt;isolation&lt;/em&gt;. And what do we like to perform on our application in isolation? Yeah, you guessed right &amp;ndash; testing!&lt;/p&gt;
-&lt;p&gt;Specifically, with this post, I aim to dig deeper into how to use &lt;a href=&quot;https://docs.docker.com/compose/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;docker-compose&lt;/a&gt; (a specific Docker-based tool that enbales creation of multi-container Docker applications) to build and run a Node.js application connected to MongoDB, to test their interaction and the interaction of the app with the external world, all inside containers running on your machine. All isolated and testable thanks to the usage of containers that we can spin up, hit with tests, and clean up with little effort. &lt;/p&gt;
-
+      &lt;h2 id=&quot;Contents-of-this-post&quot;&gt;&lt;a href=&quot;#Contents-of-this-post&quot; class=&quot;headerlink&quot; title=&quot;Contents of this post&quot;&gt;&lt;/a&gt;Contents of this post&lt;/
     
     </summary>
     
@@ -167,11 +157,7 @@
     <summary type="html">
     
       &lt;p&gt;At OpenTable, we have an engineering culture that empowers us to research, experiment and learn. &lt;/p&gt;
-&lt;p&gt;In an effort to foster innovation and to try new ideas, &lt;a href=&quot;/blog/authors/ccartlidge.html&quot;&gt;Chris Cartlidge&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/nickbalestra&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Nick Balestra&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/tpgmartin&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Tom Martin&lt;/a&gt; and &lt;a href=&quot;/blog/authors/mrichetto.html&quot;&gt;myself&lt;/a&gt; started to work on a side project nicknamed big-mars. Our project is a mobile-first, responsive web application that uses Falcor by Netflix.&lt;/p&gt;
-&lt;p&gt;Falcor, a JavaScript library for efficient data fetching, is an implementation of the Backend for Frontend (BFF) or the API Gateway pattern.&lt;/p&gt;
-&lt;p&gt;One powerful concept that Falcor has is its query model, in which you access your data as if it was a single JSON model in memory.  You can navigate your data structure the way you would navigate a JSON object; either with a “dot notation” (e.g. restaurant.address.city) or with an “array notation” (e.g. restaurant[‘address’][‘city’]). &lt;/p&gt;
-&lt;p&gt;Really easy and intuitive.&lt;/p&gt;
-
+&lt;p&gt;In an effort to foster innovatio
     
     </summary>
     
@@ -252,11 +238,7 @@ undefined
     
     <summary type="html">
     
-      &lt;p&gt;Many engineers work every day on opentable.com from our offices located in Europe, America, and Asia, pushing changes to production multiple times a day. Usually, this is very hard to achieve, in fact it took years for us to get to this point. &lt;a href=&quot;/blog/2015/02/09/dismantling-the-monolith-microsites-at-opentable/&quot;&gt;I described in a previous article&lt;/a&gt; how we dismantled our monolith in favour of a Microsites architecture. Since the publication of that blog post we have been working on something I believe to be quite unique, called &lt;strong&gt;OpenComponents&lt;/strong&gt;.&lt;/p&gt;
-&lt;h3 id=&quot;Another-front-end-framework&quot;&gt;&lt;a href=&quot;#Another-front-end-framework&quot; class=&quot;headerlink&quot; title=&quot;Another front-end framework?&quot;&gt;&lt;/a&gt;Another front-end framework?&lt;/h3&gt;&lt;p&gt;OpenComponents is a system to facilitate code sharing, reduce dependencies, and easily approach new features and experiments from the back-end to the front-end. To achieve this, it is based on the concept of using services as interfaces - enabling pages to render partial content that is located, executed and deployed independently.&lt;/p&gt;
-&lt;p&gt;OpenComponents is not &lt;em&gt;another SPA JS framework&lt;/em&gt;; it is a set of conventions, patterns and tools to develop and quickly deploy fragments of front-end. In this perspective, it plays nicely with any existing architecture and framework in terms of front-end and back-end. Its purpose is to &lt;strong&gt;serve as delivery mechanism for a more modularised end-result in the front-end&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;OC is been in production for more than a year at OpenTable and it is &lt;a href=&quot;https://github.com/opentable/oc&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;fully open-sourced&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;Overview&quot;&gt;&lt;a href=&quot;#Overview&quot; class=&quot;headerlink&quot; title=&quot;Overview&quot;&gt;&lt;/a&gt;Overview&lt;/h2&gt;
+      &lt;p&gt;Many engineers work every day on opentable.com from our offices located in Europe, America, and Asia, pushing changes to production multi
     
     </summary>
     
@@ -338,12 +320,7 @@ undefined
     
     <summary type="html">
     
-      &lt;p&gt;At OpenTable it’s becoming an increasingly popular trend to use &lt;em&gt;&lt;a href=&quot;https://facebook.github.io/react/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;React&lt;/a&gt;&lt;/em&gt;.&lt;br&gt;One of the reasons for this is the ability for it  to server-side render whilst still&lt;br&gt;giving us the client side flexibility that we all crave!&lt;/p&gt;
-&lt;p&gt;We all know to have stable, reliable software you need to have well written tests. Facebook knows this and&lt;br&gt;provides the handy &lt;em&gt;&lt;a href=&quot;https://facebook.github.io/react/docs/test-utils.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Test Utilities&lt;/a&gt;&lt;/em&gt; library to make&lt;br&gt;our lives easier.&lt;/p&gt;
-&lt;p&gt;Cool — I hear you all say! But what is the best approach to testing React components?&lt;/p&gt;
-&lt;p&gt;Well unfortunately this is something that is not very well documented and if not approached in&lt;br&gt;the correct way can lead to brittle tests.&lt;/p&gt;
-&lt;p&gt;Therefore I have written this blog post to discuss the different approaches we have available to us.&lt;/p&gt;
-
+      &lt;p&gt;At OpenTable it’s becoming an increasingly popular trend to use &lt;em&gt;&lt;a href=&quot;https://facebook.github.io/react/&quot; target=&quot;_blank&quot; rel=&quot;exte
     
     </summary>
     
@@ -384,12 +361,7 @@ undefined
     
     <summary type="html">
     
-      &lt;p&gt;Puppet is an important tool to us at OpenTable; we couldn’t operate as efficiently without it but Puppet is more than a tool or a vendor, it is a community of people trying to help&lt;br&gt;each other operate increasing complex and sophisticated infrastructures.&lt;/p&gt;
-&lt;p&gt;The Puppet community and the open source efforts that drive that community have always been important to us which is why we want to take a step further in our efforts and introduce&lt;br&gt;you to the “Puppet-community” project.&lt;/p&gt;
-&lt;p&gt;##What is Puppet-community&lt;br&gt;Puppet-community is a GitHub organisation of like-minded individuals from across the wider Puppet ecosystem and from a diverse set of companies. Its principle aims are to allow the community to synchronise its efforts and to provide a GitHub organisation and Puppet Forge namespace not affiliated with any company.&lt;/p&gt;
-&lt;p&gt;Its wider aims are to provide a place for module and tool authors to share their code and the burden of maintaining it.&lt;/p&gt;
-&lt;p&gt;I would like to say that this was our idea, as it’s an excellent one, but actually all credit goes to its founders: &lt;a href=&quot;https://github.com/igalic&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Igor Galić&lt;/a&gt;, &lt;a href=&quot;https://github.com/daenney&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Daniele Sluijters&lt;/a&gt; and &lt;a href=&quot;https://github.com/nibalizer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Spencer Krum&lt;/a&gt;&lt;/p&gt;
-
+      &lt;p&gt;Puppet is an important tool to us at OpenTable; we couldn’t operate as efficiently without it but Puppet is more than a tool or a vendor,
     
     </summary>
     
@@ -459,11 +431,7 @@ undefined
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Introduction-to-DNS&quot;&gt;&lt;a href=&quot;#Introduction-to-DNS&quot; class=&quot;headerlink&quot; title=&quot;Introduction to DNS&quot;&gt;&lt;/a&gt;Introduction to DNS&lt;/h2&gt;&lt;p&gt;Before joining OpenTable I was looking for a software engineer job and I’ve done my fair share of interviews. A question that has popped out a lot, and when I say a lot I mean &lt;em&gt;always&lt;/em&gt;, is:&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Could you tell me what happens when I type an URL in a web browser on my computer and press enter?&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Of course the possible answers could range from “MMMHHH, wellll, I’m not sure where to start…” to a whole book on computer networks.&lt;/p&gt;
-&lt;p&gt;After a number of attempts to answer briefly and correctly, I’ve concluded that mentioning &lt;strong&gt;DNS&lt;/strong&gt; can make a reasonable start.&lt;/p&gt;
-&lt;p&gt;Let’s think about it. When we type the address of the resource we want to browse, we use the alphabet, right? With letters and names easily readable and retainable by a human being.&lt;/p&gt;
+      &lt;h2 id=&quot;Introduction-to-DNS&quot;&gt;&lt;a href=&quot;#Introduction-to-DNS&quot; class=&quot;headerlink&quot; title=&quot;Introduction to DNS&quot;&gt;&lt;/a&gt;Introduction to DNS&lt;/h2&gt;&lt;p&gt;Be
     
     </summary>
     
@@ -511,12 +479,7 @@ undefined
     
     <summary type="html">
     
-      &lt;p&gt;When we first stood up our hapi.js APIs, we wrote init scripts to start/stop them. Stopping the server, was simply a case of sending SIGKILL (causing the app to immediately exit).&lt;/p&gt;
-&lt;p&gt;Whilst this is fine for most cases, if we want our apps to be good Linux citizens, then they should terminate gracefully. Hapi.js has the handy &lt;code&gt;server.stop(...)&lt;/code&gt; command (see docs &lt;a href=&quot;http://hapijs.com/api#serverstopoptions-callback&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;here&lt;/a&gt;) which will terminate the server gracefully. It will cause the server to respond to new connections with a 503 (server unavailable), and wait for existing connections to terminate (up to some specified timeout), before stopping the server and allowing the node.js process to exit. Perfect.&lt;/p&gt;
-&lt;p&gt;This makes our graceful shutdown code really simple:&lt;/p&gt;
-&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;process.on(&lt;span class=&quot;string&quot;&gt;&#39;SIGTERM&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  server.stop(&amp;#123; &lt;span class=&quot;attr&quot;&gt;timeout&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;1000&lt;/span&gt;&amp;#125;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    process.exit(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;When we see a SIGTERM, call &lt;code&gt;server.stop()&lt;/code&gt;, then once the server has stopped, call &lt;code&gt;process.exit(0)&lt;/code&gt;. Easy peasy.&lt;/p&gt;
-
+      &lt;p&gt;When we first stood up our hapi.js APIs, we wrote init scripts to start/stop them. Stopping the server, was simply a case of sending SIGK
     
     </summary>
     
@@ -568,17 +531,7 @@ undefined
     
     <summary type="html">
     
-      &lt;p&gt;A couple of years ago we started to break-up the code-base behind our consumer site &lt;a href=&quot;http://www.opentable.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;opentable.com&lt;/a&gt;, to smaller units of code, in order to improve our productivity. New teams were created with the goal of splitting up the logic that was powering the back-end and then bring to life new small services. Then, we started working on what we call &lt;em&gt;Microsites&lt;/em&gt;.&lt;/p&gt;
-&lt;h3 id=&quot;Microsites&quot;&gt;&lt;a href=&quot;#Microsites&quot; class=&quot;headerlink&quot; title=&quot;Microsites&quot;&gt;&lt;/a&gt;Microsites&lt;/h3&gt;&lt;p&gt;A microsite is a very small set of web-pages, or even a single one, that takes care of handling a very specific part of the system’s domain logic. Examples are the &lt;em&gt;Search Results&lt;/em&gt; page or the &lt;em&gt;Restaurant’s Profile&lt;/em&gt; page. Every microsite is an independently deployable unit of code, so it is easier to test, to deploy, and in consequence more resilient. Microsites are then all connected by a front-door service that handles the routing.&lt;/p&gt;
-&lt;h3 id=&quot;Not-a-free-ride&quot;&gt;&lt;a href=&quot;#Not-a-free-ride&quot; class=&quot;headerlink&quot; title=&quot;Not a free ride&quot;&gt;&lt;/a&gt;Not a free ride&lt;/h3&gt;&lt;p&gt;When we deployed some microsites to production we immediately discovered a lot of pros:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Bi-weekly deployments of the monolith became hundreds of deployments every week.&lt;/li&gt;
-&lt;li&gt;Not anymore a shared codebase for hundreds of engineers. Pull requests accepted, merged, and often deployed on the same day.&lt;/li&gt;
-&lt;li&gt;Teams experimenting and reiterating faster: product was happy.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Diversity&lt;/em&gt; on tech stacks: teams were finally able to pick their own favourite web-stack, as soon as they were capable of deploying their code and taking care of it in terms of reliability and performance.&lt;/li&gt;
-&lt;li&gt;Robustness: when something was wrong with a microsite, everything else was fine.&lt;/li&gt;
-&lt;/ul&gt;
-
+      &lt;p&gt;A couple of years ago we started to break-up the code-base behind our consumer site &lt;a href=&quot;http://www.opentable.com&quot; target=&quot;_blank&quot; re
     
     </summary>
     
@@ -670,11 +623,7 @@ undefined
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Why-this-post&quot;&gt;&lt;a href=&quot;#Why-this-post&quot; class=&quot;headerlink&quot; title=&quot;Why this post?&quot;&gt;&lt;/a&gt;Why this post?&lt;/h2&gt;&lt;p&gt;As a junior, I always find it easier to just sit and write code than actually stop to think about the theoretical basis that lie under the applications I work on. &lt;strong&gt;REST&lt;/strong&gt;  is one of those terms I heard a lot about, so I decided to try to sum up what it means and how it affects the choices we make everyday as software engineers.&lt;/p&gt;
-&lt;h2 id=&quot;Introduction-to-REST&quot;&gt;&lt;a href=&quot;#Introduction-to-REST&quot; class=&quot;headerlink&quot; title=&quot;Introduction to REST&quot;&gt;&lt;/a&gt;Introduction to REST&lt;/h2&gt;&lt;p&gt;REST stands for Representational State Transfer, and it can be defined as an architectural style used to build Web Services that are lightweight, maintainable, and scalable. A service that is designed by REST principles can be called a &lt;strong&gt;RESTful service&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;It has been described first in 2000 by Roy Fielding, in a &lt;a href=&quot;http://www.ics.uci.edu/~fielding/pubs/webarch_icse2000.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;dissertation&lt;/a&gt; called “Architectural Styles and the Design of Network-based Software Architectures”. The basic idea was to describe the interactions between the components of a distributed system, putting constraints on them and emphasizing the importance of an uniform interface, that is abstracted from the single components.&lt;/p&gt;
-&lt;p&gt;REST is often applied to the design and development of web services, which is the scenario I’ll try to address in this post.&lt;/p&gt;
-
+      &lt;h2 id=&quot;Why-this-post&quot;&gt;&lt;a href=&quot;#Why-this-post&quot; class=&quot;headerlink&quot; title=&quot;Why this post?&quot;&gt;&lt;/a&gt;Why this post?&lt;/h2&gt;&lt;p&gt;As a junior, I always fi
     
     </summary>
     
@@ -725,11 +674,7 @@ undefined
     
     <summary type="html">
     
-      &lt;p&gt;Logging is a crucial element of monitoring highly available systems. It allows not only to find out about errors but also quickly identify their cause. Logs are often used to generate metrics that help business and engineering make informative decisions on future development directions. &lt;/p&gt;
-&lt;p&gt;At OpenTable we have a central logging infrastructure, that means all logs are stored in the same shared database (ElasticSearch for us). And everybody can access any logs they want without having very specialized knowledge (thanks Kibana!).&lt;/p&gt;
-&lt;p&gt;ElasticSearch, though living in a NoSQL world, is not actually a schema-free database. Sure, you do not need to provide schema to it but instead ES will infer schema for you from documents you send to it. This is very similar to type inference you can find in many programming languages. You do not need to specify type of field, but if you later on try to assign inappropriate value to it you will get an exception.&lt;/p&gt;
-&lt;p&gt;This trait of our database goes all the way to the root of our logging system design. Let me explain why I say that we have ‘strongly typed logs’.&lt;/p&gt;
-&lt;h2 id=&quot;In-The-Beginning-There-Was-String&quot;&gt;&lt;a href=&quot;#In-The-Beginning-There-Was-String&quot; class=&quot;headerlink&quot; title=&quot;In The Beginning There Was String&quot;&gt;&lt;/a&gt;In The Beginning There Was String&lt;/h2&gt;&lt;p&gt;Before centralization we just logged a single message along with its importance. In code it looked something like:&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;logger.ERROR(“Kaboom!”)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+      &lt;p&gt;Logging is a crucial element of monitoring highly available systems. It allows not only to find out about errors but also quickly identif
     
     </summary>
     
@@ -796,14 +741,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;If you’re reading this you’ve probably built yourself a website.  A site - large or small - that’s thrown together or crafted over many months.  And if you have, you’ve probably kept all your CSS class names in your head, or at least been able to go straight to the relevant stylesheets to retrieve them.&lt;/p&gt;
-&lt;p&gt;Well OpenTable is unsurprisingly built by many engineering teams across multiple continents, and was completely redesigned last year.  And as soon as you have more than a handful of people working on your front-end you will quickly find a well-intentioned developer causing one or both of these problems:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Well-intentioned developer adds a new submission form but, like the design Philistine he is, his buttons are &lt;span style=&quot;font-family:verdana;font-size:18px;color:#E40000;&quot;&gt;18px Verdana #E40000&lt;/span&gt;, not the correct &lt;span style=&quot;font-family:arial;font-size:16px;color:#DA3743;&quot;&gt;16px Arial #DA3743&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;Your good old developer knows which font size and colour it should be, but bungs a duplicate class into a random stylesheet (or worse still, inline)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Despite these risks, a single front-end dev (or a team of them) cannot check every new piece of code or they will quickly become a bottleneck.&lt;/p&gt;
-&lt;h3 id=&quot;You-need-some-guidelines&quot;&gt;&lt;a href=&quot;#You-need-some-guidelines&quot; class=&quot;headerlink&quot; title=&quot;You need some guidelines&quot;&gt;&lt;/a&gt;You need some guidelines&lt;/h3&gt;&lt;p&gt;Offline designers regularly create ‘brand guidelines’ or ‘design standards’ to document the precise way their brand or product should be recreated when outside of their control.  Online, such guidelines are similarly invaluable for maintaining brand and code consistency with multiple engineers and designers, but it is blindingly obvious that a printed or ‘static’ set of guidelines is completely unsuitable for a constantly changing website.&lt;/p&gt;
+      &lt;p&gt;If you’re reading this you’ve probably built yourself a website.  A site - large or small - that’s thrown together or crafted over many m
     
     </summary>
     
@@ -852,11 +790,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;h2 id=&quot;What-is-Flux&quot;&gt;&lt;a href=&quot;#What-is-Flux&quot; class=&quot;headerlink&quot; title=&quot;What is Flux?&quot;&gt;&lt;/a&gt;What is Flux?&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/facebook/flux&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Flux&lt;/a&gt; is an application architectural pattern developed by Facebook. It was developed to solve some of the complexities of the MVC pattern when used at scale by favouring a uni-directional approach. It is a pattern and not a technology or framework.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/posts/mvc-scale.png&quot; alt=&quot;MVC scale issue&quot;&gt;&lt;/p&gt;
-&lt;p&gt;When applications that use the model-view-controller (MVC) pattern at any scale it becomes difficult to maintain consistent data across multiple views. In particular the case whereby flow between models and views is not uni-directional and may require increasing logic to maintain parity between views when model data is updated. Facebook hit this issue several times and in particular with their unseen count (an incremented value of unseen messages which is updated by several UI chat components). It wasn’t until they realised that the MVC pattern accomodated the complexity that they stepped back from the problem and addressed the architecture.&lt;/p&gt;
-&lt;p&gt;Flux is intentionally unidirectional.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/posts/flux.png&quot; alt=&quot;flux&quot;&gt;&lt;/p&gt;
+      &lt;h2 id=&quot;What-is-Flux&quot;&gt;&lt;a href=&quot;#What-is-Flux&quot; class=&quot;headerlink&quot; title=&quot;What is Flux?&quot;&gt;&lt;/a&gt;What is Flux?&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/
     
     </summary>
     
@@ -916,12 +850,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;We’re really &lt;a href=&quot;http://blog.opentable.com/2014/opentables-website-re-designed-re-architected-re-imagined/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;proud to have released&lt;/a&gt; last week our redesigned &lt;a href=&quot;http://www.opentable.co.uk&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;OpenTable&lt;/a&gt; site, the culmination of months of hard work from many talented people here in London and in San Francisco.&lt;/p&gt;
-&lt;p&gt;However despite killing off our old site and its 2004 design, 2.8% of our visitors could have been crying into their keyboard as a far worse opentable.co.uk filled their screen.&lt;/p&gt;
-&lt;p&gt;That version of OpenTable was our new responsive site viewed in Internet Explorer 8.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/posts/redesign-ie8.png&quot; alt=&quot;Our redesign before we optimised for IE8&quot;&gt;&lt;/p&gt;
-&lt;p&gt;The fundamental issue is that IE8 doesn’t support media queries so the age-old browser would try to stretch our &lt;em&gt;mobile-first&lt;/em&gt; responsive design as wide as it could go - not great across a 27” Thunderbolt.&lt;/p&gt;
-
+      &lt;p&gt;We’re really &lt;a href=&quot;http://blog.opentable.com/2014/opentables-website-re-designed-re-architected-re-imagined/&quot; target=&quot;_blank&quot; rel=&quot;ext
     
     </summary>
     
@@ -971,12 +900,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;I’ve raved in the past about how awesome &lt;a href=&quot;http://hapijs.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;hapi.js&lt;/a&gt; is, but I’m going to talk about just a specific case today.&lt;/p&gt;
-&lt;p&gt;We started off with just a couple of hapi.js apis. This was at a time when standing up new infrastructure was still a bit painful, so inevitably those apis ended up having more functionality in them than they should have. Now it’s easy for us to get infrastructure, so we want to do more of it.&lt;/p&gt;
-&lt;p&gt;Our goal is to have lots of small(er) apis that just look after one specific piece (skillfully avoiding using the buzzword ‘microservices’).&lt;/p&gt;
-&lt;p&gt;When you want to split out functionality from one api to another, it can be a pain, especially if you have a lot of consumers who aren’t particularly fast-moving or communicative. Or maybe you don’t know all your consumers up front.&lt;/p&gt;
-&lt;p&gt;You’ve got a couple of options here:&lt;/p&gt;
-
+      &lt;p&gt;I’ve raved in the past about how awesome &lt;a href=&quot;http://hapijs.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;hapi.js&lt;/a&gt; is, but I’m going to talk
     
     </summary>
     
@@ -1018,11 +942,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;Sometimes there is the requirement for more granularity when toggling a feature switch.&lt;br&gt;Version 2.0 of &lt;a href=&quot;https://github.com/opentable/hobknob&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hobknob&lt;/a&gt; hopes to address this with feature categories.&lt;/p&gt;
-&lt;h3 id=&quot;TL-DR&quot;&gt;&lt;a href=&quot;#TL-DR&quot; class=&quot;headerlink&quot; title=&quot;TL;DR.&quot;&gt;&lt;/a&gt;TL;DR.&lt;/h3&gt;&lt;p&gt;Hobknob now allows you to define categories of features that have multiple toggles per feature.&lt;/p&gt;
-&lt;p&gt;For example, you can define the ‘Domain Features’ category which allows you to toggle a feature OFF in &lt;code&gt;your-website.com&lt;/code&gt;, but ON in &lt;code&gt;your-website.co.uk&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/posts/hobknob-domain-features.png&quot; alt=&quot;Domain Features&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;Categories&quot;&gt;&lt;a href=&quot;#Categories&quot; class=&quot;headerlink&quot; title=&quot;Categories&quot;&gt;&lt;/a&gt;Categories&lt;/h2&gt;
+      &lt;p&gt;Sometimes there is the requirement for more granularity when toggling a feature switch.&lt;br&gt;Version 2.0 of &lt;a href=&quot;https://github.com/ope
     
     </summary>
     
@@ -1062,11 +982,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;At OpenTable, we use a few &lt;a href=&quot;&quot;&gt;ElasticSearch&lt;/a&gt; clusters. Our aim was to be able to interact with our ElasticSearch clusters via &lt;a href=&quot;http://www.hipchat.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;HipChat&lt;/a&gt; so that we could troubleshoot easily and without having to log into our VPN. We already use &lt;a href=&quot;http://hubot.github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hubot&lt;/a&gt; as part of our systems workflow, so it made sense to be able to interact with ElasticSearch with it. &lt;/p&gt;
-&lt;h3 id=&quot;Setting-a-cluster-alias&quot;&gt;&lt;a href=&quot;#Setting-a-cluster-alias&quot; class=&quot;headerlink&quot; title=&quot;Setting a cluster alias&quot;&gt;&lt;/a&gt;Setting a cluster alias&lt;/h3&gt;&lt;p&gt;When a pager wakes me at 3am, I really do not want to have to try and type the cluster URL into my mobile hipchat client. So the first thing that was added to the script was the ability to give a cluster an alias.&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;elasticsearch add alias my-test-alias http://my-cluster.com:9200&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;img src=&quot;/images/posts/elasticsearch-add-alias.png&quot; alt=&quot;add-alias&quot;&gt;&lt;/p&gt;
-&lt;p&gt;This allows us to use that alias for all commands going forward. Please note that you can remove and query aliases as well:&lt;/p&gt;
+      &lt;p&gt;At OpenTable, we use a few &lt;a href=&quot;&quot;&gt;ElasticSearch&lt;/a&gt; clusters. Our aim was to be able to interact with our ElasticSearch clusters via 
     
     </summary>
     
@@ -1120,11 +1036,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;I recently attended a fascinating and emotionally-charged talk by &lt;a href=&quot;https://twitter.com/sisoma&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Samantha Soma&lt;/a&gt; at &lt;a href=&quot;https://2014.dareconf.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DareConf 2014&lt;/a&gt;, &lt;a href=&quot;http://vimeo.com/108047198&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;‘How to stop rescuing people’&lt;/a&gt;. It strongly mirrored my experience of moving into a leadership role and I’d recommend anyone with a spare 30mins to watch it.&lt;/p&gt;
-&lt;p&gt;Samantha’s talk made me reflect on how I struggle to coach talented individuals; how I can identify when it’s going wrong and what steps I can take to remedy the situation.&lt;/p&gt;
-&lt;h2 id=&quot;Gold-star-syndrome&quot;&gt;&lt;a href=&quot;#Gold-star-syndrome&quot; class=&quot;headerlink&quot; title=&quot;Gold star syndrome&quot;&gt;&lt;/a&gt;Gold star syndrome&lt;/h2&gt;&lt;p&gt;A new concept for me and a recurring theme throughout the sessions at DareConf, ‘Gold Star Syndrome’ is a fixation on finding validation for your work. I feel this is a result of early childhood values spinning the perception of working life away from the actual reality. As a child, especially during our school years, we discovered that when we do good things, good things happen to us. Remember how it felt to get that gold star in your spelling test or that A+ on an English essay?&lt;/p&gt;
-&lt;p&gt;That was great in school and even through to University but working life is a much more terse environment and getting positive reenforcement is much less common. As professionals, the majority of our work goes unnoticed - until there is a problem or issue to solve. Then we feel open to the stinging criticism but resentful that months of good work went unnoticed.&lt;/p&gt;
-&lt;p&gt;When we continue to search for a gold star or continually strive for perfectionism we, as individuals, become much more insular and isolated. We tend to avoid showing our work until it is 100% ready and put up a shield to protect us from any feedback, in fear of being made to look stupid or being called a fraud.&lt;/p&gt;
+      &lt;p&gt;I recently attended a fascinating and emotionally-charged talk by &lt;a href=&quot;https://twitter.com/sisoma&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Sam
     
     </summary>
     
@@ -1181,11 +1093,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;We are pleased to announce the version 1.0 release of &lt;a href=&quot;https://github.com/opentable/hobknob&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hobknob&lt;/a&gt;, our open-source feature toggle management system. With it comes a few additions and several improvements. &lt;/p&gt;
-&lt;p&gt;This post will expand on some of the changes, in particular, authorisation via access control lists.&lt;br&gt;For an introduction to Hobknob, see our previous post: &lt;a href=&quot;/blog/2014/09/04/introducing-hobknob-feature-toggling-with-etcd/&quot;&gt;Introducing Hobknob: Feature toggling with etcd&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;Authorisation-with-ACLs&quot;&gt;&lt;a href=&quot;#Authorisation-with-ACLs&quot; class=&quot;headerlink&quot; title=&quot;Authorisation with ACLs&quot;&gt;&lt;/a&gt;Authorisation with ACLs&lt;/h2&gt;&lt;p&gt;A much requested feature was the ability to control who can add/update/delete toggles on an application by application basis. We achieve this via the use if an Access Control List for each application. Users that are part of the ACL for an application are known as application owners.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/posts/hobknob-owners.png&quot; alt=&quot;Hobknob Owner List&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Application owners can (for an owned application):&lt;/p&gt;
+      &lt;p&gt;We are pleased to announce the version 1.0 release of &lt;a href=&quot;https://github.com/opentable/hobknob&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hobkn
     
     </summary>
     
@@ -1355,12 +1263,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Day-2&quot;&gt;&lt;a href=&quot;#Day-2&quot; class=&quot;headerlink&quot; title=&quot;Day 2&quot;&gt;&lt;/a&gt;Day 2&lt;/h2&gt;&lt;p&gt;This is our summary of PuppetConf 2014. In our &lt;a href=&quot;/blog/2014/10/06/puppetconf-2014-part-2/&quot;&gt;previous post&lt;/a&gt; we gave an overview of the first day of the conference. This post will provide an&lt;br&gt;overview of the final day.&lt;/p&gt;
-&lt;p&gt;There were even more inspiring keynotes and lots more talks which have given us plenty of ideas to go home and think about.&lt;/p&gt;
-&lt;h3 id=&quot;Key-Notes&quot;&gt;&lt;a href=&quot;#Key-Notes&quot; class=&quot;headerlink&quot; title=&quot;Key Notes&quot;&gt;&lt;/a&gt;Key Notes&lt;/h3&gt;&lt;h4 id=&quot;Animating-the-Puppet-Creating-a-Culture-of-Puppet-Adoption-Dan-Spurling-spurling-Getty-Images-Slides&quot;&gt;&lt;a href=&quot;#Animating-the-Puppet-Creating-a-Culture-of-Puppet-Adoption-Dan-Spurling-spurling-Getty-Images-Slides&quot; class=&quot;headerlink&quot; title=&quot;Animating the Puppet: Creating a Culture of Puppet Adoption - Dan Spurling (@spurling), Getty Images - Slides&quot;&gt;&lt;/a&gt;Animating the Puppet: Creating a Culture of Puppet Adoption - Dan Spurling (&lt;a href=&quot;https://twitter.com/spurling&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;@spurling&lt;/a&gt;), Getty Images - &lt;a href=&quot;http://www.slideshare.net/PuppetLabs/keynote-animating-the-puppet-creating-a-culture-of-puppet-adoption-puppetconf-2014&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Slides&lt;/a&gt;&lt;/h4&gt;&lt;div style=&quot;float:right;margin:0 10px 10px 10px;width:50%&quot;&gt;&lt;br&gt;  &lt;img src=&quot;/images/posts/puppetconf-dan.jpg&quot;&gt;&lt;br&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Dan Spuring, VP of Tech Services at Getty came out of the gate with a strong message. His &lt;a href=&quot;http://www.urbandictionary.com/define.php?term=GSD&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GSD&lt;/a&gt; t-shirt&lt;br&gt;giving you a clear understanding of who he is. His talk about creating a culture of Puppet adoption at his company was a great story of how challenging it&lt;br&gt;can be to move various business units with projects of various ages to a configuration-management (with Puppet) ethos.&lt;/p&gt;
+      &lt;h2 id=&quot;Day-2&quot;&gt;&lt;a href=&quot;#Day-2&quot; class=&quot;headerlink&quot; title=&quot;Day 2&quot;&gt;&lt;/a&gt;Day 2&lt;/h2&gt;&lt;p&gt;This is our summary of PuppetConf 2014. In our &lt;a href=&quot;/b
     
     </summary>
     
@@ -1522,11 +1425,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Day-1&quot;&gt;&lt;a href=&quot;#Day-1&quot; class=&quot;headerlink&quot; title=&quot;Day 1&quot;&gt;&lt;/a&gt;Day 1&lt;/h2&gt;&lt;p&gt;This is our summary of PuppetConf 2014. In our &lt;a href=&quot;/blog/2014/10/06/puppetconf-2014-part-1/&quot;&gt;previous post&lt;/a&gt; we gave an overview of the contributor summit. This post will provide an overview&lt;br&gt;of the first day of PuppetConf.&lt;/p&gt;
-&lt;p&gt;As you might expect there were great keynotes with plenty of announcements and too many talks for us to attend. We have provided an outline for all the talks&lt;br&gt;we did attend and links to those we didn’t.&lt;/p&gt;
-&lt;h3 id=&quot;KeyNotes&quot;&gt;&lt;a href=&quot;#KeyNotes&quot; class=&quot;headerlink&quot; title=&quot;KeyNotes&quot;&gt;&lt;/a&gt;KeyNotes&lt;/h3&gt;&lt;h4 id=&quot;Nearly-a-Decade-of-Puppet-What-We’ve-Learned-and-Where-We’re-Going-Next-Luke-Kanies-PuppetLabs-Slides&quot;&gt;&lt;a href=&quot;#Nearly-a-Decade-of-Puppet-What-We’ve-Learned-and-Where-We’re-Going-Next-Luke-Kanies-PuppetLabs-Slides&quot; class=&quot;headerlink&quot; title=&quot;Nearly a Decade of Puppet: What We’ve Learned and Where We’re Going Next - Luke Kanies, PuppetLabs - Slides&quot;&gt;&lt;/a&gt;Nearly a Decade of Puppet: What We’ve Learned and Where We’re Going Next - Luke Kanies, PuppetLabs - &lt;a href=&quot;http://www.slideshare.net/PuppetLabs/luke-kanies-keynote-nearly-a-decade-of-puppet-what-weve-learned-and-where-were-going-next-puppetconf-2014&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Slides&lt;/a&gt;&lt;/h4&gt;&lt;div style=&quot;float:right;margin:0 10px 10px 10px;width:50%&quot;&gt;&lt;br&gt;  &lt;img src=&quot;/images/posts/puppetconf-luke-1.jpg&quot;&gt;&lt;br&gt;&lt;/div&gt;
-
-&lt;p&gt;The big keynote of the event to kick off the first day from the author of Puppet himself. This was obviously going to be a tweet worthy affair full of photos&lt;br&gt;and big announcements and it did not disappoint.&lt;/p&gt;
+      &lt;h2 id=&quot;Day-1&quot;&gt;&lt;a href=&quot;#Day-1&quot; class=&quot;headerlink&quot; title=&quot;Day 1&quot;&gt;&lt;/a&gt;Day 1&lt;/h2&gt;&lt;p&gt;This is our summary of PuppetConf 2014. In our &lt;a href=&quot;/b
     
     </summary>
     

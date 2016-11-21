@@ -20,13 +20,13 @@ As I am sure the audience of this post knows to some extent, [Docker](https://ww
 
 So we can use Docker for our deployment needs, awesome. But let’s pay attention to a key word I used above. Docker grants _isolation_. And what do we like to perform on our application in isolation? Yeah, you guessed right &ndash; testing!
 
-Specifically, with this post, I aim to dig deeper into how to use [docker-compose](https://docs.docker.com/compose/) (a specific Docker-based tool that enbales creation of multi-container Docker applications) to build and run a Node.js application connected to MongoDB, to test their interaction and the interaction of the app with the external world, all inside containers running on your machine. All isolated and testable thanks to the usage of containers that we can spin up, hit with tests, and clean up with little effort. 
+Specifically, with this post, I aim to dig deeper into how to use [docker-compose](https://docs.docker.com/compose/) (a specific Docker-based tool that enables creation of multi-container Docker applications) to build and run a Node.js application connected to MongoDB, to test their interaction and the interaction of the app with the external world, all inside containers running on your machine. All isolated and testable thanks to the usage of containers that we can spin up, hit with tests, and clean up with little effort. 
 
 Interested? Let’s go!
 
 ## <a name="scenario"></a>Scenario
 
-In this scenario we wil use Docker and one of its functionalities, docker-compose, to build a container and spin up our app.  Then we build another container with a copy of the database where we can freely create and manipulate data, and finally we perform all the integration testing we want against those self-contained entities, which we can clean up after the tests ran. Total isolation and, very importantly, no need to pollute our development or pre-production environment with superfluous test data.
+In this scenario we will use Docker and one of its functionalities, docker-compose, to build a container and spin up our app.  Then we build another container with a copy of the database where we can freely create and manipulate data, and finally we perform all the integration testing we want against those self-contained entities, which we can clean up after the tests ran. Total isolation and, very importantly, no need to pollute our development or pre-production environment with superfluous test data.
 
 Let’s imagine an app that we can build and test, for example a directory of soul music artists.
 
