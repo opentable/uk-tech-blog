@@ -15,6 +15,8 @@ title: Authors
 
 <a href="/blog/authors/jcatterfeld.html">John Catterfeld</a>
 
+<a href="/blog/authors/jflowers.html">Jonathan Flowers</a>
+
 <a href="/blog/authors/lbennett.html">Liam Bennett</a>
 
 <a href="/blog/authors/mbazydlo.html">Marcin Bazydlo</a>
