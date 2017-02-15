@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tech.opentable.co.uk/"/>
-  <updated>2016-11-21T10:26:40.264Z</updated>
+  <updated>2017-02-15T10:49:22.178Z</updated>
   <id>http://tech.opentable.co.uk/</id>
   
   <author>
@@ -14,6 +14,164 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>The goal driven organisation</title>
+    <link href="http://tech.opentable.co.uk//blog/2017/02/15/the-goal-driven-organisation/"/>
+    <id>http://tech.opentable.co.uk//blog/2017/02/15/the-goal-driven-organisation/</id>
+    <published>2017-02-15T09:00:00.000Z</published>
+    <updated>2017-02-15T10:49:22.178Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>Quarterly team goals are an effective way to establish organisational purpose, direction and alignment while supporting team agility. But be vigilant - they can be used inappropriately.</strong></p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>Due to factors such as growth, acquisition, changing markets amongst others, organisations can find themselves in new environments to which they struggle to adapt.</p>
+<p>Scaling Agile in these new environments is hard. The practices and tools that are frequently used to solve this problem can give the appearance of acting against team autonomy and agility. Teams and individuals naturally try to protect the engineering culture that they have worked hard to establish but by allowing new organisational needs to go unmet they put their autonomy and agility at risk.</p>
+<p>In this post I will show how quarterly goal setting, using Agile principles and with one eye on the dysfunctions that can arise, is an effective way to meet organisational needs while protecting team agility and engineering culture.</p>
+<h2 id="What-needs-are-we-trying-to-meet"><a href="#What-needs-are-we-trying-to-meet" class="headerlink" title="What needs are we trying to meet?"></a>What needs are we trying to meet?</h2><p>Senior leaders in an organisation need confidence that the creativity, intelligence, skills and knowledge of their employees are directed most effectively towards delivering long term business objectives. Ensuring that teams are aligned around those business objectives is traditionally called governance.</p>
+<p>The top-down command-and-control connotations of that term do not sit comfortably in modern software development and rightly so. The responsibility for organisational alignment should rest with teams and individuals. </p>
+<p>A bottom-up approach to organisational alignment relies on transparency. Everyone in the business needs to know the business objectives and what all teams are doing to meet the objectives. Arguably the primary output of all product development and engineering teams is a statement of intent and a narrative of their progress.</p>
+<p>Put another way, the first output of all knowledge work is shared, actionable knowledge - we can then decide how best to utilise that knowledge. Teams need to know that the decisions that they are making right now are the right decisions for the business. Without full transparency this is not possible. </p>
+<p>In medium to large organisations dependencies between teams are inevitable and I would argue not undesirable. Efforts to structure an organisation and system architecture in such a way that teams are able to work in isolation can reduce friction and time to market.</p>
+<p>But at scale this becomes unrealistic without product, technology and knowledge fragmentation. Cross team collaboration can fail and cause unnecessary friction without organisational support and guidance. The ‘improvised collaboration’ that takes place daily and is essential for a business to innovate and succeed needs a framework of ‘scripted collaboration’ so that teams and individuals can assess the impact of requests from and to other teams, and avoid the false sense of urgency that arises without clear direction on the business priorities.</p>
+<p>Teams and individuals also need a sense of how their work contributes to the larger whole. A sense of purpose and direction is intrinsically motivating. Similarly team autonomy and the space to make your own decisions are important aspects of any company culture that values its employees and wants to make the most of their talents.</p>
+<p>However, they come under threat when a business lacks clear vision and priorities or the vision and priorities are not understood by everyone in the business.</p>
+<h3 id="The-learning-organisation"><a href="#The-learning-organisation" class="headerlink" title="The learning organisation"></a>The learning organisation</h3><p>By holding regular retrospectives and fostering a spirit of experimentation and continuous improvement teams have become adept at locking in their learning through process and system improvements. But how does an organisation as a whole achieve this?</p>
+<p>If everything is experienced as change then nothing is. We’re just floundering in the zone of chaos. The organisation needs a lightweight means to capture its intent, key decisions, the evolution of plans and actual outcomes. Think of this as a thin slice or low-res snapshot of our current shared understanding. Once captured we can refer to it when evaluating the impact of change. Without this reference the organisation is reactive with little understanding of the impact of its decisions over the medium and long term. </p>
+<p>The tool that OpenTable has chosen to achieve organisational alignment, create a sense of purpose and direction and to act as a foundation to support learning is quarterly goals.</p>
+<h2 id="Inappropriate-use-of-goals"><a href="#Inappropriate-use-of-goals" class="headerlink" title="Inappropriate use of goals"></a>Inappropriate use of goals</h2><p>As with all tools, quarterly goals can be used inappropriately. Following Agile principles will help ensure that they are of benefit to the team and organisation but there is always scope for misinterpretation, and consequently there are approaches to goal setting that should be avoided.</p>
+<h3 id="A-pipeline-of-work"><a href="#A-pipeline-of-work" class="headerlink" title="A pipeline of work"></a>A pipeline of work</h3><p>Goals should not be treated as a pipeline of engineering deliverables that the team are expected to deliver in priority order. Customer and stakeholder value should be the driving factor in defining goals. Simply clearing a backlog of fixed scope work items is an ineffective way to run a business such as OpenTable.</p>
+<p>The project pipeline will be familiar to anyone who has spent time at a digital agency or production shop. By delivering a pipeline of work the agency has a guaranteed revenue stream as it is work that clients have agreed to pay for. A business such as OpenTable could successfully deliver a pipeline of work on time and within budget and still go out of business.</p>
+<p>We should ask ourselves where do we want to be in three months time and, at this moment, what do we think we will need to do to get there. Contrast this with the approach whereby we select a number of work items from a backlog that we think we will be able to complete in three months. We should favour the first approach over the second.</p>
+<p>Avoid thinking of goals as a pipeline of fixed, engineering deliverables.</p>
+<h3 id="The-arbitrary-deadline-as-a-means-to-push-teams-to-deliver"><a href="#The-arbitrary-deadline-as-a-means-to-push-teams-to-deliver" class="headerlink" title="The arbitrary deadline as a means to push teams to deliver"></a>The arbitrary deadline as a means to push teams to deliver</h3><p>The three month time horizon for goals is as good an arbitrary period of time as any other. It provides a constraint for thinking beyond the current sprint and considering the medium and longer terms. But we mustn’t lose sight of the fact that it is arbitrary. </p>
+<p>We should feel a sense of obligation to our colleagues to meet the commitments that we make to them. If we accept that all models and plans are wrong but are useful and allow us to move forward, then we should be rigorous in doing what we can to invalidate our plans as early as possible, adapt them and share this information with all stakeholders. </p>
+<p>Teams should not be pressured into meeting a goal at all costs simply because of the impending end of quarter. We should all agree that the level of effort and duration are important factors in determining business value and prioritisation but driving teams to meet arbitrary deadlines will not help them establish a regular, sustainable pace that is the foundation for reliable forecasting.</p>
+<p>Conversely the element of time cannot be ignored and the cost of delay to the business of not having a feature in the hands of customers beyond a certain date is too great.</p>
+<p>Avoid treating the end of the quarter as an arbitrary deadline.</p>
+<h3 id="A-low-tolerance-for-risk-and-change"><a href="#A-low-tolerance-for-risk-and-change" class="headerlink" title="A low tolerance for risk and change"></a>A low tolerance for risk and change</h3><p>An aligned business should not be rigid to the point that it is inflexible to changing circumstances. If business objectives change, teams should be able to adapt and realign around those new objectives.</p>
+<p>What we assumed was important at the beginning of the quarter is very likely to be proven not to be so as the quarter progresses. New information and feedback from stakeholders, development teams and customers may invalidate our assumptions. Fast, frequent feedback and actual outcomes should allow us to adapt our goals and business objectives.</p>
+<p>Don’t allow goals to lower our tolerance for risk and change.</p>
+<h3 id="Silo-ed-behaviour-and-working-against-collaboration"><a href="#Silo-ed-behaviour-and-working-against-collaboration" class="headerlink" title="Silo-ed behaviour and working against collaboration"></a>Silo-ed behaviour and working against collaboration</h3><p><em>“It’s not in our goals”.</em></p>
+<p>Once a team has agreed its goals for the quarter the temptation may be to push back on anything that is considered to fall outside of them. Only so much can be anticipated three months in advance and there will always be new requests and changing priorities.</p>
+<p>A business that embraces change should allow for goals and business objectives to change as new information emerges. Requests that originate from outside the team should be considered in light of longer term business objectives and priorities. If this means adapting the team’s plans for the quarter then so be it if it is in the best interests of the business as a whole.</p>
+<p>Avoid a team-first mentality.</p>
+<h2 id="A-web-of-goals"><a href="#A-web-of-goals" class="headerlink" title="A web of goals"></a>A web of goals</h2><p><em>“How does what I’m doing right now contribute to the success of the business?”</em></p>
+<p>This is the question that everyone in the organisation should be able to answer. It should be possible to map each story on a team’s task board to the team goal and from there to the longer term business goals. Longer term business goals can be broken down into shorter term interim goals thereby adding more levels to the hierarchy.</p>
+<p>Taken together the business goals are the connecting threads that run through all team goals and provide the context that establishes team and organisational purpose and direction.</p>
+<p>Below is an example of a goal hierarchy for the OpenTable Global Traveller initiative:</p>
+<pre>
+> Global Traveller
+    > Create a global habit
+        > Global Platform feature parity
+            > Add multilingual support to start page features.
+</pre>
+
+<p>In this example there are two levels of business goals which are needed to define the context for the value that will be realised from delivering the specific team goal - in this case adding multilingual support.</p>
+<p>By following the links up the goal hierarchy and then back down along alternate paths, new connections and opportunities for collaboration that may otherwise go unnoticed are revealed.</p>
+<p>Here is another example:</p>
+<pre>
+> Global Platform
+    > Allow diners to book any restaurant on any domain in any language
+        > Launch all restaurants from English speaking domains in Australia
+            > Enable all English restaurant natural language URLs
+            > Enable cross domain search results
+        > Allow users to book in any language on OpenTable.com
+            > AB test a language switcher on .com
+            > Allow users to receive emails in their selected language
+</pre>
+
+<p>The highlighted team goals are not dependent on each other but the connections established by the higher level business goals suggest that collaboration and coordination between the teams would be beneficial.</p>
+<h2 id="Setting-goals"><a href="#Setting-goals" class="headerlink" title="Setting goals"></a>Setting goals</h2><h3 id="The-team-mission-statement"><a href="#The-team-mission-statement" class="headerlink" title="The team mission statement"></a>The team mission statement</h3><p>When setting goals for the first time a good place to start for any team is to consider its purpose. Why do we exist? A team mission statement can provide a framework for setting goals that have value and meaning to the team and to the business.</p>
+<p>As an example, here is a possible mission statement for a team responsible for transactional communications:</p>
+<ol>
+<li><p>Maintain transactional communications systems in production so that the business has a reliable and performant transactional communications system, and customers receive timely and relevant communications.</p>
+</li>
+<li><p>Build transactional communications capabilities that increase value for our customers and help the business meet its objectives.</p>
+</li>
+<li><p>Evolve transactional communications systems in line with the company’s technical vision for the platform to position the business to best meet the evolving needs of its customers.</p>
+</li>
+<li><p>Foster a supportive and welcoming team culture that values innovation, collaboration and continuous learning.</p>
+</li>
+</ol>
+<p>Quarterly goals can then map back to elements of the mission statement:</p>
+<ol>
+<li><p>Maintain transactional communications systems in production so that the business has a reliable and performant transactional communications system, and customers receive timely and relevant communications.  <strong>Reduce the level of noise from alerts so that the team can more effectively respond to production incidents.</strong></p>
+</li>
+<li><p>Build transactional communications capabilities that increase value for our customers and helps the business meet its objectives.  <strong>Launch a thank you email to reinforce the benefits of booking with OpenTable.</strong></p>
+</li>
+<li><p>Evolve transactional communications systems in line with the company’s technical vision for the platform to position the business to best meet the evolving needs of its customers.  <strong>Migrate transactional communications systems to Apache Mesos.</strong></p>
+</li>
+<li><p>Foster a supportive and welcoming team culture that values innovation, collaboration and continuous learning.  <strong>Create an engineer on-boarding playbook to ensure that new team members have a great first experience of the team and OpenTable.</strong></p>
+</li>
+</ol>
+<p>Everything that a team does should relate to a team goal and the mission statement. </p>
+<p>The thank you email goal example also sits within the web of goals as described above. An example of how it might relate to higher level business objectives is:</p>
+<pre>
+> Increase the frequency of yearly active bookers
+    > Improve the post dining experience
+        <span style="font-weight:bold;">> Launch a thank you email to reinforce the benefits of booking with OpenTable.</span>
+</pre>
+
+
+<h3 id="The-anatomy-of-a-goal"><a href="#The-anatomy-of-a-goal" class="headerlink" title="The anatomy of a goal"></a>The anatomy of a goal</h3><ul>
+<li><strong>The goal summary</strong> succinctly captures our intent.</li>
+<li><strong>The customer and business value</strong> that this goal will unlock. This is the most important element of a goal as it defines why we think it is important.</li>
+<li><strong>Key metrics</strong> that will tell us whether the goal has been achieved.</li>
+<li><strong>Steps to achieve</strong> includes anything that we think is worth capturing now in terms of discrete aspects of the goal. They can include interim milestones that will give us early feedback on how we’re progressing towards the goal.</li>
+</ul>
+<h2 id="Reviewing-goals"><a href="#Reviewing-goals" class="headerlink" title="Reviewing goals"></a>Reviewing goals</h2><p>How should teams incorporate goals into their regular planning practices?</p>
+<p>Sprint reviews, demos, retrospectives and planning sessions give teams a chance to reflect on and share their progress and collectively agree their next steps. We want to aim to keep the goals process as lightweight as possible and incorporating a regular review of goals into existing agile rituals is preferable. </p>
+<p>Fifteen minutes spent reviewing a team’s goals and agreeing changes when needed every other sprint planning session adds an extra dimension to planning, and gives a team more confidence that they are making the right decisions for the coming sprint.</p>
+<p>Goals sit alongside a number of other elements that can be incorporated into planning that help establish team situational awareness:</p>
+<ul>
+<li><strong>goals</strong> provide purpose and direction and are adapted based on outcomes;</li>
+<li><strong>workflow metrics</strong> provide insight into what we’ve done and how we’ve done it and suggest improvements that we can make to our processes and practices; and</li>
+<li><strong>maps</strong> allow us to navigate a path towards our goals.</li>
+</ul>
+<p>The data captured by these three elements can then be interpreted and enriched by the team to tell a story about the team’s progress and intent.</p>
+<h2 id="The-quarterly-goal-setting-cycle"><a href="#The-quarterly-goal-setting-cycle" class="headerlink" title="The quarterly goal setting cycle"></a>The quarterly goal setting cycle</h2><p>In the same way that the team comes together to reflect and plan on a regular cadence the quarterly goal setting cycle is when the organisation as a whole does the same.</p>
+<h3 id="The-roadmap"><a href="#The-roadmap" class="headerlink" title="The roadmap"></a>The roadmap</h3><p>So that everyone in the organisation understands the vision and business objectives the quarterly goal setting process should be kicked off with the business reiterating the medium and long term objectives. A review of progress towards those objectives and any changes that have been made since the last goal setting process should be highlighted and explained. This helps establish a consistent narrative that is essential when attempting to align an organisation towards a shared vision. </p>
+<p>Too often a company roadmap is created and presented only to be discarded and forgotten within weeks. The same rigour combined with Agile principles applied to planning at the team level should be applied to the medium and long term business objectives.</p>
+<p>As I have shown these are the connecting threads that run through all team goals and establish organisational purpose and context. Left to fray, tangle and rot organisational alignment is impossible.</p>
+<p>Once the business objectives have been firmly established teams and individuals are better placed to make the right prioritisation decisions.</p>
+<h3 id="Team-dependencies"><a href="#Team-dependencies" class="headerlink" title="Team dependencies"></a>Team dependencies</h3><p>The goal setting process provides the opportunity for the ‘scripted collaboration’ mentioned earlier that is needed to support and protect the daily ‘improvised collaboration’. When teams have agreed the things that they need to do to help the business best meet its objectives, dependencies on other teams should be called out.</p>
+<p>Teams can then review all requests for collaboration, discuss with the relevant team and reach a shared understanding of what is expected, how they will work together and the impact on their other goals.</p>
+<h3 id="The-problem-of-local-optimisations"><a href="#The-problem-of-local-optimisations" class="headerlink" title="The problem of local optimisations"></a>The problem of local optimisations</h3><p>It is unrealistic to expect members of a team to hold a complete model of the business in their heads which they can refer to when making decisions. Teams need the mental space to be able to focus on the domain and part of the system for which they have direct responsibility.</p>
+<p>The downside to this is known as the problem of local optimisations. Over time small decisions made without taking the whole business into account accumulate. We need a means to either anticipate them or to realign on a regular basis. </p>
+<p>The quarterly goal setting cycle and the goal reviews give us a means to achieve this. They act as checkpoints to allow the organisation to realign.</p>
+<h3 id="The-organisation’s-statement-of-intent"><a href="#The-organisation’s-statement-of-intent" class="headerlink" title="The organisation’s statement of intent"></a>The organisation’s statement of intent</h3><p>Following a final review with senior leadership to validate that the team’s interpretation of the business vision and objectives is aligned; and to make the difficult prioritisation decisions that it has not been possible to reconcile at the team level, the outcome of the goal setting process can be seen as the organisation’s statement of intent.</p>
+<p>The artifact that is produced as a result of this process is the sum total of all business objectives, team goals, team dependencies and connections. For full transparency and as a reference point for ongoing decision making and for understanding the impact of change this artifact should be made accessible to everyone in the organisation. </p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Quarterly goal setting establishes the organisational superstructure within which a valued product development and engineering culture can flourish.</p>
+<p>We often make the mistake to assume that an approach that values adaptive planning, team autonomy and less top-down control has less rigour and accountability. In fact the opposite is true. Applying Agile principles at scale is hard and relies on skills that may not come naturally to everyone in the business. But done well it results in:</p>
+<ul>
+<li><strong>more commitment</strong> - to each other and the business;</li>
+<li><strong>more accountability</strong> - to each other and the business;</li>
+<li><strong>more rigour</strong> - in validating assumptions and making sure we are doing the right thing;</li>
+<li><strong>more planning</strong> - done continuously rather than upfront; and</li>
+<li><strong>more connection</strong> between individuals, teams and the business vision.</li>
+</ul>
+<p>And by meeting the needs of senior management and giving them confidence that the energies of everyone in the business are directed most effectively towards business objectives team agility is protected and supported.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;Quarterly team goals are an effective way to establish organisational purpose, direction and alignment while supporting team agility. But be vigilant - they can be used inappropriately.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Overview&quot;&gt;&lt;a href=&quot;#Overview&quot; class=&quot;headerlink&quot; title=&quot;Overview&quot;&gt;&lt;/a&gt;Overview&lt;/h2&gt;&lt;p&gt;Due to factors such as growth, acquisition, changing markets amongst others, organisations can find themselves in new environments to which they struggle to adapt.&lt;/p&gt;
+&lt;p&gt;Scaling Agile in these new environments is hard. The practices and tools that are frequently used to solve this problem can give the appearance of acting against team autonomy and agility. Teams and individuals naturally try to protect the engineering culture that they have worked hard to establish but by allowing new organisational needs to go unmet they put their autonomy and agility at risk.&lt;/p&gt;
+&lt;p&gt;In this post I will show how quarterly goal setting, using Agile principles and with one eye on the dysfunctions that can arise, is an effective way to meet organisational needs while protecting team agility and engineering culture.&lt;/p&gt;
+&lt;h2 id=&quot;What-needs-are-we-trying-to-meet&quot;&gt;&lt;a href=&quot;#What-needs-are-we-trying-to-meet&quot; class=&quot;headerlink&quot; title=&quot;What needs are we trying to meet?&quot;&gt;&lt;/a&gt;What needs are we trying to meet?&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="Culture" scheme="http://tech.opentable.co.uk/blog/categories/Culture/"/>
+    
+      <category term="Agile" scheme="http://tech.opentable.co.uk/blog/categories/Agile/"/>
+    
+      <category term="Goals" scheme="http://tech.opentable.co.uk/blog/categories/Goals/"/>
+    
+      <category term="Delivery" scheme="http://tech.opentable.co.uk/blog/categories/Delivery/"/>
+    
+  </entry>
   
   <entry>
     <title>testing-node-apps-with-docker-compose (and some Soul)</title>
@@ -108,18 +266,28 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Contents-of-this-post&quot;&gt;&lt;a href=&quot;#Contents-of-this-post&quot; class=&quot;headerlink&quot; title=&quot;Contents of this post&quot;&gt;&lt;/a&gt;Contents of this post&lt;/
+      &lt;h2 id=&quot;Contents-of-this-post&quot;&gt;&lt;a href=&quot;#Contents-of-this-post&quot; class=&quot;headerlink&quot; title=&quot;Contents of this post&quot;&gt;&lt;/a&gt;Contents of this post&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#purpose&quot;&gt;Purpose&lt;/a&gt;: the reason for this blog post.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#scenario&quot;&gt;Scenario&lt;/a&gt;: what this example of using docker-compose can be useful for.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#prerequisites&quot;&gt;Prerequisites&lt;/a&gt;: basic setup to be able to run the code contained in this post.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#example&quot;&gt;Code example&lt;/a&gt;: an actual step-by-step guide on how you can setup your test environment to run with docker-compose.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#improvements&quot;&gt;Improvements&lt;/a&gt;: a couple of ideas on how to expand this technique.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;Purpose&quot;&gt;&lt;a href=&quot;#Purpose&quot; class=&quot;headerlink&quot; title=&quot;Purpose&quot;&gt;&lt;/a&gt;&lt;a name=&quot;purpose&quot;&gt;&lt;/a&gt;Purpose&lt;/h2&gt;&lt;p&gt;As I am sure the audience of this post knows to some extent, &lt;a href=&quot;https://www.docker.com/what-docker&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Docker&lt;/a&gt; is a technology that has grown to become popular over the last few years, allowing developers to deploy pieces of software by packaging them into standardized containers, in a number of various ecosystems (Apache Mesos, Amazon Web Services and many more).&lt;/p&gt;
+&lt;p&gt;So we can use Docker for our deployment needs, awesome. But let’s pay attention to a key word I used above. Docker grants &lt;em&gt;isolation&lt;/em&gt;. And what do we like to perform on our application in isolation? Yeah, you guessed right &amp;ndash; testing!&lt;/p&gt;
+&lt;p&gt;Specifically, with this post, I aim to dig deeper into how to use &lt;a href=&quot;https://docs.docker.com/compose/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;docker-compose&lt;/a&gt; (a specific Docker-based tool that enables creation of multi-container Docker applications) to build and run a Node.js application connected to MongoDB, to test their interaction and the interaction of the app with the external world, all inside containers running on your machine. All isolated and testable thanks to the usage of containers that we can spin up, hit with tests, and clean up with little effort. &lt;/p&gt;
+
     
     </summary>
     
     
       <category term="Docker" scheme="http://tech.opentable.co.uk/blog/categories/Docker/"/>
     
+      <category term="Node-js" scheme="http://tech.opentable.co.uk/blog/categories/Node-js/"/>
+    
       <category term="TDD" scheme="http://tech.opentable.co.uk/blog/categories/TDD/"/>
     
       <category term="Compose" scheme="http://tech.opentable.co.uk/blog/categories/Compose/"/>
-    
-      <category term="Node-js" scheme="http://tech.opentable.co.uk/blog/categories/Node-js/"/>
     
   </entry>
   
@@ -157,7 +325,11 @@
     <summary type="html">
     
       &lt;p&gt;At OpenTable, we have an engineering culture that empowers us to research, experiment and learn. &lt;/p&gt;
-&lt;p&gt;In an effort to foster innovatio
+&lt;p&gt;In an effort to foster innovation and to try new ideas, &lt;a href=&quot;/blog/authors/ccartlidge.html&quot;&gt;Chris Cartlidge&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/nickbalestra&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Nick Balestra&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/tpgmartin&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Tom Martin&lt;/a&gt; and &lt;a href=&quot;/blog/authors/mrichetto.html&quot;&gt;myself&lt;/a&gt; started to work on a side project nicknamed big-mars. Our project is a mobile-first, responsive web application that uses Falcor by Netflix.&lt;/p&gt;
+&lt;p&gt;Falcor, a JavaScript library for efficient data fetching, is an implementation of the Backend for Frontend (BFF) or the API Gateway pattern.&lt;/p&gt;
+&lt;p&gt;One powerful concept that Falcor has is its query model, in which you access your data as if it was a single JSON model in memory.  You can navigate your data structure the way you would navigate a JSON object; either with a “dot notation” (e.g. restaurant.address.city) or with an “array notation” (e.g. restaurant[‘address’][‘city’]). &lt;/p&gt;
+&lt;p&gt;Really easy and intuitive.&lt;/p&gt;
+
     
     </summary>
     
@@ -238,7 +410,11 @@ undefined
     
     <summary type="html">
     
-      &lt;p&gt;Many engineers work every day on opentable.com from our offices located in Europe, America, and Asia, pushing changes to production multi
+      &lt;p&gt;Many engineers work every day on opentable.com from our offices located in Europe, America, and Asia, pushing changes to production multiple times a day. Usually, this is very hard to achieve, in fact it took years for us to get to this point. &lt;a href=&quot;/blog/2015/02/09/dismantling-the-monolith-microsites-at-opentable/&quot;&gt;I described in a previous article&lt;/a&gt; how we dismantled our monolith in favour of a Microsites architecture. Since the publication of that blog post we have been working on something I believe to be quite unique, called &lt;strong&gt;OpenComponents&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;Another-front-end-framework&quot;&gt;&lt;a href=&quot;#Another-front-end-framework&quot; class=&quot;headerlink&quot; title=&quot;Another front-end framework?&quot;&gt;&lt;/a&gt;Another front-end framework?&lt;/h3&gt;&lt;p&gt;OpenComponents is a system to facilitate code sharing, reduce dependencies, and easily approach new features and experiments from the back-end to the front-end. To achieve this, it is based on the concept of using services as interfaces - enabling pages to render partial content that is located, executed and deployed independently.&lt;/p&gt;
+&lt;p&gt;OpenComponents is not &lt;em&gt;another SPA JS framework&lt;/em&gt;; it is a set of conventions, patterns and tools to develop and quickly deploy fragments of front-end. In this perspective, it plays nicely with any existing architecture and framework in terms of front-end and back-end. Its purpose is to &lt;strong&gt;serve as delivery mechanism for a more modularised end-result in the front-end&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;OC is been in production for more than a year at OpenTable and it is &lt;a href=&quot;https://github.com/opentable/oc&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;fully open-sourced&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;Overview&quot;&gt;&lt;a href=&quot;#Overview&quot; class=&quot;headerlink&quot; title=&quot;Overview&quot;&gt;&lt;/a&gt;Overview&lt;/h2&gt;
     
     </summary>
     
@@ -320,7 +496,12 @@ undefined
     
     <summary type="html">
     
-      &lt;p&gt;At OpenTable it’s becoming an increasingly popular trend to use &lt;em&gt;&lt;a href=&quot;https://facebook.github.io/react/&quot; target=&quot;_blank&quot; rel=&quot;exte
+      &lt;p&gt;At OpenTable it’s becoming an increasingly popular trend to use &lt;em&gt;&lt;a href=&quot;https://facebook.github.io/react/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;React&lt;/a&gt;&lt;/em&gt;.&lt;br&gt;One of the reasons for this is the ability for it  to server-side render whilst still&lt;br&gt;giving us the client side flexibility that we all crave!&lt;/p&gt;
+&lt;p&gt;We all know to have stable, reliable software you need to have well written tests. Facebook knows this and&lt;br&gt;provides the handy &lt;em&gt;&lt;a href=&quot;https://facebook.github.io/react/docs/test-utils.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Test Utilities&lt;/a&gt;&lt;/em&gt; library to make&lt;br&gt;our lives easier.&lt;/p&gt;
+&lt;p&gt;Cool — I hear you all say! But what is the best approach to testing React components?&lt;/p&gt;
+&lt;p&gt;Well unfortunately this is something that is not very well documented and if not approached in&lt;br&gt;the correct way can lead to brittle tests.&lt;/p&gt;
+&lt;p&gt;Therefore I have written this blog post to discuss the different approaches we have available to us.&lt;/p&gt;
+
     
     </summary>
     
@@ -361,7 +542,12 @@ undefined
     
     <summary type="html">
     
-      &lt;p&gt;Puppet is an important tool to us at OpenTable; we couldn’t operate as efficiently without it but Puppet is more than a tool or a vendor,
+      &lt;p&gt;Puppet is an important tool to us at OpenTable; we couldn’t operate as efficiently without it but Puppet is more than a tool or a vendor, it is a community of people trying to help&lt;br&gt;each other operate increasing complex and sophisticated infrastructures.&lt;/p&gt;
+&lt;p&gt;The Puppet community and the open source efforts that drive that community have always been important to us which is why we want to take a step further in our efforts and introduce&lt;br&gt;you to the “Puppet-community” project.&lt;/p&gt;
+&lt;p&gt;##What is Puppet-community&lt;br&gt;Puppet-community is a GitHub organisation of like-minded individuals from across the wider Puppet ecosystem and from a diverse set of companies. Its principle aims are to allow the community to synchronise its efforts and to provide a GitHub organisation and Puppet Forge namespace not affiliated with any company.&lt;/p&gt;
+&lt;p&gt;Its wider aims are to provide a place for module and tool authors to share their code and the burden of maintaining it.&lt;/p&gt;
+&lt;p&gt;I would like to say that this was our idea, as it’s an excellent one, but actually all credit goes to its founders: &lt;a href=&quot;https://github.com/igalic&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Igor Galić&lt;/a&gt;, &lt;a href=&quot;https://github.com/daenney&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Daniele Sluijters&lt;/a&gt; and &lt;a href=&quot;https://github.com/nibalizer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Spencer Krum&lt;/a&gt;&lt;/p&gt;
+
     
     </summary>
     
@@ -431,7 +617,11 @@ undefined
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Introduction-to-DNS&quot;&gt;&lt;a href=&quot;#Introduction-to-DNS&quot; class=&quot;headerlink&quot; title=&quot;Introduction to DNS&quot;&gt;&lt;/a&gt;Introduction to DNS&lt;/h2&gt;&lt;p&gt;Be
+      &lt;h2 id=&quot;Introduction-to-DNS&quot;&gt;&lt;a href=&quot;#Introduction-to-DNS&quot; class=&quot;headerlink&quot; title=&quot;Introduction to DNS&quot;&gt;&lt;/a&gt;Introduction to DNS&lt;/h2&gt;&lt;p&gt;Before joining OpenTable I was looking for a software engineer job and I’ve done my fair share of interviews. A question that has popped out a lot, and when I say a lot I mean &lt;em&gt;always&lt;/em&gt;, is:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Could you tell me what happens when I type an URL in a web browser on my computer and press enter?&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Of course the possible answers could range from “MMMHHH, wellll, I’m not sure where to start…” to a whole book on computer networks.&lt;/p&gt;
+&lt;p&gt;After a number of attempts to answer briefly and correctly, I’ve concluded that mentioning &lt;strong&gt;DNS&lt;/strong&gt; can make a reasonable start.&lt;/p&gt;
+&lt;p&gt;Let’s think about it. When we type the address of the resource we want to browse, we use the alphabet, right? With letters and names easily readable and retainable by a human being.&lt;/p&gt;
     
     </summary>
     
@@ -479,7 +669,12 @@ undefined
     
     <summary type="html">
     
-      &lt;p&gt;When we first stood up our hapi.js APIs, we wrote init scripts to start/stop them. Stopping the server, was simply a case of sending SIGK
+      &lt;p&gt;When we first stood up our hapi.js APIs, we wrote init scripts to start/stop them. Stopping the server, was simply a case of sending SIGKILL (causing the app to immediately exit).&lt;/p&gt;
+&lt;p&gt;Whilst this is fine for most cases, if we want our apps to be good Linux citizens, then they should terminate gracefully. Hapi.js has the handy &lt;code&gt;server.stop(...)&lt;/code&gt; command (see docs &lt;a href=&quot;http://hapijs.com/api#serverstopoptions-callback&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;here&lt;/a&gt;) which will terminate the server gracefully. It will cause the server to respond to new connections with a 503 (server unavailable), and wait for existing connections to terminate (up to some specified timeout), before stopping the server and allowing the node.js process to exit. Perfect.&lt;/p&gt;
+&lt;p&gt;This makes our graceful shutdown code really simple:&lt;/p&gt;
+&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;process.on(&lt;span class=&quot;string&quot;&gt;&#39;SIGTERM&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  server.stop(&amp;#123; &lt;span class=&quot;attr&quot;&gt;timeout&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;1000&lt;/span&gt;&amp;#125;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    process.exit(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;When we see a SIGTERM, call &lt;code&gt;server.stop()&lt;/code&gt;, then once the server has stopped, call &lt;code&gt;process.exit(0)&lt;/code&gt;. Easy peasy.&lt;/p&gt;
+
     
     </summary>
     
@@ -531,7 +726,17 @@ undefined
     
     <summary type="html">
     
-      &lt;p&gt;A couple of years ago we started to break-up the code-base behind our consumer site &lt;a href=&quot;http://www.opentable.com&quot; target=&quot;_blank&quot; re
+      &lt;p&gt;A couple of years ago we started to break-up the code-base behind our consumer site &lt;a href=&quot;http://www.opentable.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;opentable.com&lt;/a&gt;, to smaller units of code, in order to improve our productivity. New teams were created with the goal of splitting up the logic that was powering the back-end and then bring to life new small services. Then, we started working on what we call &lt;em&gt;Microsites&lt;/em&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;Microsites&quot;&gt;&lt;a href=&quot;#Microsites&quot; class=&quot;headerlink&quot; title=&quot;Microsites&quot;&gt;&lt;/a&gt;Microsites&lt;/h3&gt;&lt;p&gt;A microsite is a very small set of web-pages, or even a single one, that takes care of handling a very specific part of the system’s domain logic. Examples are the &lt;em&gt;Search Results&lt;/em&gt; page or the &lt;em&gt;Restaurant’s Profile&lt;/em&gt; page. Every microsite is an independently deployable unit of code, so it is easier to test, to deploy, and in consequence more resilient. Microsites are then all connected by a front-door service that handles the routing.&lt;/p&gt;
+&lt;h3 id=&quot;Not-a-free-ride&quot;&gt;&lt;a href=&quot;#Not-a-free-ride&quot; class=&quot;headerlink&quot; title=&quot;Not a free ride&quot;&gt;&lt;/a&gt;Not a free ride&lt;/h3&gt;&lt;p&gt;When we deployed some microsites to production we immediately discovered a lot of pros:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bi-weekly deployments of the monolith became hundreds of deployments every week.&lt;/li&gt;
+&lt;li&gt;Not anymore a shared codebase for hundreds of engineers. Pull requests accepted, merged, and often deployed on the same day.&lt;/li&gt;
+&lt;li&gt;Teams experimenting and reiterating faster: product was happy.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Diversity&lt;/em&gt; on tech stacks: teams were finally able to pick their own favourite web-stack, as soon as they were capable of deploying their code and taking care of it in terms of reliability and performance.&lt;/li&gt;
+&lt;li&gt;Robustness: when something was wrong with a microsite, everything else was fine.&lt;/li&gt;
+&lt;/ul&gt;
+
     
     </summary>
     
@@ -623,14 +828,18 @@ undefined
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Why-this-post&quot;&gt;&lt;a href=&quot;#Why-this-post&quot; class=&quot;headerlink&quot; title=&quot;Why this post?&quot;&gt;&lt;/a&gt;Why this post?&lt;/h2&gt;&lt;p&gt;As a junior, I always fi
+      &lt;h2 id=&quot;Why-this-post&quot;&gt;&lt;a href=&quot;#Why-this-post&quot; class=&quot;headerlink&quot; title=&quot;Why this post?&quot;&gt;&lt;/a&gt;Why this post?&lt;/h2&gt;&lt;p&gt;As a junior, I always find it easier to just sit and write code than actually stop to think about the theoretical basis that lie under the applications I work on. &lt;strong&gt;REST&lt;/strong&gt;  is one of those terms I heard a lot about, so I decided to try to sum up what it means and how it affects the choices we make everyday as software engineers.&lt;/p&gt;
+&lt;h2 id=&quot;Introduction-to-REST&quot;&gt;&lt;a href=&quot;#Introduction-to-REST&quot; class=&quot;headerlink&quot; title=&quot;Introduction to REST&quot;&gt;&lt;/a&gt;Introduction to REST&lt;/h2&gt;&lt;p&gt;REST stands for Representational State Transfer, and it can be defined as an architectural style used to build Web Services that are lightweight, maintainable, and scalable. A service that is designed by REST principles can be called a &lt;strong&gt;RESTful service&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;It has been described first in 2000 by Roy Fielding, in a &lt;a href=&quot;http://www.ics.uci.edu/~fielding/pubs/webarch_icse2000.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;dissertation&lt;/a&gt; called “Architectural Styles and the Design of Network-based Software Architectures”. The basic idea was to describe the interactions between the components of a distributed system, putting constraints on them and emphasizing the importance of an uniform interface, that is abstracted from the single components.&lt;/p&gt;
+&lt;p&gt;REST is often applied to the design and development of web services, which is the scenario I’ll try to address in this post.&lt;/p&gt;
+
     
     </summary>
     
     
-      <category term="Architecture" scheme="http://tech.opentable.co.uk/blog/categories/Architecture/"/>
-    
       <category term="Engineering" scheme="http://tech.opentable.co.uk/blog/categories/Engineering/"/>
+    
+      <category term="Architecture" scheme="http://tech.opentable.co.uk/blog/categories/Architecture/"/>
     
       <category term="REST" scheme="http://tech.opentable.co.uk/blog/categories/REST/"/>
     
@@ -674,7 +883,11 @@ undefined
     
     <summary type="html">
     
-      &lt;p&gt;Logging is a crucial element of monitoring highly available systems. It allows not only to find out about errors but also quickly identif
+      &lt;p&gt;Logging is a crucial element of monitoring highly available systems. It allows not only to find out about errors but also quickly identify their cause. Logs are often used to generate metrics that help business and engineering make informative decisions on future development directions. &lt;/p&gt;
+&lt;p&gt;At OpenTable we have a central logging infrastructure, that means all logs are stored in the same shared database (ElasticSearch for us). And everybody can access any logs they want without having very specialized knowledge (thanks Kibana!).&lt;/p&gt;
+&lt;p&gt;ElasticSearch, though living in a NoSQL world, is not actually a schema-free database. Sure, you do not need to provide schema to it but instead ES will infer schema for you from documents you send to it. This is very similar to type inference you can find in many programming languages. You do not need to specify type of field, but if you later on try to assign inappropriate value to it you will get an exception.&lt;/p&gt;
+&lt;p&gt;This trait of our database goes all the way to the root of our logging system design. Let me explain why I say that we have ‘strongly typed logs’.&lt;/p&gt;
+&lt;h2 id=&quot;In-The-Beginning-There-Was-String&quot;&gt;&lt;a href=&quot;#In-The-Beginning-There-Was-String&quot; class=&quot;headerlink&quot; title=&quot;In The Beginning There Was String&quot;&gt;&lt;/a&gt;In The Beginning There Was String&lt;/h2&gt;&lt;p&gt;Before centralization we just logged a single message along with its importance. In code it looked something like:&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;logger.ERROR(“Kaboom!”)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
     
     </summary>
     
@@ -741,7 +954,14 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;If you’re reading this you’ve probably built yourself a website.  A site - large or small - that’s thrown together or crafted over many m
+      &lt;p&gt;If you’re reading this you’ve probably built yourself a website.  A site - large or small - that’s thrown together or crafted over many months.  And if you have, you’ve probably kept all your CSS class names in your head, or at least been able to go straight to the relevant stylesheets to retrieve them.&lt;/p&gt;
+&lt;p&gt;Well OpenTable is unsurprisingly built by many engineering teams across multiple continents, and was completely redesigned last year.  And as soon as you have more than a handful of people working on your front-end you will quickly find a well-intentioned developer causing one or both of these problems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Well-intentioned developer adds a new submission form but, like the design Philistine he is, his buttons are &lt;span style=&quot;font-family:verdana;font-size:18px;color:#E40000;&quot;&gt;18px Verdana #E40000&lt;/span&gt;, not the correct &lt;span style=&quot;font-family:arial;font-size:16px;color:#DA3743;&quot;&gt;16px Arial #DA3743&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Your good old developer knows which font size and colour it should be, but bungs a duplicate class into a random stylesheet (or worse still, inline)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Despite these risks, a single front-end dev (or a team of them) cannot check every new piece of code or they will quickly become a bottleneck.&lt;/p&gt;
+&lt;h3 id=&quot;You-need-some-guidelines&quot;&gt;&lt;a href=&quot;#You-need-some-guidelines&quot; class=&quot;headerlink&quot; title=&quot;You need some guidelines&quot;&gt;&lt;/a&gt;You need some guidelines&lt;/h3&gt;&lt;p&gt;Offline designers regularly create ‘brand guidelines’ or ‘design standards’ to document the precise way their brand or product should be recreated when outside of their control.  Online, such guidelines are similarly invaluable for maintaining brand and code consistency with multiple engineers and designers, but it is blindingly obvious that a printed or ‘static’ set of guidelines is completely unsuitable for a constantly changing website.&lt;/p&gt;
     
     </summary>
     
@@ -790,7 +1010,11 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;h2 id=&quot;What-is-Flux&quot;&gt;&lt;a href=&quot;#What-is-Flux&quot; class=&quot;headerlink&quot; title=&quot;What is Flux?&quot;&gt;&lt;/a&gt;What is Flux?&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/
+      &lt;h2 id=&quot;What-is-Flux&quot;&gt;&lt;a href=&quot;#What-is-Flux&quot; class=&quot;headerlink&quot; title=&quot;What is Flux?&quot;&gt;&lt;/a&gt;What is Flux?&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/facebook/flux&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Flux&lt;/a&gt; is an application architectural pattern developed by Facebook. It was developed to solve some of the complexities of the MVC pattern when used at scale by favouring a uni-directional approach. It is a pattern and not a technology or framework.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/posts/mvc-scale.png&quot; alt=&quot;MVC scale issue&quot;&gt;&lt;/p&gt;
+&lt;p&gt;When applications that use the model-view-controller (MVC) pattern at any scale it becomes difficult to maintain consistent data across multiple views. In particular the case whereby flow between models and views is not uni-directional and may require increasing logic to maintain parity between views when model data is updated. Facebook hit this issue several times and in particular with their unseen count (an incremented value of unseen messages which is updated by several UI chat components). It wasn’t until they realised that the MVC pattern accomodated the complexity that they stepped back from the problem and addressed the architecture.&lt;/p&gt;
+&lt;p&gt;Flux is intentionally unidirectional.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/posts/flux.png&quot; alt=&quot;flux&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -850,7 +1074,12 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;We’re really &lt;a href=&quot;http://blog.opentable.com/2014/opentables-website-re-designed-re-architected-re-imagined/&quot; target=&quot;_blank&quot; rel=&quot;ext
+      &lt;p&gt;We’re really &lt;a href=&quot;http://blog.opentable.com/2014/opentables-website-re-designed-re-architected-re-imagined/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;proud to have released&lt;/a&gt; last week our redesigned &lt;a href=&quot;http://www.opentable.co.uk&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;OpenTable&lt;/a&gt; site, the culmination of months of hard work from many talented people here in London and in San Francisco.&lt;/p&gt;
+&lt;p&gt;However despite killing off our old site and its 2004 design, 2.8% of our visitors could have been crying into their keyboard as a far worse opentable.co.uk filled their screen.&lt;/p&gt;
+&lt;p&gt;That version of OpenTable was our new responsive site viewed in Internet Explorer 8.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/posts/redesign-ie8.png&quot; alt=&quot;Our redesign before we optimised for IE8&quot;&gt;&lt;/p&gt;
+&lt;p&gt;The fundamental issue is that IE8 doesn’t support media queries so the age-old browser would try to stretch our &lt;em&gt;mobile-first&lt;/em&gt; responsive design as wide as it could go - not great across a 27” Thunderbolt.&lt;/p&gt;
+
     
     </summary>
     
@@ -900,7 +1129,12 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;I’ve raved in the past about how awesome &lt;a href=&quot;http://hapijs.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;hapi.js&lt;/a&gt; is, but I’m going to talk
+      &lt;p&gt;I’ve raved in the past about how awesome &lt;a href=&quot;http://hapijs.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;hapi.js&lt;/a&gt; is, but I’m going to talk about just a specific case today.&lt;/p&gt;
+&lt;p&gt;We started off with just a couple of hapi.js apis. This was at a time when standing up new infrastructure was still a bit painful, so inevitably those apis ended up having more functionality in them than they should have. Now it’s easy for us to get infrastructure, so we want to do more of it.&lt;/p&gt;
+&lt;p&gt;Our goal is to have lots of small(er) apis that just look after one specific piece (skillfully avoiding using the buzzword ‘microservices’).&lt;/p&gt;
+&lt;p&gt;When you want to split out functionality from one api to another, it can be a pain, especially if you have a lot of consumers who aren’t particularly fast-moving or communicative. Or maybe you don’t know all your consumers up front.&lt;/p&gt;
+&lt;p&gt;You’ve got a couple of options here:&lt;/p&gt;
+
     
     </summary>
     
@@ -942,7 +1176,11 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;Sometimes there is the requirement for more granularity when toggling a feature switch.&lt;br&gt;Version 2.0 of &lt;a href=&quot;https://github.com/ope
+      &lt;p&gt;Sometimes there is the requirement for more granularity when toggling a feature switch.&lt;br&gt;Version 2.0 of &lt;a href=&quot;https://github.com/opentable/hobknob&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hobknob&lt;/a&gt; hopes to address this with feature categories.&lt;/p&gt;
+&lt;h3 id=&quot;TL-DR&quot;&gt;&lt;a href=&quot;#TL-DR&quot; class=&quot;headerlink&quot; title=&quot;TL;DR.&quot;&gt;&lt;/a&gt;TL;DR.&lt;/h3&gt;&lt;p&gt;Hobknob now allows you to define categories of features that have multiple toggles per feature.&lt;/p&gt;
+&lt;p&gt;For example, you can define the ‘Domain Features’ category which allows you to toggle a feature OFF in &lt;code&gt;your-website.com&lt;/code&gt;, but ON in &lt;code&gt;your-website.co.uk&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/posts/hobknob-domain-features.png&quot; alt=&quot;Domain Features&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Categories&quot;&gt;&lt;a href=&quot;#Categories&quot; class=&quot;headerlink&quot; title=&quot;Categories&quot;&gt;&lt;/a&gt;Categories&lt;/h2&gt;
     
     </summary>
     
@@ -982,7 +1220,11 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;At OpenTable, we use a few &lt;a href=&quot;&quot;&gt;ElasticSearch&lt;/a&gt; clusters. Our aim was to be able to interact with our ElasticSearch clusters via 
+      &lt;p&gt;At OpenTable, we use a few &lt;a href=&quot;&quot;&gt;ElasticSearch&lt;/a&gt; clusters. Our aim was to be able to interact with our ElasticSearch clusters via &lt;a href=&quot;http://www.hipchat.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;HipChat&lt;/a&gt; so that we could troubleshoot easily and without having to log into our VPN. We already use &lt;a href=&quot;http://hubot.github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hubot&lt;/a&gt; as part of our systems workflow, so it made sense to be able to interact with ElasticSearch with it. &lt;/p&gt;
+&lt;h3 id=&quot;Setting-a-cluster-alias&quot;&gt;&lt;a href=&quot;#Setting-a-cluster-alias&quot; class=&quot;headerlink&quot; title=&quot;Setting a cluster alias&quot;&gt;&lt;/a&gt;Setting a cluster alias&lt;/h3&gt;&lt;p&gt;When a pager wakes me at 3am, I really do not want to have to try and type the cluster URL into my mobile hipchat client. So the first thing that was added to the script was the ability to give a cluster an alias.&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;elasticsearch add alias my-test-alias http://my-cluster.com:9200&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&quot;/images/posts/elasticsearch-add-alias.png&quot; alt=&quot;add-alias&quot;&gt;&lt;/p&gt;
+&lt;p&gt;This allows us to use that alias for all commands going forward. Please note that you can remove and query aliases as well:&lt;/p&gt;
     
     </summary>
     
@@ -1036,7 +1278,11 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;I recently attended a fascinating and emotionally-charged talk by &lt;a href=&quot;https://twitter.com/sisoma&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Sam
+      &lt;p&gt;I recently attended a fascinating and emotionally-charged talk by &lt;a href=&quot;https://twitter.com/sisoma&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Samantha Soma&lt;/a&gt; at &lt;a href=&quot;https://2014.dareconf.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DareConf 2014&lt;/a&gt;, &lt;a href=&quot;http://vimeo.com/108047198&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;‘How to stop rescuing people’&lt;/a&gt;. It strongly mirrored my experience of moving into a leadership role and I’d recommend anyone with a spare 30mins to watch it.&lt;/p&gt;
+&lt;p&gt;Samantha’s talk made me reflect on how I struggle to coach talented individuals; how I can identify when it’s going wrong and what steps I can take to remedy the situation.&lt;/p&gt;
+&lt;h2 id=&quot;Gold-star-syndrome&quot;&gt;&lt;a href=&quot;#Gold-star-syndrome&quot; class=&quot;headerlink&quot; title=&quot;Gold star syndrome&quot;&gt;&lt;/a&gt;Gold star syndrome&lt;/h2&gt;&lt;p&gt;A new concept for me and a recurring theme throughout the sessions at DareConf, ‘Gold Star Syndrome’ is a fixation on finding validation for your work. I feel this is a result of early childhood values spinning the perception of working life away from the actual reality. As a child, especially during our school years, we discovered that when we do good things, good things happen to us. Remember how it felt to get that gold star in your spelling test or that A+ on an English essay?&lt;/p&gt;
+&lt;p&gt;That was great in school and even through to University but working life is a much more terse environment and getting positive reenforcement is much less common. As professionals, the majority of our work goes unnoticed - until there is a problem or issue to solve. Then we feel open to the stinging criticism but resentful that months of good work went unnoticed.&lt;/p&gt;
+&lt;p&gt;When we continue to search for a gold star or continually strive for perfectionism we, as individuals, become much more insular and isolated. We tend to avoid showing our work until it is 100% ready and put up a shield to protect us from any feedback, in fear of being made to look stupid or being called a fraud.&lt;/p&gt;
     
     </summary>
     
@@ -1093,7 +1339,11 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;p&gt;We are pleased to announce the version 1.0 release of &lt;a href=&quot;https://github.com/opentable/hobknob&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hobkn
+      &lt;p&gt;We are pleased to announce the version 1.0 release of &lt;a href=&quot;https://github.com/opentable/hobknob&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hobknob&lt;/a&gt;, our open-source feature toggle management system. With it comes a few additions and several improvements. &lt;/p&gt;
+&lt;p&gt;This post will expand on some of the changes, in particular, authorisation via access control lists.&lt;br&gt;For an introduction to Hobknob, see our previous post: &lt;a href=&quot;/blog/2014/09/04/introducing-hobknob-feature-toggling-with-etcd/&quot;&gt;Introducing Hobknob: Feature toggling with etcd&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;Authorisation-with-ACLs&quot;&gt;&lt;a href=&quot;#Authorisation-with-ACLs&quot; class=&quot;headerlink&quot; title=&quot;Authorisation with ACLs&quot;&gt;&lt;/a&gt;Authorisation with ACLs&lt;/h2&gt;&lt;p&gt;A much requested feature was the ability to control who can add/update/delete toggles on an application by application basis. We achieve this via the use if an Access Control List for each application. Users that are part of the ACL for an application are known as application owners.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/posts/hobknob-owners.png&quot; alt=&quot;Hobknob Owner List&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Application owners can (for an owned application):&lt;/p&gt;
     
     </summary>
     
@@ -1263,169 +1513,12 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Day-2&quot;&gt;&lt;a href=&quot;#Day-2&quot; class=&quot;headerlink&quot; title=&quot;Day 2&quot;&gt;&lt;/a&gt;Day 2&lt;/h2&gt;&lt;p&gt;This is our summary of PuppetConf 2014. In our &lt;a href=&quot;/b
-    
-    </summary>
-    
-    
-      <category term="Puppet" scheme="http://tech.opentable.co.uk/blog/categories/Puppet/"/>
-    
-      <category term="Conferences" scheme="http://tech.opentable.co.uk/blog/categories/Conferences/"/>
-    
-      <category term="PuppetConf 2014" scheme="http://tech.opentable.co.uk/blog/categories/PuppetConf-2014/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PuppetConf 2014 - Part 2</title>
-    <link href="http://tech.opentable.co.uk//blog/2014/10/06/puppetconf-2014-part-2/"/>
-    <id>http://tech.opentable.co.uk//blog/2014/10/06/puppetconf-2014-part-2/</id>
-    <published>2014-10-06T12:30:58.000Z</published>
-    <updated>2016-10-24T10:26:16.048Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Day-1"><a href="#Day-1" class="headerlink" title="Day 1"></a>Day 1</h2><p>This is our summary of PuppetConf 2014. In our <a href="/blog/2014/10/06/puppetconf-2014-part-1/">previous post</a> we gave an overview of the contributor summit. This post will provide an overview<br>of the first day of PuppetConf.</p>
-<p>As you might expect there were great keynotes with plenty of announcements and too many talks for us to attend. We have provided an outline for all the talks<br>we did attend and links to those we didn’t.</p>
-<h3 id="KeyNotes"><a href="#KeyNotes" class="headerlink" title="KeyNotes"></a>KeyNotes</h3><h4 id="Nearly-a-Decade-of-Puppet-What-We’ve-Learned-and-Where-We’re-Going-Next-Luke-Kanies-PuppetLabs-Slides"><a href="#Nearly-a-Decade-of-Puppet-What-We’ve-Learned-and-Where-We’re-Going-Next-Luke-Kanies-PuppetLabs-Slides" class="headerlink" title="Nearly a Decade of Puppet: What We’ve Learned and Where We’re Going Next - Luke Kanies, PuppetLabs - Slides"></a>Nearly a Decade of Puppet: What We’ve Learned and Where We’re Going Next - Luke Kanies, PuppetLabs - <a href="http://www.slideshare.net/PuppetLabs/luke-kanies-keynote-nearly-a-decade-of-puppet-what-weve-learned-and-where-were-going-next-puppetconf-2014" target="_blank" rel="external">Slides</a></h4><div style="float:right;margin:0 10px 10px 10px;width:50%"><br>  <img src="/images/posts/puppetconf-luke-1.jpg"><br></div>
+      &lt;h2 id=&quot;Day-2&quot;&gt;&lt;a href=&quot;#Day-2&quot; class=&quot;headerlink&quot; title=&quot;Day 2&quot;&gt;&lt;/a&gt;Day 2&lt;/h2&gt;&lt;p&gt;This is our summary of PuppetConf 2014. In our &lt;a href=&quot;/blog/2014/10/06/puppetconf-2014-part-2/&quot;&gt;previous post&lt;/a&gt; we gave an overview of the first day of the conference. This post will provide an&lt;br&gt;overview of the final day.&lt;/p&gt;
+&lt;p&gt;There were even more inspiring keynotes and lots more talks which have given us plenty of ideas to go home and think about.&lt;/p&gt;
+&lt;h3 id=&quot;Key-Notes&quot;&gt;&lt;a href=&quot;#Key-Notes&quot; class=&quot;headerlink&quot; title=&quot;Key Notes&quot;&gt;&lt;/a&gt;Key Notes&lt;/h3&gt;&lt;h4 id=&quot;Animating-the-Puppet-Creating-a-Culture-of-Puppet-Adoption-Dan-Spurling-spurling-Getty-Images-Slides&quot;&gt;&lt;a href=&quot;#Animating-the-Puppet-Creating-a-Culture-of-Puppet-Adoption-Dan-Spurling-spurling-Getty-Images-Slides&quot; class=&quot;headerlink&quot; title=&quot;Animating the Puppet: Creating a Culture of Puppet Adoption - Dan Spurling (@spurling), Getty Images - Slides&quot;&gt;&lt;/a&gt;Animating the Puppet: Creating a Culture of Puppet Adoption - Dan Spurling (&lt;a href=&quot;https://twitter.com/spurling&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;@spurling&lt;/a&gt;), Getty Images - &lt;a href=&quot;http://www.slideshare.net/PuppetLabs/keynote-animating-the-puppet-creating-a-culture-of-puppet-adoption-puppetconf-2014&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Slides&lt;/a&gt;&lt;/h4&gt;&lt;div style=&quot;float:right;margin:0 10px 10px 10px;width:50%&quot;&gt;&lt;br&gt;  &lt;img src=&quot;/images/posts/puppetconf-dan.jpg&quot;&gt;&lt;br&gt;&lt;/div&gt;
 
-<p>The big keynote of the event to kick off the first day from the author of Puppet himself. This was obviously going to be a tweet worthy affair full of photos<br>and big announcements and it did not disappoint.</p>
-<p>Native Clients (CFactor + C++ rewrite of agents) are coming in the very near future. This is not only a matter of improving the performance for existing users part<br>of philosophy of PuppetLabs to become ubiquitous across as many devices and platforms as possible. This is one of those improvements that is really setting up<br>PuppetLabs for the future.</p>
-<p>Puppet Server (a.k.a the Clojure rewrite). This is PuppetLabs big move away from Ruby on onto the JVM. Being on the JVM means they can slowly rewrite the<br>codebase while also maintaining compatibility thanks to JRuby. They have gained a lot of experience with Clojure thanks to the PuppetDB &amp; TrapKeeper projects and given how<br>successful that project has been it has helped ease many of the fears people have in moving the JVM. Puppet Server is also a self contained application so there<br>is no longer any need to worry about the whole apache/passanger yak shave. There was even a demo on the metrics that are now exposed by Puppet Server - yes<br>you can now plug Puppet into graphite.</p>
-<p>There have been plenty of follow-ups on this that you might be interested in reading:</p>
-<ul>
-<li><a href="http://www.infoworld.com/article/2687553/devops/puppet-server-drops-ruby-for-clojure.html" target="_blank" rel="external">http://www.infoworld.com/article/2687553/devops/puppet-server-drops-ruby-for-clojure.html</a></li>
-<li><a href="http://puppetlabs.com/blog/puppet-server-bringing-soa-to-a-puppet-master-near-you" target="_blank" rel="external">http://puppetlabs.com/blog/puppet-server-bringing-soa-to-a-puppet-master-near-you</a></li>
-<li><a href="http://puppetlabs.com/blog/new-era-application-services-puppet-labs" target="_blank" rel="external">http://puppetlabs.com/blog/new-era-application-services-puppet-labs</a></li>
-<li><a href="https://github.com/puppetlabs/puppet-server" target="_blank" rel="external">https://github.com/puppetlabs/puppet-server</a></li>
-<li><a href="http://www.informationweek.com/cloud/software-as-a-service/puppet-servers-big-revamp/d/d-id/1315934" target="_blank" rel="external">http://www.informationweek.com/cloud/software-as-a-service/puppet-servers-big-revamp/d/d-id/1315934</a></li>
-</ul>
-<p>Puppet Apps was the next big announcement. Puppet Apps is actually a fantastic piece of marketing around the idea that they are refactoring to a more micro-services<br>style approach - splitting up the monolith that is currently the Puppet master into smaller applications that have their own release cadence and can be scaled<br>separately.</p>
-<p>The first announcement from the “Apps” initiative is Puppet Node Manager the new node classifier which will roll out in the Q1 of 2015 as an add-on<br>to Puppet Enterprise. Given that Puppet has allowed external node classifiers to be written for a long time now (and there are many open source ones out there)<br>it is good to see PuppetLabs stepping up and trying to own this more and improve the experience.</p>
-<p><a href="http://puppetlabs.com/about/press-releases/puppet-labs-kicks-puppetconf-announcements-major-updates-industrys-most-popular" target="_blank" rel="external">http://puppetlabs.com/about/press-releases/puppet-labs-kicks-puppetconf-announcements-major-updates-industrys-most-popular</a></p>
-<p>Another huge announcement (of which we got a preview at the contributors summit) was Puppet Approved Modules. Luke and the rest of PuppetLabs have the huge<br>idea that 80% of what you’re going to want to configure on your systems should be possible with what is available on the forge. Some of the bigger pieces have<br>been covered by the module engineers at PuppetLabs under the existing Puppet Support Modules program. This has been fantastic in driving for consensus around<br>configuration making installation of certain products (like apache) easier for people.</p>
-<p>The reality is that if PuppetLabs want to achieve its 80% goal they are are not going to be able to do that with the engineers and resources they have<br>available to them. Nor do they have the expertise to know about all the software out there. This is where the Puppet Approved program comes in. Its aim is to<br>provide the same standard of quality that you see in the Supported modules but for modules written by the community. It is easy for users of the forge to<br>be able to pick out high quality, actively maintained modules and know what they are getting. As a user this is very exciting and as a module author, while<br>there will be plenty of work for me to do, I am glad that the community is moving in this direction.</p>
-<p>Speaking of the community, Luke used this opportunity to announce the finalists and the winner of the Most Valued Puppetier (MVP) competition.</p>
-<p>Finalists:</p>
-<ul>
-<li>Daniele Sluijters (<a href="https://twitter.com/daenney" target="_blank" rel="external">@daenney</a>)</li>
-<li>Felix Frank</li>
-<li>Tim Sharp (<a href="https://twitter.com/rodjek" target="_blank" rel="external">@rodjek</a>)</li>
-</ul>
-<p>Winner</p>
-<ul>
-<li>Erik Dalén (<a href="(https://twitter.com/erik_dalen">@erik_dalen</a>)</li>
-</ul>
-<p>The last part of the keynote was talking about some of the wider thoughts as we look to the next ten years of Puppet and what comes next. There is going to be<br>more focus on the ubiquity of Puppet, on devices more network device partners and solving problems like orchestration. The next ten years is going to be about<br>taking Puppet beyond the single node. We are already thinking of machines as cattle and not pets - Puppet should also better reflect that change.</p>
-<p>I for one am very excited by all this and look forward to seeing what comes out over the next few years.</p>
-<h4 id="The-Phoenix-Project-Lessons-Learned-Gene-Kim-IT-Revolution-Press-Slides"><a href="#The-Phoenix-Project-Lessons-Learned-Gene-Kim-IT-Revolution-Press-Slides" class="headerlink" title="The Phoenix Project: Lessons Learned - Gene Kim, IT Revolution Press - Slides"></a>The Phoenix Project: Lessons Learned - Gene Kim, IT Revolution Press - <a href="http://www.slideshare.net/PuppetLabs/keynote-the-phoenix-project-lessons-learned-puppetconf-2014" target="_blank" rel="external">Slides</a></h4><div style="float:right;margin:0 10px 10px 10px;width:50%"><br>  <img src="/images/posts/puppetconf-gene.jpg"><br></div>
 
-<p>This was a great overview of Gene’s research of DevOps and how that intersects with high performing organisations. There were many interesting results that came<br>out the the survey that he did in joint co-operation with PuppetLabs many of which he shared during this talk.</p>
-<p>I think the one that stands out and often tweeted is the following:</p>
-<p><em>“High performers have 30x more deployments and 8000x faster lead time, 2x the change success rate and 12x faster recovery”</em></p>
-<p>Read that again - wow.</p>
-<p>This talk as one might expect was all about DevOps, its history, why and how it works. Even if you’re fully familiar with the whole culture of DevOps there are<br>plenty of things to be learnt from this keynote and I look forward to re-watching it when the video lands on YouTube.</p>
-<h4 id="Trust-Me-Kate-Matsudaira-Popforms-Slides"><a href="#Trust-Me-Kate-Matsudaira-Popforms-Slides" class="headerlink" title="Trust Me - Kate Matsudaira, Popforms - Slides"></a>Trust Me - Kate Matsudaira, Popforms - <a href="http://www.slideshare.net/PuppetLabs/keynote-trust-me-puppetconf-2014" target="_blank" rel="external">Slides</a></h4><div style="float:right;margin:0 10px 10px 10px;width:50%"><br>  <img src="/images/posts/puppetconf-kate.jpg"><br></div>
-
-<p>Following the theme of culture, Kate’s talk was a refreshing look at the culture of trust within an organisation. Far from being the usual “this is what my<br>company culture looks like” sort-of talk, this talk had a lot of practical advice. Discussion of how to build relationships, how to raise your profile within<br>the organisation and how to improve yourself as a manger. “If you use your 1-on-1 to talk about status, you’re wasting time. Get to know your boss, solicit<br>feedback on your performance.” - Great advice like this is littered throughout the talk.</p>
-<p>She says that trust is like money and that you need to be wise in how you spend that trust. Most organisations are not a meritocracy and we need to stop thinking that they are. Your relationships within the organisation are just as important as the quality of the work that you do.  There needs to be balance between these two things - are your relationships as good as the work that you do?</p>
-<p>If you want to improve yourself and advance your career, either as an engineer or as a manager then you should absolutely take the time to listen to this talk.</p>
-<p><strong>Bonus</strong>: the slides rock! (I won’t spoilt it - take a look)</p>
-<h3 id="Track-Talks"><a href="#Track-Talks" class="headerlink" title="Track Talks"></a>Track Talks</h3><h4 id="The-Puppet-Debugging-Kit-Building-Blocks-for-Exploration-and-Problem-Solving-Charlie-Sharpsteen-Puppet-Labs-csharpsteen-Slides"><a href="#The-Puppet-Debugging-Kit-Building-Blocks-for-Exploration-and-Problem-Solving-Charlie-Sharpsteen-Puppet-Labs-csharpsteen-Slides" class="headerlink" title="The Puppet Debugging Kit: Building Blocks for Exploration and Problem Solving - Charlie Sharpsteen, Puppet Labs (@csharpsteen) - Slides"></a>The Puppet Debugging Kit: Building Blocks for Exploration and Problem Solving - Charlie Sharpsteen, Puppet Labs (<a href="https://twitter.com/csharpsteen" target="_blank" rel="external">@csharpsteen</a>) - <a href="http://www.slideshare.net/PuppetLabs/the-puppet-debugging-kit-building-blocks-for-exploration-and-problem-solving-charlie-sharpsteen-puppet-labs" target="_blank" rel="external">Slides</a></h4><p>Interesting tool, has some cross-over with the Beaker testing tool. PDK is more for focused manual testing rather than automated acceptance tests.</p>
-<ul>
-<li><a href="https://github.com/Sharpie/puppet-debugging-kit" target="_blank" rel="external">https://github.com/Sharpie/puppet-debugging-kit</a></li>
-<li>vagrant + oscar (<a href="https://github.com/adrienthebo/oscar" target="_blank" rel="external">https://github.com/adrienthebo/oscar</a>)</li>
-<li>oscar is a collection of vagrant plugins</li>
-<li>vagrant-config_builder -&gt; adds role to share vagrant config  (similar to the beaker nodeset file)</li>
-<li>PDK is a set of oscar roles</li>
-<li>facter / hiera and Puppet running off GitHub</li>
-<li>beaker vs oscar - oscar is optimised for manual testing. There is room to share stuff here.</li>
-</ul>
-<h4 id="Cloudy-with-a-Chance-of-Fireballs-Provisioning-and-Certificate-Management-in-Puppet-Eric-Sorenson-ahpook-Puppet-Labs-Slides"><a href="#Cloudy-with-a-Chance-of-Fireballs-Provisioning-and-Certificate-Management-in-Puppet-Eric-Sorenson-ahpook-Puppet-Labs-Slides" class="headerlink" title="Cloudy with a Chance of Fireballs: Provisioning and Certificate Management in Puppet - Eric Sorenson (@ahpook), Puppet Labs - Slides"></a>Cloudy with a Chance of Fireballs: Provisioning and Certificate Management in Puppet - Eric Sorenson (<a href="https://twitter.com/ahpook" target="_blank" rel="external">@ahpook</a>), Puppet Labs - <a href="http://www.slideshare.net/PuppetLabs/sorenson-fireballspuppet-conf2014" target="_blank" rel="external">Slides</a></h4><ul>
-<li>Apple iCloud uses Puppet + autosign</li>
-<li>auto sign doesn’t work very well for the cloud</li>
-<li>Amazon IAM can be applied by machines - IAM so instance can read it’s own tags (if it has ec2-client-utils installed)</li>
-<li>puts instance_id, ami_id and role into /etc/puppet/csr_attriubutes.yaml</li>
-<li>can validate the metadata in the cert using x509</li>
-<li>true_node_data = true &amp; immutable_node_data = true</li>
-<li>closes security hole of setting certname to fact on agent</li>
-</ul>
-<h4 id="Beaker-Automated-Cloud-Based-Acceptance-Testing-Alice-Nodelman-alicenode-Puppet-Labs-Slides"><a href="#Beaker-Automated-Cloud-Based-Acceptance-Testing-Alice-Nodelman-alicenode-Puppet-Labs-Slides" class="headerlink" title="Beaker: Automated, Cloud-Based Acceptance Testing - Alice Nodelman (@alicenode), Puppet Labs - Slides"></a>Beaker: Automated, Cloud-Based Acceptance Testing - Alice Nodelman (<a href="https://twitter.com/alicenode" target="_blank" rel="external">@alicenode</a>), Puppet Labs - <a href="http://www.slideshare.net/PuppetLabs/beaker-automated-cloudbased-acceptance-testing-puppetconf-2014" target="_blank" rel="external">Slides</a></h4><p>Having contributed to this tool, I was a little bias in attending this talk. Still plenty of interesting new things that came up though.<br>If you haven’t heard of beaker yet you will also be interested in our <a href="/blog/2014/04/04/testing-puppet-with-beaker/">previous blog post</a>.</p>
-<ul>
-<li>basic introduction to what beaker is and how to use it.</li>
-<li>rspec vs test dsl - both are still supported methods of writing tests.</li>
-<li>junit export - useful when integrating with Jenkins</li>
-<li><code>on host as</code> - is a feature that is coming soon so that you can run a command on a host with a given user account</li>
-</ul>
-<h4 id="Puppet-Language-4-0-Henrik-Lindberg-hel-Puppet-Labs-Slides"><a href="#Puppet-Language-4-0-Henrik-Lindberg-hel-Puppet-Labs-Slides" class="headerlink" title="Puppet Language 4.0 - Henrik Lindberg (@hel), Puppet Labs  - Slides"></a>Puppet Language 4.0 - Henrik Lindberg (<a href="https://twitter.com/hel" target="_blank" rel="external">@hel</a>), Puppet Labs  - <a href="http://www.slideshare.net/PuppetLabs/puppet-language-40-puppetconf-2014" target="_blank" rel="external">Slides</a></h4><p>Lots and lots of interesting information here about the new Puppet 4 syntax and jokes about some of the terrible edge cases of the past. It is good to<br>know now that with Puppet 4 there is a formal specification for the language so we should no longer see these sorts of weird edge cases of the past.<br>There are also lots of new features in the language: some to deal with long standing pain points (interation), some to help in the move away from ruby<br>(Puppet templates) and some to prevent authors themselves writing buggy manifests (the type system). Puppet 4 is going to be an exciting this to use.</p>
-<ul>
-<li>pain-points / cleanup (specification)<ul>
-<li>numbers are numbers (and not strings)</li>
-<li>Type references</li>
-</ul>
-</li>
-<li>heredoc</li>
-<li>Puppet templates</li>
-<li>iteration (each, map, filter, reduce, slice, with)</li>
-<li>local defaults</li>
-<li>Type system</li>
-</ul>
-<h4 id="7-Puppet-Horror-Stories-in-7-Years-Kris-Buytaert-KrisBuytaert-Inuits-Slides"><a href="#7-Puppet-Horror-Stories-in-7-Years-Kris-Buytaert-KrisBuytaert-Inuits-Slides" class="headerlink" title="7 Puppet Horror Stories in 7 Years - Kris Buytaert (@KrisBuytaert), Inuits - Slides"></a>7 Puppet Horror Stories in 7 Years - Kris Buytaert (<a href="https://twitter.com/KrisBuytaert" target="_blank" rel="external">@KrisBuytaert</a>), Inuits - <a href="http://www.slideshare.net/KrisBuytaert/7-years-of-puppet-horror-stories" target="_blank" rel="external">Slides</a></h4><p>This was more of an interactive talk, trying to get members of the audience to try and predict what the actual problem was. For more senior Puppetiers<br>this was a fun talk, reminding us of the challenges many of us have faced. For newer Puppet developers this was likely acting as a good warning and<br>foreshadowing of things that may arise if your not careful (or are very unlucky).</p>
-<ul>
-<li>SSL</li>
-<li>Full Disk</li>
-<li>Puppet Bugs</li>
-<li>DNS (everything is a DNS problem)</li>
-</ul>
-<h4 id="Killer-R10K-Workflow-Phil-Zimmerman-phil-zimmerman-Time-Warner-Cable-Slides"><a href="#Killer-R10K-Workflow-Phil-Zimmerman-phil-zimmerman-Time-Warner-Cable-Slides" class="headerlink" title="Killer R10K Workflow - Phil Zimmerman (@phil_zimmerman), Time Warner Cable - Slides"></a>Killer R10K Workflow - Phil Zimmerman (<a href="https://twitter.com/phil_zimmerman" target="_blank" rel="external">@phil_zimmerman</a>), Time Warner Cable - <a href="http://www.slideshare.net/PuppetLabs/killer-r10k-39571913" target="_blank" rel="external">Slides</a></h4><p>This was a good introduction to r10k and the reasons you would want to use it. The workflow is pretty straightforward and I think that for anyone managing Puppet at scale this is going to be something to look at.</p>
-<ul>
-<li>some good use cases for r10k<ul>
-<li>upgrading modules</li>
-<li>not having to wait for all role tests to run</li>
-<li>deploying everything to all masters (even hiera)</li>
-</ul>
-</li>
-<li>workflow<ul>
-<li>ci per module</li>
-<li>release job per module (tags)</li>
-<li>deploy job per module (cap task to wrap r10k for masters/nodes)</li>
-</ul>
-</li>
-</ul>
-<h3 id="Other-Talks-from-the-Day"><a href="#Other-Talks-from-the-Day" class="headerlink" title="Other Talks from the Day"></a>Other Talks from the Day</h3><ul>
-<li>Infrastructure-as-Code with Puppet Enterprise in the Cloud - Evan Scheessele, HP - <a href="http://www.slideshare.net/PuppetLabs/infrastructure-ascode-with-puppet-enterprise-in-the-cloud-evan-scheessele-hp" target="_blank" rel="external">Slides</a></li>
-<li>Getting Started with Puppet - Michael Stahnke, Puppet Labs - <a href="http://www.slideshare.net/PuppetLabs/getting-started-with-puppet-puppetconf-2014" target="_blank" rel="external">Slides</a></li>
-<li>Plan, Deploy &amp; Manage Modern Applications Leveraging vCloud Automation Center and Puppet - Pradnesh Patil, VMware - <a href="http://www.slideshare.net/PuppetLabs/plan-deploy-manage-modern-applications-leveraging-vcloud-automation-center-and-puppet-puppetconf-2014" target="_blank" rel="external">Slides</a></li>
-<li>Writing and Publishing Puppet Modules - Colleen Murphy, Puppet Labs - <a href="http://www.slideshare.net/PuppetLabs/writing-and-publishing-puppet-modules-colleen-murphy-puppet-labs" target="_blank" rel="external">Slides</a></li>
-<li>To the Future! - Goals for Puppet 4 - Andrew Parker, Puppet Labs &amp; Kylo Ginsberg, Puppet Labs - <a href="http://www.slideshare.net/PuppetLabs/to-the-future-goals-for-puppet-and-facter-1" target="_blank" rel="external">Slides</a></li>
-<li>Managing and Scaling Puppet - Miguel Zuniga, Symantec - <a href="http://www.slideshare.net/PuppetLabs/managing-and-scaling-puppet-puppetconf-2014-39542923" target="_blank" rel="external">Slides</a></li>
-<li>What Developers and Operations Can Learn from Design: 6 Ways to Work Better Together - Ashley Hathaway, IBM Watson - <a href="http://www.slideshare.net/PuppetLabs/what-developers-and-operations-can-learn-from-design-6-ways-to-work-better-together-puppetconf-2014" target="_blank" rel="external">Slides</a></li>
-<li>Performance Tuning Your Puppet Infrastructure - Nic Benders, New Relic - <a href="http://www.slideshare.net/PuppetLabs/performance-tuning-your-puppet-infrastructure-nic-benders-new-relic" target="_blank" rel="external">Slides</a></li>
-<li>“Sensu and Sensibility” - The Story of a Journey From #monitoringsucks to #monitoringlove - Tomas Doran, Yelp - <a href="http://www.slideshare.net/PuppetLabs/130pm-210pm-tomas-doran-track-1-puppetconf2014-sensu" target="_blank" rel="external">Slides</a></li>
-<li>DevOps Means Business - Gene Kim, IT Revolution Press &amp; Nicole Forsgren Velasquez, Utah State University - <a href="http://www.slideshare.net/PuppetLabs/devops-means-business-gene-kim-it-revolution-press-nicole-forsgren-velasquez-utah-state-university" target="_blank" rel="external">Slides</a></li>
-<li>Auditing/Security with Puppet - Robert Maury, Puppet Labs - <a href="http://www.slideshare.net/PuppetLabs/auditingsecurity-with-puppet-puppetconf-2014" target="_blank" rel="external">Slides</a></li>
-<li>Absolute Beginners Guide to Puppet Through Types - Igor Galić, Brainsware OG - <a href="http://www.slideshare.net/PuppetLabs/absolute-beginners-guide-to-puppet-through-types-igor-galic-brainsware-og" target="_blank" rel="external">Slides</a></li>
-<li>Plugging Chocolatey into Your Puppet Infrastructure - Rob Reynolds, Puppet Labs - <a href="http://www.slideshare.net/PuppetLabs/plugging-chocolatey-into-your-puppet-infrastructure-rob-reynolds-puppet-labs" target="_blank" rel="external">Slides</a></li>
-<li>PuppetDB: One Year Faster - Deepak Giridharagopal, Puppet Labs - <a href="http://www.slideshare.net/PuppetLabs/puppetconf-2014" target="_blank" rel="external">Slides</a></li>
-<li>The Puppet Community: Current State and Future Plans - Dawn Foster, Puppet Labs &amp; Kara Sowles, Puppet Labs - <a href="http://www.slideshare.net/PuppetLabs/the-puppet-community-current-state-and-future-plans-dawn-foster-puppet-labs-kara-sowles-puppet-labs" target="_blank" rel="external">Slides</a></li>
-<li>Continuous Delivery of Puppet-Based Infrastructure - Sam Kottler, Digital Ocean - <a href="http://www.slideshare.net/PuppetLabs/continuous-delivery-of-puppetbased-infrastructure-puppetconf-2014" target="_blank" rel="external">Slides</a></li>
-<li>The Seven Habits of Highly Effective Puppet Users - David Danzilio, Constant Contact - <a href="http://www.slideshare.net/PuppetLabs/the-seven-habits-of-highly-effective-puppet-users-puppetconf-2014" target="_blank" rel="external">Slides</a></li>
-<li>Fact-Based Monitoring - Alexis Le-Quoc, Datadog - <a href="http://www.slideshare.net/PuppetLabs/fact-based-monitoring-puppetconf-2014" target="_blank" rel="external">Slides</a></li>
-<li>Test-Driven Puppet Development - Nan Liu, Bodeco - <a href="http://www.slideshare.net/PuppetLabs/testdriven-puppet-development-puppetconf-2014" target="_blank" rel="external">Slides</a></li>
-<li>A Practical Guide to Modules - Lauren Rother, Puppet Labs &amp; Morgan Haskel, Puppet Labs - <a href="http://www.slideshare.net/PuppetLabs/a-practical-guide-to-modules-lauren-rother-puppet-labs-morgan-haskel-puppet-labs" target="_blank" rel="external">Slides</a></li>
-<li>Leveraging the PuppetDB API: Puppetboard - Daniele Sluijters, Nedap</li>
-<li>Puppet Availability and Performance at 100K Nodes - John Jawed, eBay/PayPal - <a href="http://www.slideshare.net/PuppetLabs/puppet-availability-and-performance-at-100k-nodes-puppetconf-2014" target="_blank" rel="external">Slides</a></li>
-<li>DevOps and Software Defined Networking - John Willis, Pacific Crest</li>
-<li>Razor, the Provisioning Toolbox - David Lutterkort, Puppet Labs - <a href="http://www.slideshare.net/PuppetLabs/razor-the-provisioning-toolbox-puppetconf-2014" target="_blank" rel="external">Slides</a></li>
-<li>How to Puppetize Google Cloud Platform - Katharina Probst, Google, Matt Bookman, Google &amp; Ryan Coleman, Puppet Labs - <a href="http://www.slideshare.net/PuppetLabs/how-to-puppetize-google-cloud-platform-katharina-e" target="_blank" rel="external">Slides</a></li>
-<li>Continuous Infrastructure: Modern Puppet for the Jenkins Project - R.Tyler Croy, Jenkins - <a href="http://www.slideshare.net/PuppetLabs/continuous-infrastructure-modern-puppet-for-the-jenkins-project-rtyler-croy-jenkins" target="_blank" rel="external">Slides</a></li>
-<li>How to Measure Everything: A Million Metrics Per Second with Minimal Developer Overhead - Jos Boumans, Krux - <a href="http://www.slideshare.net/PuppetLabs/how-to-measure-everything-a-million-metrics-per-second-with-minimal-developer-overhead-puppetco" target="_blank" rel="external">Slides</a></li>
-<li>How to Open Source Your Puppet Configuration - Elizabeth Krumbach Joseph, HP - <a href="http://www.slideshare.net/PuppetLabs/how-to-open-source-your-puppet-configuration-elizabeth-krumbach-joseph-hp" target="_blank" rel="external">Slides</a></li>
-<li>Manageable Puppet Infrastructure - Ger Apeldoorn, Freelance Puppet Consultant - <a href="http://www.slideshare.net/PuppetLabs/manageable-puppet-infrastructure-ger-apeldoorn-freelance-puppet-consultant" target="_blank" rel="external">Slides</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Day-1&quot;&gt;&lt;a href=&quot;#Day-1&quot; class=&quot;headerlink&quot; title=&quot;Day 1&quot;&gt;&lt;/a&gt;Day 1&lt;/h2&gt;&lt;p&gt;This is our summary of PuppetConf 2014. In our &lt;a href=&quot;/b
+&lt;p&gt;Dan Spuring, VP of Tech Services at Getty came out of the gate with a strong message. His &lt;a href=&quot;http://www.urbandictionary.com/define.php?term=GSD&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GSD&lt;/a&gt; t-shirt&lt;br&gt;giving you a clear understanding of who he is. His talk about creating a culture of Puppet adoption at his company was a great story of how challenging it&lt;br&gt;can be to move various business units with projects of various ages to a configuration-management (with Puppet) ethos.&lt;/p&gt;
     
     </summary>
     

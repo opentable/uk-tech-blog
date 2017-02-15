@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tech.opentable.co.uk//blog/2017/02/15/the-goal-driven-organisation/</loc>
+    
+    <lastmod>2017-02-15T10:49:22.178Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/index.html</loc>
+    
+    <lastmod>2017-02-09T16:48:44.523Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/jflowers.html</loc>
+    
+    <lastmod>2017-02-09T16:48:21.922Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tech.opentable.co.uk//blog/2016/11/18/testing-node-apps-with-docker-compose/</loc>
     
     <lastmod>2016-11-21T10:26:40.264Z</lastmod>
@@ -12,13 +33,6 @@
     <loc>http://tech.opentable.co.uk/blog/authors/fmaffei.html</loc>
     
     <lastmod>2016-11-18T16:37:54.263Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/index.html</loc>
-    
-    <lastmod>2016-11-18T13:39:29.356Z</lastmod>
     
   </url>
   
