@@ -17,7 +17,7 @@ I'm not talking solely about Agile here either. Yes we plan stories, yes we prio
 
 How do we know what to do next? Perhaps you lean on your gut feeling to order your to-do list. Maybe it is real-time cost and budget implications that influence your priorities or does it come down to who shouts loudest?
 
-## Why is prioritisation important? ##
+## Why is prioritisation important?
 
 The experts would have us believe we are living through the Digital Age, also know as the Computer Age. Increasingly this has been more accurately redefined as the Information Age. 
 
@@ -29,7 +29,7 @@ For instance how many times have we said "I don't have time to read" or "I'd lov
 
 The decision not to spend time reading or working-out in the gym means you are spending time on other activities you consider more important. Consciously or unconsciously, we prioritise our life. The key is to prioritise effectively.
 
-##The Focus Quadrant##
+## The Focus Quadrant
 
 I've been introduced to a framework that helped me to grab this idea of effective prioritisation and certainly opened my eyes to some of the mistakes I made previously.
 
@@ -65,7 +65,7 @@ Stephen Covey, a sadly deceased educator, author and businessman, designed a mat
 </tr>
 </table>
 
-##How does this help?##
+## How does this help?
 
 Covey's point is that if we have a long list of items and activities and we are struggling to prioritise them, spending 20 minutes writing the list down and assigning each task A, B, C or D can help clarify importance.
 
@@ -77,7 +77,7 @@ For category C there is a great saying 'The quadrant of deception'. These are ta
 
 Finally category D is the worst place to spend your time. It's okay to roam across each of these four quadrants but if we identify we are spending too much time in quadrant D we need to step back, reassess and pick up a task more aligned to our goals - ideally something from category B.
 
-##Money => mouth##
+## Money => mouth
 
 While this is useful in theory, we of course need to be realistic. You should factor in time for impromptu interruptions - saying no to every meeting isn't possible and this isn't an excuse to push back difficult tasks. However, the next time your to-do list gets unmanageable, take time out to clarify your priorities.
 
