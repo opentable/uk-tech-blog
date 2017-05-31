@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tech.opentable.co.uk//blog/2017/06/01/opentables-global-hackathon-2017/</loc>
+    
+    <lastmod>2017-05-30T21:57:02.572Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk//blog/2014/04/28/effective-prioritisation/</loc>
+    
+    <lastmod>2017-05-30T21:55:14.061Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/jcatterfeld.html</loc>
+    
+    <lastmod>2017-05-30T21:50:50.533Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tech.opentable.co.uk//blog/2017/02/15/the-goal-driven-organisation/</loc>
     
     <lastmod>2017-02-15T10:49:22.178Z</lastmod>
@@ -145,13 +166,6 @@
     <loc>http://tech.opentable.co.uk/blog/authors/mfigus.html</loc>
     
     <lastmod>2016-10-24T12:46:29.504Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/jcatterfeld.html</loc>
-    
-    <lastmod>2016-10-24T12:27:29.823Z</lastmod>
     
   </url>
   
@@ -439,13 +453,6 @@
     <loc>http://tech.opentable.co.uk//blog/2015/01/01/explaining-flux-architecture-with-macgyver-dot-js/</loc>
     
     <lastmod>2016-10-24T10:23:48.351Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk//blog/2014/04/28/effective-prioritisation/</loc>
-    
-    <lastmod>2016-10-24T10:23:42.395Z</lastmod>
     
   </url>
   
