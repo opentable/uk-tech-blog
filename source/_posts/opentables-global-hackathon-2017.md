@@ -24,17 +24,17 @@ The hackathon concluded with each team having up to five minutes to present thei
 
 The big headache in London that we always have to live with is the eight hour time difference between London and San Francisco - and the same constraint obviously existed for the hackathon. Each team concluded that it wouldn't be feasible to form teams across the offices so all our build-up and actual hacking remained independent. However we submitted our recorded presentations for the final judging along with the rest of the company.
 
-To get our ideas flowing we set up a kick-off session which we called "Beers and Ideas" - half an hour at the end of the Friday preceding the hackathon. Each individual with an idea was asked to pitch it to their colleagues with the intent to recruit team-mates. This format seemed to be popular and rolled seamlessly into our regular Friday office drinks where the 'recruitment' could continue.  Some engineers and product managers pitched their ideas even though though couldn't attend the hackathon itself.
+To get our ideas flowing we set up a kick-off session which we called "Beers and Ideas" - half an hour at the end of the Friday preceding the hackathon. Each individual with an idea was asked to pitch it to their colleagues with the intent to recruit team-mates. This format seemed to be popular and rolled seamlessly into our regular Friday office drinks where the 'recruitment' could continue.  Some engineers and product managers pitched their ideas even though they couldn't attend the hackathon itself.
 
 Our design team in SF supplied posters which we put up around the office to raise awareness of the event amongst colleagues and invite them to submit ideas. We were also sent t-shirts that were handed out to the hackers.
 
-One rule we introduced in London was that every hack team had to include someone with which you do not normally work. This was not an arduous stipulation and all teams managed to cross pollinate with each other.
+One rule we introduced in London was that every hack team had to include someone with which you do not normally work. This was not an arduous stipulation and all teams managed to cross-pollinate with each other.
 
-Just before we started hacking we had a short meeting to finalise the teams and projects. This was a last opportunity for anyone without a team to join an existing team or join forces together. Most people had already made their decisions, but three or four people found their projects at this late stage.
+Just before we started hacking we had a short meeting to finalise the teams and projects. This was the last opportunity for anyone without a team to join an existing team or join forces together. Most people had already made their decisions, but three or four people found their projects at this late stage.
 
 Our London hackathon culminated with a joint session at which we watched each other's demos.  All teams decided to record in advance rather than giving a live presentation and we gathered to watch these often very funny videos as a group.
 
-Finally we introduced a "Best Hack in London" award. This bonus, regional award added some drama and tension, preventing an anti-climax at the end of our day - as we had to wait until 1am to hear the global awards live from SF.
+Finally, we introduced a "Best Hack in London" award. This bonus, regional award added some drama and tension, preventing an anti-climax at the end of our day - as we had to wait until 1am to hear the global awards live from SF.
 
 
 ## How did it go?
@@ -53,7 +53,7 @@ Providing the meals was a headache and not something I'd want to do too often!  
 
 I was also unexpectedly asked to "star" in a hackathon video, "acting" as a restaurateur.  Watching it back was quite cringeworthy - my acting skills are not as strong as I'd thought.
 
-The final presentation of all the hacks was a high-energy,  enjoyable conclusion to the event. Our co-ordinator in SF did a good job lining up 40 back-to-back live presentations to multiple remote office, but inevitably there were some audio visual difficulties.  One final disappointment in London was that the winners were not emailed to the global office, meaning many of us excitedly checked our emails upon waking but had to wait much later to find out if they'd won.
+The final presentation of all the hacks was a high-energy,  enjoyable conclusion to the event. Our co-ordinator in SF did a good job lining up 40 back-to-back live presentations to multiple remote offices, but inevitably there were some audiovisual difficulties.  One final disappointment in London was that the winners were not emailed to the global office, meaning many of us excitedly checked our emails upon waking but had to wait much later to find out if they'd won.
 
 
 
