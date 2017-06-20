@@ -7,9 +7,9 @@ comments: true
 tags: [Testing, Engineering, Acceptance tests]
 ---
 
-We’ve been using GraphQL at OpenTable for a little over half a year now.  I won’t get into detail with why we use GraphQL, sufficed to say, we really enjoyed creating our very first GraphQL endpoint.  It eased a lot of the inconsistencies that we were experiencing with some of our REST-ful services.
+We’ve been using GraphQL at OpenTable for a little over half a year now.  I won’t go into detail as to why we started using it, but suffice to say, we really enjoyed creating our very first GraphQL endpoint.  It eased a lot of the inconsistencies that we were experiencing with some of our REST-ful services.
 
-The rest of this post assumes you’ve had some experience building a GraphQL endpoint.  If you aren’t familiar with it.  I want to say it feels a lot like having a querying language accessible via an HTTP endpoint.  If you want to try it for yourself, I would recommend [GitHub’s endpoint](https://developer.github.com/v4/explorer/).  To get started with GraphQL, [the official documentation](http://graphql.org/learn/) is a perfect place.
+This post assumes you have some experience building a GraphQL endpoint.  For those of who you aren’t familiar with it, it feels a lot like having a querying language via an HTTP endpoint.  If you want to try it for yourself, I recommend [GitHub’s endpoint](https://developer.github.com/v4/explorer/).  To get started with GraphQL, [the official documentation](http://graphql.org/learn/) is a perfect place.
 
 ## The Problem
 
@@ -21,7 +21,7 @@ Finding a good solution to this is important because I’ve had such a love--hat
 
 So we took a step back and looked at the code we were writing.  Most of the connectors we wrote were fairly anemic.  We didn’t have much logic for our API nor did we want any.  We could have written unit tests for each parts of the schema but mocking portions of the system seemed more work than it was worth.
 
-So where did we start?  I personally enjoy the outside-in approach and started writing a few acceptance tests. Most of the errors that occurred when we extended existing schemas and inadvertently broke existing queries.  To curtail this, I wrote a query for each schema we had.  It would fire an HTTP request and expect a 200 status code and have no errors in the resulting JSON body.  Thanks to GraphQL most errors are handily reported using this mechanism so we would be able to make a decent impact using little work.
+So where did we start?  I personally enjoy the outside-in approach and started writing a few acceptance tests. So, we wrote a test for each query in the schema that we had.  It would fire an HTTP request and expect a 200 status code and have no errors in the resulting JSON body.  Thanks to GraphQL most errors are handily reported using this mechanism so we would be able to make a decent impact using little work.
 
 {% img left /images/posts/graphql-base-tests.gif %}
 
@@ -29,7 +29,7 @@ As you can see, we found that this would be good enough at the time but eventual
 
 ## The Solution
 
-We knew GraphiQL (the web interface for testing GraphQL queries) was using introspection to give us intellisense.  What a great idea: we could leverage introspection in a similar way to discover all the possible queries for a given endpoint.  After doing so, we repeated our previous tests which was to: fire an HTTP request and ensure there were no errors.
+We knew GraphiQL (the web interface for testing GraphQL queries) was using introspection to give us intellisense.  What a great idea: we could leverage introspection in a similar way to discover all the possible queries for a given endpoint.  After doing so, we repeated our previous tests, which was to fire an HTTP request.
 
 So how would you generate queries with parameters?  For example numDice is required for this query:
 
