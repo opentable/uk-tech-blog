@@ -61,7 +61,7 @@ From this, all we did is write examples for every single one of our queries and 
 
 We thought that we wouldn’t be the only ones running into this problem so we decided to open source this tool: [graphql-query-generator](https://github.com/opentable/graphql-query-generator).  It can be used as a CLI or a library (if you need more tweaking).  Feel free to give constructive feedback.  Here is a quick demonstration.
 
-![Demonstration of GraphQL Testing Tool](/images/posts/graphql-tool-tests.gif)
+![Demonstration of GraphQL Testing Tool](/images/posts/graphql-tool-test.gif)
 
 If you’re not seeing the above commands and want to run it for yourself.  Just follow these three steps:
 
