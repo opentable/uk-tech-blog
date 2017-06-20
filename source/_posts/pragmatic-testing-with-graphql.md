@@ -4,7 +4,7 @@ title: "Pragmatic Testing with GraphQL"
 date: 2017-06-16 15:41:16
 author: rluong
 comments: true
-tags: [Testing, Engineering, Acceptance tests]
+tags: [Testing, Engineering, Acceptance tests, API, GraphQL]
 ---
 
 We’ve been using GraphQL at OpenTable for a little over half a year now.  I won’t go into detail as to why we started using it, but suffice to say, we really enjoyed creating our very first GraphQL endpoint.  It eased a lot of the inconsistencies that we were experiencing with some of our REST-ful services.
@@ -75,7 +75,9 @@ If you’re not seeing the above commands and want to run it for yourself.  Just
 … And that’s it!  You have a full suite of acceptance tests running against your own GraphQL endpoint!
 
 Please check out: https://www.npmjs.com/package/graphql-query-generator for more information and updates!
+
 We are always looking for contributors and feedback here: https://github.com/opentable/graphql-query-generator/issues
+
 Finally, if you find it valuable in anyway, perhaps you could throw a star :)
 
-##### disclaimer: we do have performance and unit tests on top of this :)
+##### Disclaimer: we do have performance and unit tests on top of this :)
