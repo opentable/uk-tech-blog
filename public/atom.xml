@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tech.opentable.co.uk/"/>
-  <updated>2017-06-20T11:05:33.007Z</updated>
+  <updated>2017-06-20T11:16:41.170Z</updated>
   <id>http://tech.opentable.co.uk/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://tech.opentable.co.uk//blog/2017/06/16/pragmatic-testing-with-graphql/"/>
     <id>http://tech.opentable.co.uk//blog/2017/06/16/pragmatic-testing-with-graphql/</id>
     <published>2017-06-16T15:41:16.000Z</published>
-    <updated>2017-06-20T11:05:33.007Z</updated>
+    <updated>2017-06-20T11:16:41.170Z</updated>
     
     <content type="html"><![CDATA[<p>We’ve been using GraphQL at OpenTable for a little over half a year now.  I won’t go into detail as to why we started using it, but suffice to say, we really enjoyed creating our very first GraphQL endpoint.  It eased a lot of the inconsistencies that we were experiencing with some of our REST-ful services.</p>
 <p>This post assumes you have some experience building a GraphQL endpoint.  For those of who you aren’t familiar with it, it feels a lot like having a querying language via an HTTP endpoint.  If you want to try it for yourself, I recommend <a href="https://developer.github.com/v4/explorer/" target="_blank" rel="external">GitHub’s endpoint</a>.  To get started with GraphQL, <a href="http://graphql.org/learn/" target="_blank" rel="external">the official documentation</a> is a perfect place.</p>
@@ -41,8 +41,10 @@
 <p>If you’re not seeing the above commands and want to run it for yourself.  Just follow these three steps:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. npm i -g graphql-query-generator</div><div class="line">2. gql-test http://www.example.com/graphql</div><div class="line">3. Have a cup of tea :)</div></pre></td></tr></table></figure>
 <p>… And that’s it!  You have a full suite of acceptance tests running against your own GraphQL endpoint!</p>
-<p>Please check out: <a href="https://www.npmjs.com/package/graphql-query-generator" target="_blank" rel="external">https://www.npmjs.com/package/graphql-query-generator</a> for more information and updates!<br>We are always looking for contributors and feedback here: <a href="https://github.com/opentable/graphql-query-generator/issues" target="_blank" rel="external">https://github.com/opentable/graphql-query-generator/issues</a><br>Finally, if you find it valuable in anyway, perhaps you could throw a star :)</p>
-<h5 id="disclaimer-we-do-have-performance-and-unit-tests-on-top-of-this"><a href="#disclaimer-we-do-have-performance-and-unit-tests-on-top-of-this" class="headerlink" title="disclaimer: we do have performance and unit tests on top of this :)"></a>disclaimer: we do have performance and unit tests on top of this :)</h5>]]></content>
+<p>Please check out: <a href="https://www.npmjs.com/package/graphql-query-generator" target="_blank" rel="external">https://www.npmjs.com/package/graphql-query-generator</a> for more information and updates!</p>
+<p>We are always looking for contributors and feedback here: <a href="https://github.com/opentable/graphql-query-generator/issues" target="_blank" rel="external">https://github.com/opentable/graphql-query-generator/issues</a></p>
+<p>Finally, if you find it valuable in anyway, perhaps you could throw a star :)</p>
+<h5 id="Disclaimer-we-do-have-performance-and-unit-tests-on-top-of-this"><a href="#Disclaimer-we-do-have-performance-and-unit-tests-on-top-of-this" class="headerlink" title="Disclaimer: we do have performance and unit tests on top of this :)"></a>Disclaimer: we do have performance and unit tests on top of this :)</h5>]]></content>
     
     <summary type="html">
     
@@ -57,9 +59,13 @@
     
       <category term="Engineering" scheme="http://tech.opentable.co.uk/blog/categories/Engineering/"/>
     
+      <category term="API" scheme="http://tech.opentable.co.uk/blog/categories/API/"/>
+    
       <category term="Testing" scheme="http://tech.opentable.co.uk/blog/categories/Testing/"/>
     
       <category term="Acceptance tests" scheme="http://tech.opentable.co.uk/blog/categories/Acceptance-tests/"/>
+    
+      <category term="GraphQL" scheme="http://tech.opentable.co.uk/blog/categories/GraphQL/"/>
     
   </entry>
   
