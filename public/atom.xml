@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tech.opentable.co.uk/"/>
-  <updated>2017-05-31T17:00:17.190Z</updated>
+  <updated>2017-06-20T11:05:33.007Z</updated>
   <id>http://tech.opentable.co.uk/</id>
   
   <author>
@@ -14,6 +14,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Pragmatic Testing with GraphQL</title>
+    <link href="http://tech.opentable.co.uk//blog/2017/06/16/pragmatic-testing-with-graphql/"/>
+    <id>http://tech.opentable.co.uk//blog/2017/06/16/pragmatic-testing-with-graphql/</id>
+    <published>2017-06-16T15:41:16.000Z</published>
+    <updated>2017-06-20T11:05:33.007Z</updated>
+    
+    <content type="html"><![CDATA[<p>We’ve been using GraphQL at OpenTable for a little over half a year now.  I won’t go into detail as to why we started using it, but suffice to say, we really enjoyed creating our very first GraphQL endpoint.  It eased a lot of the inconsistencies that we were experiencing with some of our REST-ful services.</p>
+<p>This post assumes you have some experience building a GraphQL endpoint.  For those of who you aren’t familiar with it, it feels a lot like having a querying language via an HTTP endpoint.  If you want to try it for yourself, I recommend <a href="https://developer.github.com/v4/explorer/" target="_blank" rel="external">GitHub’s endpoint</a>.  To get started with GraphQL, <a href="http://graphql.org/learn/" target="_blank" rel="external">the official documentation</a> is a perfect place.</p>
+<h2 id="The-Problem"><a href="#The-Problem" class="headerlink" title="The Problem"></a>The Problem</h2><p>Now, let’s get back to writing tests for an endpoint.  When we were creating our first endpoint, we started facing regression testing problems while expanding our schema.  It seemed our existing testing methods were ill-equipped to handle it.</p>
+<p>Finding a good solution to this is important because I’ve had such a love–hate affair with testing.  All tests are not created equal and a naive developer would say, “write a test in case something changes”.  This certainly isn’t a good measure.  I’ve also found that just attempting to write tests immediately without forethought can be a costly distraction if you grow your codebase.</p>
+<h2 id="The-Approach"><a href="#The-Approach" class="headerlink" title="The Approach"></a>The Approach</h2><p>So we took a step back and looked at the code we were writing.  Most of the connectors we wrote were fairly anemic.  We didn’t have much logic for our API nor did we want any.  We could have written unit tests for each parts of the schema but mocking portions of the system seemed more work than it was worth.</p>
+<p>So where did we start?  I personally enjoy the outside-in approach and started writing a few acceptance tests. So, we wrote a test for each query in the schema that we had.  It would fire an HTTP request and expect a 200 status code and have no errors in the resulting JSON body.  Thanks to GraphQL most errors are handily reported using this mechanism so we would be able to make a decent impact using little work.</p>
+<img src="/images/posts/graphql-base-tests.gif" class="left">
+<p>As you can see, we found that this would be good enough at the time but eventually found that it would not scale very well.  If you forget to update one of these queries, you could leave out a major section out accidentally.  Being a big fan of automation, we wondered how we could scale this out.</p>
+<h2 id="The-Solution"><a href="#The-Solution" class="headerlink" title="The Solution"></a>The Solution</h2><p>We knew GraphiQL (the web interface for testing GraphQL queries) was using introspection to give us intellisense.  What a great idea: we could leverage introspection in a similar way to discover all the possible queries for a given endpoint.  After doing so, we repeated our previous tests, which was to fire an HTTP request.</p>
+<p>So how would you generate queries with parameters?  For example numDice is required for this query:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">rollDice(numDice: 4, numSides: 6) &#123;</div><div class="line">	name</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>So, how would we be able to provide a valid parameter to a query that we’ve discovered in this endpoint?  We believe, this is a great opportunity to kill two birds with one stone!  Write an example in your documentation/comments for your query and we’ll re-use it as a test!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">type Query &#123;</div><div class="line">  # RollDice has four examples</div><div class="line">  #</div><div class="line">  # Examples:</div><div class="line">  # rollDice(numDice: 4, numSides: 2)</div><div class="line">  # rollDice( numDice : 40 , numSides:2)</div><div class="line">  # rollDice ( numDice: 2, numSides: 299 )</div><div class="line">  # rollDice (</div><div class="line">  #   numDice:4,</div><div class="line">  #   numSides: 2342</div><div class="line">  # )</div><div class="line">  rollDice(numDice: Int!, numSides: Int): RandomDie</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>From this, all we did is write examples for every single one of our queries and re-run our methodology.</p>
+<p>We thought that we wouldn’t be the only ones running into this problem so we decided to open source this tool: <a href="https://github.com/opentable/graphql-query-generator" target="_blank" rel="external">graphql-query-generator</a>.  It can be used as a CLI or a library (if you need more tweaking).  Feel free to give constructive feedback.  Here is a quick demonstration.</p>
+<p><img src="/images/posts/graphql-base-tests.gif" alt="Demonstration of GraphQL Testing Tool"></p>
+<p>If you’re not seeing the above commands and want to run it for yourself.  Just follow these three steps:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. npm i -g graphql-query-generator</div><div class="line">2. gql-test http://www.example.com/graphql</div><div class="line">3. Have a cup of tea :)</div></pre></td></tr></table></figure>
+<p>… And that’s it!  You have a full suite of acceptance tests running against your own GraphQL endpoint!</p>
+<p>Please check out: <a href="https://www.npmjs.com/package/graphql-query-generator" target="_blank" rel="external">https://www.npmjs.com/package/graphql-query-generator</a> for more information and updates!<br>We are always looking for contributors and feedback here: <a href="https://github.com/opentable/graphql-query-generator/issues" target="_blank" rel="external">https://github.com/opentable/graphql-query-generator/issues</a><br>Finally, if you find it valuable in anyway, perhaps you could throw a star :)</p>
+<h5 id="disclaimer-we-do-have-performance-and-unit-tests-on-top-of-this"><a href="#disclaimer-we-do-have-performance-and-unit-tests-on-top-of-this" class="headerlink" title="disclaimer: we do have performance and unit tests on top of this :)"></a>disclaimer: we do have performance and unit tests on top of this :)</h5>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;We’ve been using GraphQL at OpenTable for a little over half a year now.  I won’t go into detail as to why we started using it, but suffice to say, we really enjoyed creating our very first GraphQL endpoint.  It eased a lot of the inconsistencies that we were experiencing with some of our REST-ful services.&lt;/p&gt;
+&lt;p&gt;This post assumes you have some experience building a GraphQL endpoint.  For those of who you aren’t familiar with it, it feels a lot like having a querying language via an HTTP endpoint.  If you want to try it for yourself, I recommend &lt;a href=&quot;https://developer.github.com/v4/explorer/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub’s endpoint&lt;/a&gt;.  To get started with GraphQL, &lt;a href=&quot;http://graphql.org/learn/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;the official documentation&lt;/a&gt; is a perfect place.&lt;/p&gt;
+&lt;h2 id=&quot;The-Problem&quot;&gt;&lt;a href=&quot;#The-Problem&quot; class=&quot;headerlink&quot; title=&quot;The Problem&quot;&gt;&lt;/a&gt;The Problem&lt;/h2&gt;&lt;p&gt;Now, let’s get back to writing tests for an endpoint.  When we were creating our first endpoint, we started facing regression testing problems while expanding our schema.  It seemed our existing testing methods were ill-equipped to handle it.&lt;/p&gt;
+&lt;p&gt;Finding a good solution to this is important because I’ve had such a love–hate affair with testing.  All tests are not created equal and a naive developer would say, “write a test in case something changes”.  This certainly isn’t a good measure.  I’ve also found that just attempting to write tests immediately without forethought can be a costly distraction if you grow your codebase.&lt;/p&gt;
+&lt;h2 id=&quot;The-Approach&quot;&gt;&lt;a href=&quot;#The-Approach&quot; class=&quot;headerlink&quot; title=&quot;The Approach&quot;&gt;&lt;/a&gt;The Approach&lt;/h2&gt;
+    
+    </summary>
+    
+    
+      <category term="Engineering" scheme="http://tech.opentable.co.uk/blog/categories/Engineering/"/>
+    
+      <category term="Testing" scheme="http://tech.opentable.co.uk/blog/categories/Testing/"/>
+    
+      <category term="Acceptance tests" scheme="http://tech.opentable.co.uk/blog/categories/Acceptance-tests/"/>
+    
+  </entry>
   
   <entry>
     <title>OpenTable&#39;s Global Hackathon 2017</title>
@@ -1349,61 +1397,6 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
       <category term="Work smarter" scheme="http://tech.opentable.co.uk/blog/categories/Work-smarter/"/>
     
       <category term="Culture" scheme="http://tech.opentable.co.uk/blog/categories/Culture/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hobknob v1.0: Now with authorization</title>
-    <link href="http://tech.opentable.co.uk//blog/2014/10/22/hobknob-v1-dot-0-now-with-authorization/"/>
-    <id>http://tech.opentable.co.uk//blog/2014/10/22/hobknob-v1-dot-0-now-with-authorization/</id>
-    <published>2014-10-22T14:00:31.000Z</published>
-    <updated>2016-10-24T10:24:22.027Z</updated>
-    
-    <content type="html"><![CDATA[<p>We are pleased to announce the version 1.0 release of <a href="https://github.com/opentable/hobknob" target="_blank" rel="external">Hobknob</a>, our open-source feature toggle management system. With it comes a few additions and several improvements. </p>
-<p>This post will expand on some of the changes, in particular, authorisation via access control lists.<br>For an introduction to Hobknob, see our previous post: <a href="/blog/2014/09/04/introducing-hobknob-feature-toggling-with-etcd/">Introducing Hobknob: Feature toggling with etcd</a>.</p>
-<h2 id="Authorisation-with-ACLs"><a href="#Authorisation-with-ACLs" class="headerlink" title="Authorisation with ACLs"></a>Authorisation with ACLs</h2><p>A much requested feature was the ability to control who can add/update/delete toggles on an application by application basis. We achieve this via the use if an Access Control List for each application. Users that are part of the ACL for an application are known as application owners.</p>
-<p><img src="/images/posts/hobknob-owners.png" alt="Hobknob Owner List"></p>
-<p>Application owners can (for an owned application):</p>
-<ul>
-<li>Add toggles</li>
-<li>Set the value of a toggle</li>
-<li>Delete toggles</li>
-<li>Add additional owners</li>
-<li>Remove owners</li>
-</ul>
-<p>Everyone can:</p>
-<ul>
-<li>Add an application</li>
-<li>See toggles</li>
-<li>See application owners</li>
-<li>See the audit trail for a toggle</li>
-</ul>
-<p>When a user creates an new application, they are automatically added as an owner for that application.<br>The user can then add other application owners by clicking the ‘Add user’ button in the Owners panel and entering the users email address.</p>
-<p><strong>Note:</strong> this feature is only available when authentication is enabled. If Hobknob is not configured to require authentication, everyone has owner permissions to all applications. See the <a href="https://github.com/opentable/hobknob#configuring-authentication" target="_blank" rel="external">readme</a> for more information on how to configure authentication.</p>
-<h2 id="Deleting-Toggles"><a href="#Deleting-Toggles" class="headerlink" title="Deleting Toggles"></a>Deleting Toggles</h2><p>Feature toggles can now be deleted. This ability is available on the toggle view (get there by clicking a toggle name in the application view).</p>
-<p><img src="/images/posts/hobknob-delete.png" alt="Hobknob Toggle Delete"></p>
-<p>You’ll notice the delete toggle button in the Danger Zone panel (we didn’t steal that idea from Github, honest). You’ll need to confirm the delete by clicking the delete button a second time.</p>
-<p><strong>Warning:</strong> Deleting a toggle will perform a ‘hard’ delete, that is, the key is deleted in etcd. The audit will persist however, and can be accessed via this route: <code>/#!/applications/app-name/toggle-name</code>. You are also allowed to re-add a toggle, and the audit will be appended to an existing audit for that toggle name.</p>
-<p><strong>Note:</strong> If authentication is enabled, you must be an application owner to delete a toggle.</p>
-<h2 id="Makeover"><a href="#Makeover" class="headerlink" title="Makeover"></a>Makeover</h2><p>Gone is the ‘Add Toggle’ modal dialog from the previous version. This is replaced by two separate inline forms.</p>
-<p>Applications are now added by clicking ‘Add’ in the sidebar.</p>
-<p><img src="/images/posts/hobknob-newapplication.png" alt="Hobknob New Application"></p>
-<p>Toggles are added by clicking ‘New Toggle’ in the Toggles panel for an application.</p>
-<p><img src="/images/posts/hobknob-newtoggle-v2.png" alt="Hobknob New Toggle"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;We are pleased to announce the version 1.0 release of &lt;a href=&quot;https://github.com/opentable/hobknob&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hobknob&lt;/a&gt;, our open-source feature toggle management system. With it comes a few additions and several improvements. &lt;/p&gt;
-&lt;p&gt;This post will expand on some of the changes, in particular, authorisation via access control lists.&lt;br&gt;For an introduction to Hobknob, see our previous post: &lt;a href=&quot;/blog/2014/09/04/introducing-hobknob-feature-toggling-with-etcd/&quot;&gt;Introducing Hobknob: Feature toggling with etcd&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;Authorisation-with-ACLs&quot;&gt;&lt;a href=&quot;#Authorisation-with-ACLs&quot; class=&quot;headerlink&quot; title=&quot;Authorisation with ACLs&quot;&gt;&lt;/a&gt;Authorisation with ACLs&lt;/h2&gt;&lt;p&gt;A much requested feature was the ability to control who can add/update/delete toggles on an application by application basis. We achieve this via the use if an Access Control List for each application. Users that are part of the ACL for an application are known as application owners.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/posts/hobknob-owners.png&quot; alt=&quot;Hobknob Owner List&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Application owners can (for an owned application):&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Hobknob" scheme="http://tech.opentable.co.uk/blog/categories/Hobknob/"/>
     
   </entry>
   

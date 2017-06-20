@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tech.opentable.co.uk//blog/2017/06/16/pragmatic-testing-with-graphql/</loc>
+    
+    <lastmod>2017-06-20T11:05:33.007Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tech.opentable.co.uk//blog/2017/06/01/opentables-global-hackathon-2017/</loc>
     
     <lastmod>2017-05-31T17:00:17.190Z</lastmod>
