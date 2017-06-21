@@ -117,7 +117,7 @@ There are a lot of things that go into building a puppetmaster:
 
 Now let's step through our new spec_acceptence file that supports this multi-node environment:
 
-###Deploying the codebase
+### Deploying the codebase
 Stage one is getting our puppet codebase onto the master, which includes all the files, internal modules and anything else we need to get the master up and
 running. We do this like follows:
 
@@ -139,7 +139,7 @@ running. We do this like follows:
 Here we are selecting all the files that we want and calling the scp_to method which will scp any file or directory to the host of choice, in this case our
 master.
 
-###The puppetmaster:
+### The puppetmaster:
 
     ...
 
@@ -155,7 +155,7 @@ save us some pain later on. This step should really be configured as another bea
 It is at this point that we have first introduced the "on master" this does what you think it might, it executes the command you pass it onto
 the host with the nodeset role on 'master'.
 
-###Set the puppet.conf file:
+### Set the puppet.conf file:
 
     ...
 
@@ -181,7 +181,7 @@ Here we are configuring out puppet.conf file, making sure that it includes any c
 that we have added to beaker to allow us to do this customization and in this case it is taking the hash to modify the puppet.conf file on the master
 host.
 
-###Install the required ruby gems:
+### Install the required ruby gems:
 
     ...
 
@@ -195,7 +195,7 @@ The average production-ready puppetmaster also requires a number of gems to func
 depending upon what backends and other custom puppet extensions you have implemented. Here we are installing all our dependencies from
 the Gemfile we have already put onto the host.
 
-###Installing modules:
+### Installing modules:
 
     ...
 
@@ -206,7 +206,7 @@ the Gemfile we have already put onto the host.
 The last major step is installing any external modules you have. You may be using librarian-puppet or r10k to do this. In our case it
 is the former so we go ahead and make sure that our modules directory is full of all the modules we require.
 
-###Networking:
+### Networking:
 
     ...
 

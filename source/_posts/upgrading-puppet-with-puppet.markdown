@@ -12,7 +12,7 @@ As part of one of our recent [ForgeFriday](/blog/2014/04/04/forgefriday-our-comm
 
 This should be a very straightforward task to complete because this is one of the core resources that Puppet manages - the upgrading of packages. With that in mind, putting `package { ‘puppet’: ensure => $version }` in one of our base profiles would be all that was needed but alas it was not. In this blog I want to take you through the history, the bugs, the platforms and the edge-cases that make performing an in-place upgrade of Puppet a more complex task that it ought to be.
 
-##Debian
+## Debian
 Like many, Ubuntu is our Debian derivative of choice for much of our newer production infrastructure. Debian, has the apt package management system and PuppetLabs provide the required deb packages as well as hosting their own apt repository to point our systems to. The main point of package management systems is that they take care of the dependency hell and the awkward upgrade paths all from within the confines of the package itself, and that is what happens with the PuppetLabs packages - great. 
 
 The problem that we had in some of our systems was that they had been built without the PuppetLabs apt repository. This means that they picked up a slightly older version of the Puppet packages from the main Ubuntu distribution repositories and didn’t have access to the newer versions of the Puppet packages. Ok, so we solved that with the following code:
@@ -33,11 +33,11 @@ The problem that we had in some of our systems was that they had been built with
 
 We're making use of the [puppetlabs/apt](http://forge.puppetlabs.com/puppetlabs/apt) module here. This removes the old reference and adding in the new apt source. Then we just add the package and ensure the version we’re upgrading. Perfect.
 
-##RedHat
+## RedHat
 
 Same problem different OS family - this time we had some older CentOS machines that needed fixing. Thankfully there is also a module [stahnma/puppetlabs_yum](http://forge.puppetlabs.com/stahnma/puppetlabs_yum) for the yum repositories. Add that in, add the package resource and start upgrading. Phew! This seems like it’s getting easier.
 
-##Windows
+## Windows
 
 Many of you will be following the work of OpenTable closely because of our work with Puppet on Windows. We have a pretty large Windows infrastructure, with a wide range of client and server versions deployed ranging from 2012 R2 all the way back to the historic times of 2003. Windows also has its own package format, the msi, and PuppetLabs also provides all versions of Puppet packaged as msi files. 
 
@@ -55,6 +55,6 @@ Nice little cycle there, but it works.
 
 One final issue worth mentioning is that for Windows 2003 servers you’ll need to actually have Powershell installed. Luckily, we also have a module for that [dcharleston/powershell](http://forge.puppetlabs.com/dcharleston/powershell)
 
-##Summary
+## Summary
 
 Well we’ve discussed some of the pain points, and we’ve discussed them in detail with PuppetLabs themselves. The advice here is to upgrade to Puppet 3.4.3 as soon as you can as many of these issues are resolved in that version. For those of you not on that version yet then we have you covered with our puppetversion module.

@@ -24,7 +24,7 @@ Therefore I have written this blog post to discuss the different approaches we h
 
 All code used in this post is avaliable on my *[GitHub](https://github.com/chriscartlidge/React-Testing-Blog-Code)*.
 
-##The Basics
+## The Basics
 
 To make our lives a lot easier when writing test it's best to use a couple of basic tools. Below is
 the absolute minimum required to start testing React components.
@@ -32,7 +32,7 @@ the absolute minimum required to start testing React components.
 - *[Mocha](https://mochajs.org/)* - This is a testing framework that runs in the browser or Node.JS (others are available).
 - *[ReactTestUtils](https://facebook.github.io/react/docs/test-utils.html)* - This is the basic testing framework that Facebook provides to go testing with React.
 
-##The Scenario
+## The Scenario
 
 We have a landing page broken down into two separate components:
 
@@ -46,7 +46,7 @@ Each React component is self-contained and should be tested in isolation.
 For the purpose of this exercise we will focus on the test for the container component and
 making sure that the menu bar is displayed within it.
 
-##Approach 1 (Full DOM):
+## Approach 1 (Full DOM):
 
 I like to call this the “Full DOM” approach because you take a component and render it in its entirety
 including all of its children. The React syntax are transformed and any assertion
@@ -98,7 +98,7 @@ The example above is a common approach but is it necessarily the best way?
 From my point of view no, as this approach makes our tests brittle. We are exposing and querying on the inner workings
 of the menu-bar and if someone was to refactor it and remove/rename the "menu-bar-container" class then our test would fail.
 
-##Approach 2 (Shallow Rendering):
+## Approach 2 (Shallow Rendering):
 
 With the release of React 0.13 Facebook provided the ability to “shallow render” a component.
 This allows you to instantiate a component and get the result of its render function, a ReactElement, without a DOM.
@@ -154,7 +154,7 @@ a DOM to render into.
 
 - It's a lot easier to see what is being asserted as we are able to use JSX syntax in assertions.
 
-##Conclusion
+## Conclusion
 So is shallow rendering the silver bullet for React testing? Probably not as it still lacking on key feature for me when dealing
 with large components and that is the ability to easily query the ReactDOM (libraries like *[enzyme](https://github.com/airbnb/enzyme)*
 are working towards improving this). But it is still a lot better than rendering the component out into HTML and coupling your tests

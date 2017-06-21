@@ -18,23 +18,23 @@ many different versions and editions of Windows out there in the community as we
 
 This was going to be a challenge (configuration management with Windows usually is) but we were up for it.
 
-##The Preliminaries
-###Serverspec
+## The Preliminaries
+### Serverspec
 The first step was looking at Serverspec. Serverspec is a Ruby gem that provides extensions to RSpec that allow you to test the actual state of your servers, either locally
 or from the outside in via SSH. What we needed to know was did it support Windows? The answer was thankfully a resounding "Yes!". All the [resource types](http://serverspec.org/resource_types.html) that you might want to test including file, service and user are available and supported on Windows. There are also a couple of Windows specific ones such as iis_website, Windows_feature and Windows_registry_key. We even added our own to support [Windows_scheduled_task](https://github.com/serverspec/serverspec/pull/403/files). Interestingly Serverspec also supports WinRM as an alternative to SSH when you are testing from the outside-in but we will go back into that later. As long as your using Serverspec > 1.6 you will have all the Windows support you might need.
 
-###Packer
+### Packer
 Step two was to build some Windows Vagrant boxes to test against. The documentation on the [wiki](http://github.com/puppetlabs/beaker/wiki) was (at the time) a bit slim when it came
 to building test boxes but we knew we needed Cygwin so we went ahead and created the boxes that we needed. All our boxes are created with Packer [and are open sourced on GitHub](http://github.com/opentable/packer-images). They have also been [published to Vagrant Cloud](http://vagrantcloud.com/opentable)
 so you can download pre-built images and get up and running quickly (version 1.x images contain the Cygwin installation).
 
-###Beaker
+### Beaker
 So far, so good. We hit a couple of issues in our initial test runs with Beaker: missing module_path, installation using the msi and 32-bit Windows support - but these were very
 small issues and we were happy to be able to contribute back some changes ([234](https://github.com/puppetlabs/beaker/pull/234),
 [235](https://github.com/puppetlabs/beaker/pull/235), [236](https://github.com/puppetlabs/beaker/pull/236)). We were very happy and managed to get out first module tested,
 the [cross-platform module puppet-puppetversion](http://github.com/opentable/puppet-puppetversion/) for doing Puppet upgrades.
 
-##The First Example
+## The First Example
 Let's take a more detailed look at those puppetversion tests, how we configured Beaker to run and how it changed for the Windows support. I am going to assume at this point that
 you already have some familiarity with Beaker; if not and this is your first steps into the testing tool then I would suggest going back and read [part one](/blog/2014/04/04/testing-puppet-with-beaker/) of this series which contains a little bit of background to this and some useful resources for getting started.
 
@@ -184,24 +184,24 @@ The test we have implemented in this moudle looks like this:
 
 This module was a little more tricky. Why? Installing Windows features requires elevated permissions. What this meant is that when Beaker attempted to SSH into our Windows box and our Puppet module ran its underlying PowerShell we were faced with a harsh and non-descriptive **"Access is denied error"**.
 
-##SSH
+## SSH
 Not all SSH daemons are created equal. To understand the "Access is denied error" we were seeing and why it happens you need to understand a little bit about how sshd on Cygwin works. You can read all about the details from the Cygwin forum archives ([[1]](http://cygwin.com/ml/cygwin/2004-09/msg00087.html), [[2]](http://cygwin.com/ml/cygwin/2006-06/msg00862.html), [[3]](http://thread.gmane.org/gmane.os.cygwin/128472), [[4]](https://cygwin.com/cygwin-ug-net/ntsec.html#ntsec-nopasswd1)) but TLDR; is that you need to use a username and password rather than private key authentication in order to get reasonable admin permissions. Having said all that, and having read all the documentation about the issue above we were still facing the same problem so we had to look at alternative options.
 
 There are several paths you can go down and I want to tell you about them here to save you a similar yak shave:
 
-###OpenSSH for Windows
+### OpenSSH for Windows
 A thinner alternative than having to install the full Cygwin stack using OpenSSH for Windows is the same OpenSSH implementation. The issue here however is that it doesn’t contain some of the Unix binaries required for Beaker to function. You can work around this if you have Git for Windows installed on your machine by putting its bin directory on your path but overall this doesn’t really solve any of the issues we were facing. We get a lighter footprint on the machine but still the same error as before
 
-###Bitvise SSH Server
+### Bitvise SSH Server
 [Bitvise SSH Server](http://www.bitvise.com/ssh-server-download) is an alternative SSH implementation (of which there are many more listed on [Wikipedia](http://en.wikipedia.org/wiki/Comparison_of_SSH_servers)). It resolves the permissions issue (it deals with the elevation internally) and has the benefit that it provides a proper command shell rather than a emulated bash shell. It also means we don’t have to have any binaries on there that we don’t need - a big plus. It would mean that we needed to make a few small changes to Beaker in order to replace some of the internal bash command with Windows alternatives but this was not a big task to do and is something we could contribute back.
 
-###WinRM
+### WinRM
 Could we do away with SSH altogether? It eliminates the problem we were facing and also means we don’t have to install anything on our Windows boxes - it’s all built in already. This would be an ideal solution but does all our tooling support it? I’ll discuss this in a little bit more detail later.
 
-###Not use Beaker at all
+### Not use Beaker at all
 The nuclear option. If we couldn’t get anything to work we could not use Beaker at all, we could try and use Test Kitchen (with [test-kitchen-puppet](https://github.com/neillturner/kitchen-puppet)) or some hand-rolled solution. Not the best idea, for us or the community but we though we might have to go down this path at one point. We even added [Windows support to test-kitchen-puppet](https://github.com/liamjbennett/kitchen-puppet/tree/Windows_support) as part our diversion in this direction.
 
-##What worked in the end:
+## What worked in the end:
 So we went down all these avenues and decided that the best option for us was to use Bitvise. It fixed the problem we were facing but it meant that we had some work ahead of us:
 1. We had to rebuild all our Windows images with Bitvise rather than Cygwin ([vagrantcloud.com/opentable](https://vagrantcloud.com/opentable) - version 2.x images now have this)
 2. We had to make some changes to Beaker to support using a standard Windows command shell rather than a Unix shell:
@@ -244,7 +244,7 @@ Things to note here:
 * The name of the Windows host defined in the node set must be the same as the name of the Windows hostname - if it is not then when Vagrant boots up it will change the hostname
 which will put Windows into a "restart pending" state.
 
-##The Future and WinRM
+## The Future and WinRM
 Most modern versions of Windows server have WinRM enabled by default but if you are using an older version or you are attempting to test a client then you will need to make sure
 that this is enabled on your boxes. This is still the direction that we would like to go long-term as it is the most Windows-friendly approach but there are few road blocks in
 the way of doing so right now:
@@ -257,7 +257,7 @@ the way of doing so right now:
 2. Beaker doesn’t yet support WinRM as a communication protocol. This is currently being discussed internally after we raised the idea. The work that we have completed for
 Bitvise support will go some way it allowing other providers, such as wirm going forward and therefore WinRM support should be coming in the near future.
 
-##Summary
+## Summary
 Using Beaker to test modules for Windows has been a long and complicated journey. I have attempted to cover here all the problems that you might run into when trying to do this for yourselves and provide some good examples to get you going. You will soon see this being rolled out to all of the OpenTable open source modules shortly so you will have some complete working examples to reference. We will continue to work with PuppetLabs in improving Beaker (and its Windows support) in order to make this a easy process for everyone.
 
 For any questions or comments then please reach out to me on twitter [@liamjbennett](https://twitter.com/liamjbennett)

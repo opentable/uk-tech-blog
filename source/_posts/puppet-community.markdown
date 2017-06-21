@@ -13,14 +13,14 @@ each other operate increasing complex and sophisticated infrastructures.
 The Puppet community and the open source efforts that drive that community have always been important to us which is why we want to take a step further in our efforts and introduce
 you to the "Puppet-community" project.
 
-##What is Puppet-community
+## What is Puppet-community
 Puppet-community is a GitHub organisation of like-minded individuals from across the wider Puppet ecosystem and from a diverse set of companies. Its principle aims are to allow the community to synchronise its efforts and to provide a GitHub organisation and Puppet Forge namespace not affiliated with any company.
 
 Its wider aims are to provide a place for module and tool authors to share their code and the burden of maintaining it.
 
 I would like to say that this was our idea, as it’s an excellent one, but actually all credit goes to its founders: [Igor Galić](https://github.com/igalic), [Daniele Sluijters](https://github.com/daenney) and [Spencer Krum](https://github.com/nibalizer)
 
-##Why communities matter
+## Why communities matter
 So why all the fuss about this? Why does it even matter where your code lives?
 
 Well these are the some questions that I asked myself when I first heard about this project at PuppetConf 2014. The answer is that is really does matter and it’s a pattern that is 
@@ -38,7 +38,7 @@ that you don’t own it any more, you don’t have that tight control over the c
 that on long weeks when you're on-call or on holiday that there is someone else to pick up the slack and merge those pull requests for you. It has massive benefits if you can keep that 
 ego in check.
 
-##Why we’re moving our modules there
+## Why we’re moving our modules there
 So why is OpenTable moving its modules there? It is because we care about the community (particularly those using Puppet on Windows) and want to make sure there is good long term 
 support for the modules that we authored. OpenTable isn’t a company that authors Puppet modules, it is a company that seats diners in restaurants so from time to time we are going 
 to work on other things.
@@ -52,7 +52,7 @@ even learn from them in the process.
 
 So let’s lose our egos, loosen that grip and let those modules be free ...
 
-##What that means for you
+## What that means for you
 Ok, so let’s get practical for a second. What’s happening here? What our support of Puppet-community means is that our code has moved into a new organisation 
 ([github.com/puppet-community](https://github.com/puppet-community)) and our modules have been re-released under the community namespace on the forge 
 ([forge.puppetlabs.com/puppet](https://forge.puppetlabs.com/puppet)). So if you are using our modules then you should go and have a look on the forge and update to the latest versions. 

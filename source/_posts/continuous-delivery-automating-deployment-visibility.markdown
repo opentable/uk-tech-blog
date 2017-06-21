@@ -14,7 +14,7 @@ The image below shows at a high level what our teams current deployment pipeline
 {% img /images/posts/release-pipeline.png 900 350 'image' 'images' %}
 
 
-##Kicking off a deployment
+## Kicking off a deployment
 
 I wrote previously that we started [using chatops](/blog/2013/11/22/beginning-a-journey-to-chatops-with-hubot/) to increase visibility operationally. Hubot is central to this and we wrote a small script to kick off deployments within [Hipchat](https://www.hipchat.com/)
 
@@ -26,7 +26,7 @@ To configure Hubot to do this we wrote a command to setup aliases providing the 
 
 {% img /images/posts/hubot-deploy-alias.png 350 350 'image' 'images' %}
 
-##Deployment visibility
+## Deployment visibility
 
 Our production deployments must be auditable and it's important that we know what went out with each release and keep a log of this for our Risk Management team. We do this by creating a ticket in [JIRA](https://www.atlassian.com/software/jira), internally known as a CCB, and this gives us a central store of all deployments by all teams. 
 
@@ -36,7 +36,7 @@ In the past these tickets were manually created for each release. We soon realis
 - [https://github.com/opentable/grunt-github-manifest](https://github.com/opentable/grunt-github-manifest)
 - [https://github.com/opentable/grunt-package-github](https://github.com/opentable/grunt-package-github)
 
-##Build Notifications to Kibana
+## Build Notifications to Kibana
 
 Once we have a CCB we fire a start and end event from TeamCity containing the build number to Redis which is then piped into [Logstash](http://logstash.net/). An event is sent before and after deploying the code to all nodes. This is hugely beneficial because it allows us to plot releases against our graphs in [Kibana](http://www.elasticsearch.org/overview/kibana/). Kibana recently added a new feature called Markers. Essentially these are tags that display at the bottom of a graph.
 
@@ -55,6 +55,6 @@ This has already proved incredibly useful for the team and has allowed us to vis
 Once our deployment pipeline has completed we send a notification to our teams room in Hipchat (as a final step in TeamCity) to inform the team that the release has completed. It's great to see a deployment start and end in chat. Having a central log of key operations in our team means that we don't have to go and find information when it's baked into chat.
 
 
-##Conclusion
+## Conclusion
 
 We've come along way with improving our pipeline and automating visibility. Our team is made up of 4 members; 3 in the office and 1 remote. The ultimate goal is to improve speed of deployment and visibility of events not just within the team but for everyone who is interested. Equally we want to continue to open source by as much as possible, allowing us to share our process with teams inside and outside of our organization. We can release code anywhere in the world and the process is completely centralised in chat. We want to continue to move fast and fix faster.

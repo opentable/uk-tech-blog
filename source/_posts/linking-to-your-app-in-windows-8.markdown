@@ -9,7 +9,7 @@ tags: [OpenTable, Windows8]
 
 In an effort to raise the visibility of our excellent Windows 8 app we have recently connected [www.opentable.com][1] to the Windows Store.  This was simply a case of adding two lines of meta data to our site. Or it should have been &ndash; there were several gotchas along the way that are worth sharing.
 
-##The code
+## The code
 
 The meta data that we added to the site are an _application ID_, and what Microsoft have termed the _Package Family name_.  Once you have these, add the following lines of code to your page &lt;head&gt;.
 
@@ -26,7 +26,7 @@ This will enable the **"Get app for this site"** link when you are viewing your 
 There are [three other optional meta values][2] that can also be used to control your link.
 
 
-##Finding the values
+## Finding the values
 
 There are at least two ways of finding the values. If you have your application code and Visual Studio 2012 (or later) then the values can be found in the **package.appxmanifest** file &ndash; open this in VS and it automatically launches the manifest designer view.  Select the Packaging tab and the "Package name" is the _ID_, and the _Package family name_ is at the bottom of this screen.
 
@@ -43,7 +43,7 @@ The **msApplication-ID** is still found in the `package.appxmanifest` file in yo
 	<Identity Name="OpenTable.OpenTable" Publisher="CN=9C8CE42A-5BD4-4679" Version="1.0.0.1910" /> 
 
 
-##Gotchas
+## Gotchas
 
 We tried opening the site in Visual Studio 2012 in Windows 7, but the project containing package.appxmanifest wouldn't open.  We had to open the solution in Windows 8, which finally worked once we'd logged into MSDN and installed the suggested updates.
 
