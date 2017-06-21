@@ -33,6 +33,8 @@ title: Authors
 
 <a href="/blog/authors/rhopton.html">Richard Hopton</a>
 
+<a href="/blog/authors/rluong.html">Robert Luong</a>
+
 <a href="/blog/authors/rtomlinson.html">Ryan Tomlinson</a>
 
 <a href="/blog/authors/ssalisbury.html">Sam Salisbury</a>
