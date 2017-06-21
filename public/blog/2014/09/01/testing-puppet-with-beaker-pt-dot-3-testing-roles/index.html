@@ -81,7 +81,7 @@ end
 <li>downloading external modules</li>
 </ul>
 <p>Now let’s step through our new spec_acceptence file that supports this multi-node environment:</p>
-<p>###Deploying the codebase<br>Stage one is getting our puppet codebase onto the master, which includes all the files, internal modules and anything else we need to get the master up and<br>running. We do this like follows:</p>
+<h3 id="Deploying-the-codebase"><a href="#Deploying-the-codebase" class="headerlink" title="Deploying the codebase"></a>Deploying the codebase</h3><p>Stage one is getting our puppet codebase onto the master, which includes all the files, internal modules and anything else we need to get the master up and<br>running. We do this like follows:</p>
 <pre><code>files = [ &apos;environments&apos;,&apos;facts&apos;,&apos;hiera&apos;,&apos;roles&apos;, &apos;profiles&apos;, &apos;keys&apos;, &apos;app_modules&apos;, &apos;auth.conf&apos;,&apos;autosign.conf&apos;,
           &apos;fileserver.conf&apos;, &apos;Gemfile&apos;,&apos;hiera.yaml&apos;,&apos;Puppetfile&apos;
         ]
@@ -97,8 +97,7 @@ dist_modules.each do |module_name|
   copy_module_to(master, :source =&gt; dist_module_dir, :module_name =&gt; module_name)
 end
 </code></pre><p>Here we are selecting all the files that we want and calling the scp_to method which will scp any file or directory to the host of choice, in this case our<br>master.</p>
-<p>###The puppetmaster:</p>
-<pre><code>...
+<h3 id="The-puppetmaster"><a href="#The-puppetmaster" class="headerlink" title="The puppetmaster:"></a>The puppetmaster:</h3><pre><code>...
 
 on master, &quot;apt-get install -y rubygems git&quot;
 on master, &quot;apt-get install -y puppet-common=#{version}-1puppetlabs1 puppetmaster-common=#{version}-1puppetlabs1 puppetmaster=#{version}-1puppetlabs1 &quot;
@@ -106,8 +105,7 @@ on master, &quot;echo &apos;*&apos; &gt; /etc/puppet/autosign.conf&quot;
 
 ...
 </code></pre><p>So we have already installed puppet at a previous stage in our script. At this point we are performing all the steps required to install the<br>puppetmaster: git, rubygems (if on an older distro) and the puppetmaster packages. We also making sure that we auto-signing if configured to<br>save us some pain later on. This step should really be configured as another beaker method that we can just call but for now it is still manual.<br>It is at this point that we have first introduced the “on master” this does what you think it might, it executes the command you pass it onto<br>the host with the nodeset role on ‘master’.</p>
-<p>###Set the puppet.conf file:</p>
-<pre><code>...
+<h3 id="Set-the-puppet-conf-file"><a href="#Set-the-puppet-conf-file" class="headerlink" title="Set the puppet.conf file:"></a>Set the puppet.conf file:</h3><pre><code>...
 
 config = {
   &apos;main&apos; =&gt; {
@@ -127,8 +125,7 @@ configure_puppet(master, config)
 
 ...
 </code></pre><p>Here we are configuring out puppet.conf file, making sure that it includes any customization we might need. This uses a configure_puppet method<br>that we have added to beaker to allow us to do this customization and in this case it is taking the hash to modify the puppet.conf file on the master<br>host.</p>
-<p>###Install the required ruby gems:</p>
-<pre><code>...
+<h3 id="Install-the-required-ruby-gems"><a href="#Install-the-required-ruby-gems" class="headerlink" title="Install the required ruby gems:"></a>Install the required ruby gems:</h3><pre><code>...
 
 on master, &quot;gem install bundler&quot;
 on master, &quot;gem install hiera-eyaml&quot;
@@ -136,15 +133,13 @@ on master, &quot;cd /etc/puppet &amp;&amp; bundle install --without development&
 
 ...
 </code></pre><p>The average production-ready puppetmaster also requires a number of gems to function such as hiera-eyaml, deep_merge any many others<br>depending upon what backends and other custom puppet extensions you have implemented. Here we are installing all our dependencies from<br>the Gemfile we have already put onto the host.</p>
-<p>###Installing modules:</p>
-<pre><code>...
+<h3 id="Installing-modules"><a href="#Installing-modules" class="headerlink" title="Installing modules:"></a>Installing modules:</h3><pre><code>...
 
 on master, &quot;cd /etc/puppet &amp;&amp; bundle exec librarian-puppet install&quot;
 
 ...
 </code></pre><p>The last major step is installing any external modules you have. You may be using librarian-puppet or r10k to do this. In our case it<br>is the former so we go ahead and make sure that our modules directory is full of all the modules we require.</p>
-<p>###Networking:</p>
-<pre><code>...
+<h3 id="Networking"><a href="#Networking" class="headerlink" title="Networking:"></a>Networking:</h3><pre><code>...
 
 master_name = &quot;#{master}.test.local&quot;
 on master, &quot;echo &apos;10.255.33.135   #{master_name}&apos; &gt;&gt; /etc/hosts&quot;
@@ -154,7 +149,7 @@ on master, &quot;/etc/init.d/puppetmaster restart&quot;
 ...
 </code></pre><p>This last step is a small hack that you will probably require if you are running on vagrant. It just configures the host file to make<br>sure that it’s hostname if configured correctly from certificate signing to work as expected. This might not be required in your<br>environment and I would try it without first but it’s worth noting anyway.</p>
 <h2 id="Configuring-the-agent"><a href="#Configuring-the-agent" class="headerlink" title="Configuring the agent"></a>Configuring the agent</h2><p>So if you’ve got to this point well done - most of the hard work is done. Configuring the agent(s) is pretty straightforward in comparison<br>to a puppetmaster and some of the steps are similiar:</p>
-<h3 id="Set-the-puppet-conf-file"><a href="#Set-the-puppet-conf-file" class="headerlink" title="Set the puppet.conf file:"></a>Set the puppet.conf file:</h3><pre><code>if host[&apos;roles&apos;].include?(&apos;master&apos;)
+<h3 id="Set-the-puppet-conf-file-1"><a href="#Set-the-puppet-conf-file-1" class="headerlink" title="Set the puppet.conf file:"></a>Set the puppet.conf file:</h3><pre><code>if host[&apos;roles&apos;].include?(&apos;master&apos;)
   ...
 else
   agent = host

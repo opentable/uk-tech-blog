@@ -2,6 +2,69 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/index.html</loc>
+    
+    <lastmod>2017-06-21T08:49:25.273Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk//blog/2014/04/07/upgrading-puppet-with-puppet/</loc>
+    
+    <lastmod>2017-06-21T08:47:35.115Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk//blog/2014/09/01/testing-puppet-with-beaker-pt-dot-3-testing-roles/</loc>
+    
+    <lastmod>2017-06-21T08:47:02.920Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk//blog/2014/09/01/testing-puppet-with-beaker-pt-dot-2-the-windows-story/</loc>
+    
+    <lastmod>2017-06-21T08:46:22.656Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk//blog/2016/01/07/react-testing/</loc>
+    
+    <lastmod>2017-06-21T08:44:55.581Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk//blog/2015/05/06/puppet-community/</loc>
+    
+    <lastmod>2017-06-21T08:44:05.697Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk//blog/2014/05/19/continuous-delivery-automating-deployment-visibility/</loc>
+    
+    <lastmod>2017-06-21T08:43:05.824Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk//blog/2013/11/22/beginning-a-journey-to-chatops-with-hubot/</loc>
+    
+    <lastmod>2017-06-21T08:42:30.143Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk//blog/2013/10/21/linking-to-your-app-in-windows-8/</loc>
+    
+    <lastmod>2017-06-21T08:41:52.025Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tech.opentable.co.uk//blog/2017/06/16/pragmatic-testing-with-graphql/</loc>
     
     <lastmod>2017-06-20T19:09:53.593Z</lastmod>
@@ -40,13 +103,6 @@
     <loc>http://tech.opentable.co.uk//blog/2017/02/15/the-goal-driven-organisation/</loc>
     
     <lastmod>2017-02-15T10:49:22.178Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/index.html</loc>
-    
-    <lastmod>2017-02-09T16:48:44.523Z</lastmod>
     
   </url>
   
@@ -212,13 +268,6 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk//blog/2014/04/07/upgrading-puppet-with-puppet/</loc>
-    
-    <lastmod>2016-10-24T10:27:09.782Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://tech.opentable.co.uk//blog/2015/03/05/the-dns-abc/</loc>
     
     <lastmod>2016-10-24T10:27:03.848Z</lastmod>
@@ -229,13 +278,6 @@
     <loc>http://tech.opentable.co.uk//blog/2014/02/10/the-adoption-of-configuration-management/</loc>
     
     <lastmod>2016-10-24T10:26:58.898Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk//blog/2014/09/01/testing-puppet-with-beaker-pt-dot-2-the-windows-story/</loc>
-    
-    <lastmod>2016-10-24T10:26:53.212Z</lastmod>
     
   </url>
   
@@ -257,13 +299,6 @@
     <loc>http://tech.opentable.co.uk//blog/2014/04/29/remote-worker-notes-tools-and-setup/</loc>
     
     <lastmod>2016-10-24T10:26:35.134Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk//blog/2016/01/07/react-testing/</loc>
-    
-    <lastmod>2016-10-24T10:26:28.768Z</lastmod>
     
   </url>
   
@@ -292,13 +327,6 @@
     <loc>http://tech.opentable.co.uk//blog/2014/10/06/puppetconf-2014-part-1/</loc>
     
     <lastmod>2016-10-24T10:26:10.371Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk//blog/2015/05/06/puppet-community/</loc>
-    
-    <lastmod>2016-10-24T10:26:05.856Z</lastmod>
     
   </url>
   
@@ -387,13 +415,6 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk//blog/2013/10/21/linking-to-your-app-in-windows-8/</loc>
-    
-    <lastmod>2016-10-24T10:24:44.449Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://tech.opentable.co.uk//blog/2014/09/04/introducing-hobknob-feature-toggling-with-etcd/</loc>
     
     <lastmod>2016-10-24T10:24:39.309Z</lastmod>
@@ -478,13 +499,6 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk//blog/2014/05/19/continuous-delivery-automating-deployment-visibility/</loc>
-    
-    <lastmod>2016-10-24T10:23:26.425Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://tech.opentable.co.uk//blog/2014/02/03/coaching-style-over-substance/</loc>
     
     <lastmod>2016-10-24T10:23:21.126Z</lastmod>
@@ -502,13 +516,6 @@
     <loc>http://tech.opentable.co.uk//blog/2015/01/19/building-a-living-styleguide-at-opentable/</loc>
     
     <lastmod>2016-10-24T10:23:10.745Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk//blog/2013/11/22/beginning-a-journey-to-chatops-with-hubot/</loc>
-    
-    <lastmod>2016-10-24T10:23:04.815Z</lastmod>
     
   </url>
   
@@ -544,13 +551,6 @@
     <loc>http://tech.opentable.co.uk//blog/2015/02/09/dismantling-the-monolith-microsites-at-opentable/</loc>
     
     <lastmod>2016-10-24T10:18:01.451Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk//blog/2014/09/01/testing-puppet-with-beaker-pt-dot-3-testing-roles/</loc>
-    
-    <lastmod>2016-10-22T21:06:59.720Z</lastmod>
     
   </url>
   
