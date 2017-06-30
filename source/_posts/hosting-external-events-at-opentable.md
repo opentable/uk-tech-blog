@@ -1,5 +1,5 @@
 ---
-layout: blog
+layout: post
 title: Hosting External Events at OpenTable
 date: 2017-06-30 16:09:04
 author: tmartin
