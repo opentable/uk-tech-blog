@@ -38,3 +38,5 @@ title: Authors
 <a href="/blog/authors/rtomlinson.html">Ryan Tomlinson</a>
 
 <a href="/blog/authors/ssalisbury.html">Sam Salisbury</a>
+
+<a href="/blog/authors/tmartin.html">Tom Martin</a>
