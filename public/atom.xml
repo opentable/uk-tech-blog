@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tech.opentable.co.uk/"/>
-  <updated>2017-07-18T11:36:38.633Z</updated>
+  <updated>2017-07-18T12:43:04.851Z</updated>
   <id>http://tech.opentable.co.uk/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://tech.opentable.co.uk//blog/2017/07/18/hosting-external-events/"/>
     <id>http://tech.opentable.co.uk//blog/2017/07/18/hosting-external-events/</id>
     <published>2017-07-18T09:37:18.000Z</published>
-    <updated>2017-07-18T11:36:38.633Z</updated>
+    <updated>2017-07-18T12:43:04.851Z</updated>
     
     <content type="html"><![CDATA[<p>This June, OpenTable hosted the <a href="https://www.meetup.com/London-Machine-Learning-Study-Group/" target="_blank" rel="external">London Machine Learning Study Group</a> to great success. We provided the food, drinks, and space for an extremely talented speaker and over 100 RSVPs. It was also my first experience hosting an external meetup at OpenTable - and I learned a lot!</p>
 <h2 id="My-Experience"><a href="#My-Experience" class="headerlink" title="My Experience"></a>My Experience</h2><p>OpenTable has frequently hosted meetups in our office such as <a href="https://www.meetup.com/WebPlatform-London/" target="_blank" rel="external">Web Platform London</a> and <a href="https://twitter.com/webdeldn" target="_blank" rel="external">WEBdeLDN</a>. However, acting as an event host was a complete unknown for me, so leading up to the machine learning event, I made a point of sitting down with someone who had organised one before.</p>
