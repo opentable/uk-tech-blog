@@ -1,6 +1,7 @@
-layout: blog
+layout: post
 title: Hosting external events
 date: 2017-07-18 09:37:18
+author: tmartin
 tags: [Conferences, Culture, OpenTable]
 ---
 
