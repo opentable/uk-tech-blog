@@ -1,4 +1,4 @@
-layout: blog
+layout: post
 title: OpenTable's Global Hackathon 2017
 date: 2017-06-01 14:00:00
 author: jcatterfeld
