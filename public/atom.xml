@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tech.opentable.co.uk/"/>
-  <updated>2017-11-02T11:04:46.133Z</updated>
+  <updated>2017-11-02T13:56:11.638Z</updated>
   <id>http://tech.opentable.co.uk/</id>
   
   <author>
@@ -20,14 +20,14 @@
     <link href="http://tech.opentable.co.uk//blog/2017/11/02/circuit-breakers-and-application-resilience/"/>
     <id>http://tech.opentable.co.uk//blog/2017/11/02/circuit-breakers-and-application-resilience/</id>
     <published>2017-11-02T12:00:00.000Z</published>
-    <updated>2017-11-02T11:04:46.133Z</updated>
+    <updated>2017-11-02T13:56:11.638Z</updated>
     
-    <content type="html"><![CDATA[<p>For most people circuit breakers are a concept that belong in the world of electricity. They are usually a box of fuses under the stairs that prevents the tangle of extension cords from turning into an unexpected open fireplace behind the TV. But the concept of a circuit breakers is something that we can apply to software and software services. </p>
+    <content type="html"><![CDATA[<p>For most people circuit breakers are a concept that belongs in the world of electricity. They are usually a box of fuses under the stairs that prevents the tangle of extension cords from turning into an unexpected open fireplace behind the TV. But the concept of a circuit breaker is something that we can apply to software and software services. </p>
 <p>Martin Fowler described a software circuit breaker as follows:</p>
 <blockquote>
 <p>“… a protected function call in a circuit breaker object, which monitors for failures. Once the failures reach a certain threshold, the circuit breaker trips, and all further calls to the circuit breaker return with an error, without the protected call being made at all” </p>
 </blockquote>
-<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>OpenTable runs on many microservice that depend on one another to deliver the OpenTable site. These services can have dependencies on data stores such as MongoDB and Elastic Search as well as services such as RabbitMQ and Redis. Sometimes these dependencies can have performance or availability issues; such as when somebody accidentally drops an index on a collection in Mongo. </p>
+<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>OpenTable runs on many microservices that depend on one another to deliver the OpenTable site. These services can have dependencies on data stores such as MongoDB and Elastic Search as well as services such as RabbitMQ and Redis. Sometimes these dependencies can have performance or availability issues; such as when somebody accidentally drops an index on a collection in Mongo. </p>
 <blockquote>
 <p>This actually happened, your author accidentally dropped a critical index while working with a DB synchronization tool which resulted in downtime. Hence this article.</p>
 </blockquote>
@@ -70,12 +70,12 @@
     
     <summary type="html">
     
-      &lt;p&gt;For most people circuit breakers are a concept that belong in the world of electricity. They are usually a box of fuses under the stairs that prevents the tangle of extension cords from turning into an unexpected open fireplace behind the TV. But the concept of a circuit breakers is something that we can apply to software and software services. &lt;/p&gt;
+      &lt;p&gt;For most people circuit breakers are a concept that belongs in the world of electricity. They are usually a box of fuses under the stairs that prevents the tangle of extension cords from turning into an unexpected open fireplace behind the TV. But the concept of a circuit breaker is something that we can apply to software and software services. &lt;/p&gt;
 &lt;p&gt;Martin Fowler described a software circuit breaker as follows:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;“… a protected function call in a circuit breaker object, which monitors for failures. Once the failures reach a certain threshold, the circuit breaker trips, and all further calls to the circuit breaker return with an error, without the protected call being made at all” &lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&quot;Background&quot;&gt;&lt;a href=&quot;#Background&quot; class=&quot;headerlink&quot; title=&quot;Background&quot;&gt;&lt;/a&gt;Background&lt;/h2&gt;&lt;p&gt;OpenTable runs on many microservice that depend on one another to deliver the OpenTable site. These services can have dependencies on data stores such as MongoDB and Elastic Search as well as services such as RabbitMQ and Redis. Sometimes these dependencies can have performance or availability issues; such as when somebody accidentally drops an index on a collection in Mongo. &lt;/p&gt;
+&lt;h2 id=&quot;Background&quot;&gt;&lt;a href=&quot;#Background&quot; class=&quot;headerlink&quot; title=&quot;Background&quot;&gt;&lt;/a&gt;Background&lt;/h2&gt;&lt;p&gt;OpenTable runs on many microservices that depend on one another to deliver the OpenTable site. These services can have dependencies on data stores such as MongoDB and Elastic Search as well as services such as RabbitMQ and Redis. Sometimes these dependencies can have performance or availability issues; such as when somebody accidentally drops an index on a collection in Mongo. &lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;This actually happened, your author accidentally dropped a critical index while working with a DB synchronization tool which resulted in downtime. Hence this article.&lt;/p&gt;
 &lt;/blockquote&gt;

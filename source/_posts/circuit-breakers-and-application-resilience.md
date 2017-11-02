@@ -7,14 +7,14 @@ author: dgiddins
 tags: [Polly, Application Resilience, Microservices, Error Handling]
 ---
 
-For most people circuit breakers are a concept that belong in the world of electricity. They are usually a box of fuses under the stairs that prevents the tangle of extension cords from turning into an unexpected open fireplace behind the TV. But the concept of a circuit breakers is something that we can apply to software and software services. 
+For most people circuit breakers are a concept that belongs in the world of electricity. They are usually a box of fuses under the stairs that prevents the tangle of extension cords from turning into an unexpected open fireplace behind the TV. But the concept of a circuit breaker is something that we can apply to software and software services. 
 
 Martin Fowler described a software circuit breaker as follows:
 
 > "... a protected function call in a circuit breaker object, which monitors for failures. Once the failures reach a certain threshold, the circuit breaker trips, and all further calls to the circuit breaker return with an error, without the protected call being made at all" 
 
 ## Background
-OpenTable runs on many microservice that depend on one another to deliver the OpenTable site. These services can have dependencies on data stores such as MongoDB and Elastic Search as well as services such as RabbitMQ and Redis. Sometimes these dependencies can have performance or availability issues; such as when somebody accidentally drops an index on a collection in Mongo. 
+OpenTable runs on many microservices that depend on one another to deliver the OpenTable site. These services can have dependencies on data stores such as MongoDB and Elastic Search as well as services such as RabbitMQ and Redis. Sometimes these dependencies can have performance or availability issues; such as when somebody accidentally drops an index on a collection in Mongo. 
 
 >This actually happened, your author accidentally dropped a critical index while working with a DB synchronization tool which resulted in downtime. Hence this article.
 
