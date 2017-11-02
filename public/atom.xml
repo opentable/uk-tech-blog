@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tech.opentable.co.uk/"/>
-  <updated>2017-09-04T15:00:03.000Z</updated>
+  <updated>2017-11-02T11:04:46.133Z</updated>
   <id>http://tech.opentable.co.uk/</id>
   
   <author>
@@ -16,11 +16,89 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Circuit Breakers and Application Resilience</title>
+    <link href="http://tech.opentable.co.uk//blog/2017/11/02/circuit-breakers-and-application-resilience/"/>
+    <id>http://tech.opentable.co.uk//blog/2017/11/02/circuit-breakers-and-application-resilience/</id>
+    <published>2017-11-02T12:00:00.000Z</published>
+    <updated>2017-11-02T11:04:46.133Z</updated>
+    
+    <content type="html"><![CDATA[<p>For most people circuit breakers are a concept that belong in the world of electricity. They are usually a box of fuses under the stairs that prevents the tangle of extension cords from turning into an unexpected open fireplace behind the TV. But the concept of a circuit breakers is something that we can apply to software and software services. </p>
+<p>Martin Fowler described a software circuit breaker as follows:</p>
+<blockquote>
+<p>“… a protected function call in a circuit breaker object, which monitors for failures. Once the failures reach a certain threshold, the circuit breaker trips, and all further calls to the circuit breaker return with an error, without the protected call being made at all” </p>
+</blockquote>
+<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>OpenTable runs on many microservice that depend on one another to deliver the OpenTable site. These services can have dependencies on data stores such as MongoDB and Elastic Search as well as services such as RabbitMQ and Redis. Sometimes these dependencies can have performance or availability issues; such as when somebody accidentally drops an index on a collection in Mongo. </p>
+<blockquote>
+<p>This actually happened, your author accidentally dropped a critical index while working with a DB synchronization tool which resulted in downtime. Hence this article.</p>
+</blockquote>
+<p>When this happens calls to dependencies may fail or take a long time to complete which then causes the dependent service to behave in the same way. Other upstream services can also suffer the same problem. This can be described as a cascading failure.</p>
+<p>Ideally what we would like to happen at this point is for our service to recognize what is happening, fail gracefully, and stop calling the service that already can’t keep up with the load placed upon it. (As well as alerting us to the problem). This is where a software circuit breaker can help us.</p>
+<p><img src="/images/posts/polly-logo.png" style="float:right;margin:0 0 2rem 2rem;width:20rem;"></p>
+<h2 id="Polly-to-the-rescue"><a href="#Polly-to-the-rescue" class="headerlink" title="Polly to the rescue"></a>Polly to the rescue</h2><p>Polly (<a href="http://www.thepollyproject.org/" target="_blank" rel="external">http://www.thepollyproject.org/</a>) - is a transient fault handling library which includes an implementation of a software circuit breaker (amongst other things which we will come to later). The <a href="https://github.com/App-vNext/Polly#resilience-policies" target="_blank" rel="external">documentation</a> for Polly is excellent so I won’t try to replicate it here. </p>
+<h3 id="How-we-used-Polly"><a href="#How-we-used-Polly" class="headerlink" title="How we used Polly"></a>How we used Polly</h3><p>As you would expect we wrapped calls to external services in Polly circuit breakers (using the Advanced Circuit Breaker policy) and configured it with an arbitrary failure threshold which we thought would protect downstream services that are overwhelmed. But then we went one step further…</p>
+<p>A circuit breaker has state, we wanted to be able to see what that state was as it provides insight into the state of our service. To achieve this, we named every circuit breaker instance according to what it protected (RabbitMQ, external Services or Mongo collection names). We then made that state accessible on an endpoint of our API. This allows us to use our monitoring tools to alert us when one of the breakers Opens, providing us with early warning of failures and making it easier to pin-point the failure.</p>
+<p>We created a CircuitBreakerRegistry, initialized as a singleton instance within our DI container, which lets us store a handle to a CircuitBreakerPolicy with its unique name, or retrieve all stored policies and retrieve by name. </p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CircuitBreakerRegistry</span></div><div class="line">    &#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StoreCircuitBreaker</span>(<span class="params">CircuitBreakerPolicy policy , <span class="keyword">string</span> breakerId</span>)</span></div><div class="line">        &#123;</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="function"><span class="keyword">public</span> ConcurrentDictionary&lt;<span class="keyword">string</span>, CircuitBreakerPolicy&gt; <span class="title">GetAllRegisteredBreakers</span>(<span class="params"></span>)</span></div><div class="line">        &#123;</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> CircuitBreakerPolicy <span class="title">GetCircuitNamedBreaker</span>(<span class="params"><span class="keyword">string</span> breakerId</span>)</span></div><div class="line">        &#123;</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>We then created an API controller that allows us to retrieve a list of all registered Circuit Breakers along with their current state. We configured our monitoring software to check this endpoint and alert when an Open breaker is detected. </p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CircuitBreakerController</span> : <span class="title">ApiController</span></div><div class="line">    &#123;</div><div class="line">        [HttpGet]</div><div class="line">        <span class="function"><span class="keyword">public</span> IHttpActionResult <span class="title">ListAllCircuitBreakers</span>(<span class="params"></span>)</span></div><div class="line">        &#123;</div><div class="line">            List&lt;CircuitBreakerViewModel&gt; breakers = _circuitBreakerRegistry</div><div class="line">                .GetAllRegisteredBreakers()</div><div class="line">                .Select(breaker =&gt; <span class="keyword">new</span> CircuitBreakerViewModel() &#123;BreakerId = breaker.Key, BreakerState = breaker.Value.CircuitState.ToString()&#125;)</div><div class="line">                .ToList();</div><div class="line">            <span class="keyword">var</span> viewModel = <span class="keyword">new</span> CircuitBreakersViewModel() &#123;Breakers = breakers&#125;;</div><div class="line"></div><div class="line">            <span class="keyword">return</span> Content(HttpStatusCode.OK,viewModel, <span class="keyword">new</span> JsonMediaTypeFormatter());</div><div class="line">        &#125;   </div><div class="line"></div><div class="line">        [HttpPut]</div><div class="line">        <span class="function"><span class="keyword">public</span> IHttpActionResult <span class="title">ToggleBreaker</span>(<span class="params">[FromUri]<span class="keyword">string</span> breakerId, [FromBody]<span class="keyword">string</span> <span class="keyword">value</span></span>)</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">value</span> != <span class="string">"Closed"</span> || <span class="keyword">value</span> != <span class="string">"Isolated"</span>)</div><div class="line">                <span class="keyword">return</span> BadRequest(<span class="string">"Specify either 'Isolated' or 'Closed'"</span>);</div><div class="line"></div><div class="line">            <span class="keyword">var</span> breaker = _circuitBreakerRegistry.GetCircuitNamedBreaker(breakerId);</div><div class="line">            <span class="keyword">if</span> (breaker == <span class="literal">null</span>)</div><div class="line">                NotFound();</div><div class="line">                </div><div class="line">            <span class="keyword">if</span> (<span class="keyword">value</span> == <span class="string">"Isolated"</span>)</div><div class="line">                breaker.Isolate();</div><div class="line">            <span class="keyword">else</span></div><div class="line">                breaker.Reset();</div><div class="line"></div><div class="line">            <span class="keyword">return</span> ListAllCircuitBreakers();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>The API also allows us to toggle the state of the breaker between Closed (think automatic) and Isolated (think manual fail-over). This could be useful for several reasons including:</p>
+<ul>
+<li>to test our fall-back strategy</li>
+<li>if we knew a dependency was going to fail or in a failing state (but not triggering the breaker)</li>
+<li>if we knew a dependency had a bad deploy that might take a while to rollback/fix. </li>
+</ul>
+<blockquote>
+<p>You might think that Closed is bad and Open is good. It’s the other way around in circuit breakers as a switch that is open in a circuit breaks the circuit. When it is closed the circuit is complete and electricity/data can flow.</p>
+</blockquote>
+<h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>I’ve already mentioned that the reason for my interest in Circuit Breakers and this post was through direct experience of downtime I caused. The truth is I have always been interested in Circuit Breaker technology and application resilience in general, but this incident focused time and attention on the problem. </p>
+<p>Clearly this is a case of “Locking the stable door after the horse has bolted” but that’s often the way in engineering. However, something like this might happen again and I would rather put measures in place to deal with it ahead of time. You might argue that given an Open circuit breaker can only fail fast or return an empty result, it makes no difference to the user experience as the data they want to view isn’t available either way. This is true to a degree, but a Circuit Breaker isolates only broken aspects of a service allowing the rest to function normally. Failing fast also means that the user experience of other aspects of the site are unaffected which is better than potentially impacting the whole site.</p>
+<h3 id="Insurance…"><a href="#Insurance…" class="headerlink" title="Insurance…"></a>Insurance…</h3><p>…is something everybody buys and hopes to never use. Protecting your application with Circuit Breakers and other application resilience measures is one of those things that you should really do, but hope to never need. There is of course a cost involved in adding such measures and it is up to you to decide whether you think it is worth it. </p>
+<h2 id="Application-Resilience"><a href="#Application-Resilience" class="headerlink" title="Application Resilience"></a>Application Resilience</h2><p>The Circuit Breaker pattern is only one of many Application Resilience Patterns. If you have already looked at the Polly Project Web site you may have seen that it lists several different Application Resilience policies that it offers. Briefly these are:</p>
+<ul>
+<li>Retry (which is where the Polly name comes from)</li>
+<li>Circuit Breakers (already covered)</li>
+<li>Timeout</li>
+<li>Bulkhead Isolation (think of it as a predictive circuit breaker)</li>
+<li>Cache</li>
+<li>Fall-back </li>
+</ul>
+<p>These are by no means a definitive list of Application Resilience measures but are a good starting point. </p>
+<p>Again, the documentation on the Polly website describe these in detail so I won’t repeat it here other than to say these Application Resilience methods are something that you might want to consider using alongside Circuit Breaker policies. We use Retry inside of a Circuit Breaker (using the Policy Wrap) to overcome transient faults. We apply a Timeout policy when calling some 3rd party client libraries that have no built-in timeout mechanism. For instance, a version of RabbitMQ for .NET will block our application start-up if the configured RabbitMQ instance is not running on the target host. A forced timeout ensures that our application fails and informs us of why.</p>
+<h2 id="Other-Libraries"><a href="#Other-Libraries" class="headerlink" title="Other Libraries"></a>Other Libraries</h2><p>Polly is a great library for .NET developers and there are similar libraries are available in other languages. Hysterix (<a href="https://github.com/Netflix/Hystrix" target="_blank" rel="external">https://github.com/Netflix/Hystrix</a>) is one such tool that you may have already heard of as it was developed by Netflix and is written for Java applications. There is a version of Polly in Javascript called PollyJs (<a href="https://github.com/mauricedb/polly-js" target="_blank" rel="external">https://github.com/mauricedb/polly-js</a>) that provides retry and there are of course packages that implement Circuit Breakers in Javascript as well.</p>
+<h2 id="Final-thoughts"><a href="#Final-thoughts" class="headerlink" title="Final thoughts"></a>Final thoughts</h2><p>If you decide to use any of these existing frameworks, roll your own or simply implement these patterns directly into your application, the key thing to consider is how you want your application to behave during failure. You should consider how it will affect its upstream clients and how they will react to your application in different states as this is not always as obvious as you might expect. Most importantly, consider the business impact of your failure modes on the customer. You should aim to minimize the impact on the user experience and think about how much you want to tell them when you are offering a reduced service. </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;For most people circuit breakers are a concept that belong in the world of electricity. They are usually a box of fuses under the stairs that prevents the tangle of extension cords from turning into an unexpected open fireplace behind the TV. But the concept of a circuit breakers is something that we can apply to software and software services. &lt;/p&gt;
+&lt;p&gt;Martin Fowler described a software circuit breaker as follows:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“… a protected function call in a circuit breaker object, which monitors for failures. Once the failures reach a certain threshold, the circuit breaker trips, and all further calls to the circuit breaker return with an error, without the protected call being made at all” &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;Background&quot;&gt;&lt;a href=&quot;#Background&quot; class=&quot;headerlink&quot; title=&quot;Background&quot;&gt;&lt;/a&gt;Background&lt;/h2&gt;&lt;p&gt;OpenTable runs on many microservice that depend on one another to deliver the OpenTable site. These services can have dependencies on data stores such as MongoDB and Elastic Search as well as services such as RabbitMQ and Redis. Sometimes these dependencies can have performance or availability issues; such as when somebody accidentally drops an index on a collection in Mongo. &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This actually happened, your author accidentally dropped a critical index while working with a DB synchronization tool which resulted in downtime. Hence this article.&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="Microservices" scheme="http://tech.opentable.co.uk/blog/categories/Microservices/"/>
+    
+      <category term="Polly" scheme="http://tech.opentable.co.uk/blog/categories/Polly/"/>
+    
+      <category term="Application Resilience" scheme="http://tech.opentable.co.uk/blog/categories/Application-Resilience/"/>
+    
+      <category term="Error Handling" scheme="http://tech.opentable.co.uk/blog/categories/Error-Handling/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Meetup: Frontend Refactoring at Scale</title>
     <link href="http://tech.opentable.co.uk//blog/2017/09/04/meetup-frontend-refactoring-at-scale/"/>
     <id>http://tech.opentable.co.uk//blog/2017/09/04/meetup-frontend-refactoring-at-scale/</id>
     <published>2017-09-04T15:20:03.000Z</published>
-    <updated>2017-09-04T15:00:03.000Z</updated>
+    <updated>2017-11-01T10:16:50.963Z</updated>
     
     <content type="html"><![CDATA[<p>OpenTable is delighted to host the tenth WEBdeLDN monthly meetup with talks by <a href="https://twitter.com/Jack_Franklin" target="_blank" rel="external">Jack Franklin</a> (Frontend Engineer at Thread) and <a href="https://twitter.com/nickbalestra" target="_blank" rel="external">Nick Balestra</a> (Senior Engineer at OpenTable - Delivery Tools Team at OpenTable).</p>
 <p>This month’s WEBdeLDN talks will be about frontend refactoring at scale with two real use cases: refactoring a monolith frontend application, as well as migrating a large, business critical application from Angular 1 to React.</p>
@@ -30,18 +108,14 @@
     
     <summary type="html">
     
-      &lt;p&gt;OpenTable is delighted to host the tenth WEBdeLDN monthly meetup with talks by &lt;a href=&quot;https://twitter.com/Jack_Franklin&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Jack Franklin&lt;/a&gt; (Frontend Engineer at Thread) and &lt;a href=&quot;https://twitter.com/nickbalestra&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Nick Balestra&lt;/a&gt; (Senior Engineer at OpenTable - Delivery Tools Team at OpenTable).&lt;/p&gt;
-&lt;p&gt;This month’s WEBdeLDN talks will be about frontend refactoring at scale with two real use cases: refactoring a monolith frontend application, as well as migrating a large, business critical application from Angular 1 to React.&lt;/p&gt;
-&lt;h2 id=&quot;Schedule-of-the-evening&quot;&gt;&lt;a href=&quot;#Schedule-of-the-evening&quot; class=&quot;headerlink&quot; title=&quot;Schedule of the evening&quot;&gt;&lt;/a&gt;Schedule of the evening&lt;/h2&gt;&lt;p&gt;18:30 - Doors will open. Welcoming drinks and pizza&lt;br&gt;19:00 - Dismantling the frontend monolith together - Nick Balestra&lt;br&gt;19:45 - More pizza and drinks&lt;br&gt;20:00 - Lessons learned migrating complex JS applications - Jack Franklin&lt;br&gt;20:45 - End of the meetup&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.eventbrite.co.uk/e/webdeldn-10-frontend-refactoring-at-scale-tickets-36735124747&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Registration and full details are available here&lt;/a&gt;&lt;/p&gt;
-
+      &lt;p&gt;OpenTable is delighted to host the tenth WEBdeLDN monthly meetup with talks by &lt;a href=&quot;https://twitter.com/Jack_Franklin&quot; target=&quot;_blank
     
     </summary>
     
     
-      <category term="meetup" scheme="http://tech.opentable.co.uk/blog/categories/meetup/"/>
+      <category term="Culture" scheme="http://tech.opentable.co.uk/blog/categories/Culture/"/>
     
-      <category term="culture" scheme="http://tech.opentable.co.uk/blog/categories/culture/"/>
+      <category term="Meetup" scheme="http://tech.opentable.co.uk/blog/categories/Meetup/"/>
     
   </entry>
   
@@ -50,7 +124,7 @@
     <link href="http://tech.opentable.co.uk//blog/2017/07/18/hosting-external-events/"/>
     <id>http://tech.opentable.co.uk//blog/2017/07/18/hosting-external-events/</id>
     <published>2017-07-18T09:37:18.000Z</published>
-    <updated>2017-09-04T14:19:02.000Z</updated>
+    <updated>2017-07-18T12:43:04.851Z</updated>
     
     <content type="html"><![CDATA[<p>This June, OpenTable hosted the <a href="https://www.meetup.com/London-Machine-Learning-Study-Group/" target="_blank" rel="external">London Machine Learning Study Group</a> to great success. We provided the food, drinks, and space for an extremely talented speaker and over 100 RSVPs. It was also my first experience hosting an external meetup at OpenTable - and I learned a lot!</p>
 <h2 id="My-Experience"><a href="#My-Experience" class="headerlink" title="My Experience"></a>My Experience</h2><p>OpenTable has frequently hosted meetups in our office such as <a href="https://www.meetup.com/WebPlatform-London/" target="_blank" rel="external">Web Platform London</a> and <a href="https://twitter.com/webdeldn" target="_blank" rel="external">WEBdeLDN</a>. However, acting as an event host was a complete unknown for me, so leading up to the machine learning event, I made a point of sitting down with someone who had organised one before.</p>
@@ -70,16 +144,14 @@
 &lt;h2 id=&quot;My-Experience&quot;&gt;&lt;a href=&quot;#My-Experience&quot; class=&quot;headerlink&quot; title=&quot;My Experience&quot;&gt;&lt;/a&gt;My Experience&lt;/h2&gt;&lt;p&gt;OpenTable has frequently hosted meetups in our office such as &lt;a href=&quot;https://www.meetup.com/WebPlatform-London/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Web Platform London&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/webdeldn&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;WEBdeLDN&lt;/a&gt;. However, acting as an event host was a complete unknown for me, so leading up to the machine learning event, I made a point of sitting down with someone who had organised one before.&lt;/p&gt;
 &lt;p&gt;We documented the key steps in setting up an external event, and then published what we’d discussed on our internal wiki so as to avoid siloing useful information for future use. Following the steps documented in the wiki proved invaluable in reducing my stress on the day.&lt;/p&gt;
 &lt;p&gt;After our last event we also looked back on how we’d done the last few events.&lt;/p&gt;
-&lt;h2 id=&quot;Retrospective&quot;&gt;&lt;a href=&quot;#Retrospective&quot; class=&quot;headerlink&quot; title=&quot;Retrospective&quot;&gt;&lt;/a&gt;Retrospective&lt;/h2&gt;&lt;p&gt;Following our last meetup, we held a retrospective as, along with the London Machine Learning Study Group, we have had a recent spate of meetups at OpenTable. This was extremely useful to underline our shared experiences as well as the considerations we want to make for our next external event. Here are a few areas we will look to improve.&lt;/p&gt;
-&lt;h3 id=&quot;Push-social-media-more&quot;&gt;&lt;a href=&quot;#Push-social-media-more&quot; class=&quot;headerlink&quot; title=&quot;Push social media more&quot;&gt;&lt;/a&gt;Push social media more&lt;/h3&gt;&lt;p&gt;We want the largest number of people to know about these events ahead of time, which means not just relying on one platform. Instead we aim to advertise our meetups on all channels available to us to get as diverse an audience as possible. We will tweet about our events more via &lt;a href=&quot;https://twitter.com/opentabletechuk&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;@OpenTableTechUK&lt;/a&gt; and we will use this blog to advertise upcoming events.&lt;/p&gt;
-&lt;h3 id=&quot;A-lot-of-people-don’t-turn-up&quot;&gt;&lt;a href=&quot;#A-lot-of-people-don’t-turn-up&quot; class=&quot;headerlink&quot; title=&quot;A lot of people don’t turn up&quot;&gt;&lt;/a&gt;A lot of people don’t turn up&lt;/h3&gt;
+&lt;h2 id=&quot;Retrospective&quot;&gt;&lt;a href=&quot;#Retrospective&quot; class=&quot;headerlink&quot; title=&quot;Retrospective&quot;&gt;&lt;/a&gt;Retrospective&lt;/h2&gt;
     
     </summary>
     
     
-      <category term="Culture" scheme="http://tech.opentable.co.uk/blog/categories/Culture/"/>
-    
       <category term="OpenTable" scheme="http://tech.opentable.co.uk/blog/categories/OpenTable/"/>
+    
+      <category term="Culture" scheme="http://tech.opentable.co.uk/blog/categories/Culture/"/>
     
       <category term="Conferences" scheme="http://tech.opentable.co.uk/blog/categories/Conferences/"/>
     
@@ -90,7 +162,7 @@
     <link href="http://tech.opentable.co.uk//blog/2017/06/16/pragmatic-testing-with-graphql/"/>
     <id>http://tech.opentable.co.uk//blog/2017/06/16/pragmatic-testing-with-graphql/</id>
     <published>2017-06-16T15:41:16.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2017-06-20T19:09:53.593Z</updated>
     
     <content type="html"><![CDATA[<p>We’ve been using GraphQL at OpenTable for a little over half a year now.  I won’t go into detail as to why we started using it, but suffice to say, we really enjoyed creating our very first GraphQL endpoint.  It eased a lot of the inconsistencies that we were experiencing with some of our REST-ful services.</p>
 <p>This post assumes you have some experience building a GraphQL endpoint.  For those of who you aren’t familiar with it, it feels a lot like having a querying language via an HTTP endpoint.  If you want to try it for yourself, I recommend <a href="https://developer.github.com/v4/explorer/" target="_blank" rel="external">GitHub’s endpoint</a>.  To get started with GraphQL, <a href="http://graphql.org/learn/" target="_blank" rel="external">the official documentation</a> is a perfect place.</p>
@@ -122,10 +194,7 @@
 &lt;p&gt;This post assumes you have some experience building a GraphQL endpoint.  For those of who you aren’t familiar with it, it feels a lot like having a querying language via an HTTP endpoint.  If you want to try it for yourself, I recommend &lt;a href=&quot;https://developer.github.com/v4/explorer/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub’s endpoint&lt;/a&gt;.  To get started with GraphQL, &lt;a href=&quot;http://graphql.org/learn/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;the official documentation&lt;/a&gt; is a perfect place.&lt;/p&gt;
 &lt;h2 id=&quot;The-Problem&quot;&gt;&lt;a href=&quot;#The-Problem&quot; class=&quot;headerlink&quot; title=&quot;The Problem&quot;&gt;&lt;/a&gt;The Problem&lt;/h2&gt;&lt;p&gt;Now, let’s get back to writing tests for an endpoint.  When we were creating our first endpoint, we started facing regression testing problems while expanding our schema.  It seemed our existing testing methods were ill-equipped to handle it.&lt;/p&gt;
 &lt;p&gt;Finding a good solution to this is important because I’ve had such a love–hate affair with testing.  All tests are not created equal and a naive developer would say, “write a test in case something changes”.  This certainly isn’t a good measure.  I’ve also found that just attempting to write tests immediately without forethought can be a costly distraction if you grow your codebase.&lt;/p&gt;
-&lt;h2 id=&quot;The-Approach&quot;&gt;&lt;a href=&quot;#The-Approach&quot; class=&quot;headerlink&quot; title=&quot;The Approach&quot;&gt;&lt;/a&gt;The Approach&lt;/h2&gt;&lt;p&gt;So we took a step back and looked at the code we were writing.  Most of the connectors we wrote were fairly anemic.  We didn’t have much logic for our API nor did we want any.  We could have written unit tests for each parts of the schema but mocking portions of the system seemed more work than it was worth.&lt;/p&gt;
-&lt;p&gt;So where did we start?  I personally enjoy the outside-in approach and started writing a few acceptance tests. So, we wrote a test for each query in the schema that we had.  It would fire an HTTP request and expect a 200 status code and have no errors in the resulting JSON body.  Thanks to GraphQL most errors are handily reported using this mechanism so we would be able to make a decent impact using little work.&lt;/p&gt;
-&lt;img src=&quot;/images/posts/graphql-base-tests.gif&quot; class=&quot;left&quot;&gt;
-&lt;p&gt;As you can see, we found that this would be good enough at the time but eventually found that it would not scale very well.  If you forget to update one of these queries, you could leave out a major section out accidentally.  Being a big fan of automation, we wondered how we could scale this out.&lt;/p&gt;
+&lt;h2 id=&quot;The-Approach&quot;&gt;&lt;a href=&quot;#The-Approach&quot; class=&quot;headerlink&quot; title=&quot;The Approach&quot;&gt;&lt;/a&gt;The Approach&lt;/h2&gt;
     
     </summary>
     
@@ -147,7 +216,7 @@
     <link href="http://tech.opentable.co.uk//blog/2017/06/01/opentables-global-hackathon-2017/"/>
     <id>http://tech.opentable.co.uk//blog/2017/06/01/opentables-global-hackathon-2017/</id>
     <published>2017-06-01T14:00:00.000Z</published>
-    <updated>2017-09-04T14:32:44.000Z</updated>
+    <updated>2017-09-04T14:39:40.425Z</updated>
     
     <content type="html"><![CDATA[<p>Last week we were excited to kick-off our first OpenTable Global Hackathon, underway simultaneously in San Francisco, Los Angeles, Mumbai, Melbourne, and right here in London. Having personally never attended a hackathon before let alone helped organise one I was initially daunted, but with some careful planning, good suggestions from the team and a fair amount of making it up as we went along, the end result was quite a success.</p>
 <p>This post discusses what format our hackathon took, what challenges we faced in coordinating across countries, the experience in the London office and what we learned.</p>
@@ -185,18 +254,15 @@
 &lt;h2 id=&quot;The-basic-format&quot;&gt;&lt;a href=&quot;#The-basic-format&quot; class=&quot;headerlink&quot; title=&quot;The basic format&quot;&gt;&lt;/a&gt;The basic format&lt;/h2&gt;&lt;p&gt;The hackathon was conceived in our San Francisco headquarters and could easily have been confined to that one office, but I was delighted to learn is was intended to be a global event from the outset. The basic format, described below, was however optimised for our SF office.&lt;/p&gt;
 &lt;p&gt;In the weeks leading up to the hackathon, individuals were asked to submit their hack proposals. Idea prompts were circulated such as “engages and delights diners” or “socially connected”, as well as the judging criteria; &lt;strong&gt;Originality&lt;/strong&gt;, &lt;strong&gt;Feasibility&lt;/strong&gt;, &lt;strong&gt;Likely to adopt&lt;/strong&gt;, &lt;strong&gt;Fidelity of prototype&lt;/strong&gt;, &lt;strong&gt;Business impact&lt;/strong&gt; and &lt;strong&gt;Captivating presentation&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;One week before the hackathon, our San Francisco office held a ‘happy-hour’ in which everyone taking part mingled and discussed ideas.  This social event encouraged the developers, designers and product owners to self-organise into teams and submit their proposals in advance.&lt;/p&gt;
-&lt;p&gt;The hackathon itself was devised as a 2½ day event, running from Tuesday morning to Thursday lunchtime during normal working hours, with OpenTable providing breakfast and lunch.  Live incidents or outages still had to be fixed, but otherwise the teams would be uninterrupted for the duration.&lt;/p&gt;
-&lt;p&gt;The hackathon concluded with each team having up to five minutes to present their hack to their colleagues and the judges.  The awards were for the top three hacks, special CEO and CTO’s prizes, and an open vote - and generous cash prizes and gifts were up for grabs.&lt;/p&gt;
-&lt;h2 id=&quot;Tweaks-for-the-London-version-and-building-enthusiasm&quot;&gt;&lt;a href=&quot;#Tweaks-for-the-London-version-and-building-enthusiasm&quot; class=&quot;headerlink&quot; title=&quot;Tweaks for the London version and building enthusiasm&quot;&gt;&lt;/a&gt;Tweaks for the London version and building enthusiasm&lt;/h2&gt;&lt;p&gt;The big headache in London that we always have to live with is the eight hour time difference between London and San Francisco - and the same constraint obviously existed for the hackathon. Each team concluded that it wouldn’t be feasible to form teams across the offices so all our build-up and actual hacking remained independent. However we submitted our recorded presentations for the final judging along with the rest of the company.&lt;/p&gt;
     
     </summary>
     
     
       <category term="Innovation" scheme="http://tech.opentable.co.uk/blog/categories/Innovation/"/>
     
-      <category term="Culture" scheme="http://tech.opentable.co.uk/blog/categories/Culture/"/>
-    
       <category term="OpenTable" scheme="http://tech.opentable.co.uk/blog/categories/OpenTable/"/>
+    
+      <category term="Culture" scheme="http://tech.opentable.co.uk/blog/categories/Culture/"/>
     
   </entry>
   
@@ -205,7 +271,7 @@
     <link href="http://tech.opentable.co.uk//blog/2017/02/15/the-goal-driven-organisation/"/>
     <id>http://tech.opentable.co.uk//blog/2017/02/15/the-goal-driven-organisation/</id>
     <published>2017-02-15T09:00:00.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2017-02-15T10:49:22.178Z</updated>
     
     <content type="html"><![CDATA[<p><strong>Quarterly team goals are an effective way to establish organisational purpose, direction and alignment while supporting team agility. But be vigilant - they can be used inappropriately.</strong></p>
 <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>Due to factors such as growth, acquisition, changing markets amongst others, organisations can find themselves in new environments to which they struggle to adapt.</p>
@@ -343,10 +409,7 @@
 &lt;h2 id=&quot;Overview&quot;&gt;&lt;a href=&quot;#Overview&quot; class=&quot;headerlink&quot; title=&quot;Overview&quot;&gt;&lt;/a&gt;Overview&lt;/h2&gt;&lt;p&gt;Due to factors such as growth, acquisition, changing markets amongst others, organisations can find themselves in new environments to which they struggle to adapt.&lt;/p&gt;
 &lt;p&gt;Scaling Agile in these new environments is hard. The practices and tools that are frequently used to solve this problem can give the appearance of acting against team autonomy and agility. Teams and individuals naturally try to protect the engineering culture that they have worked hard to establish but by allowing new organisational needs to go unmet they put their autonomy and agility at risk.&lt;/p&gt;
 &lt;p&gt;In this post I will show how quarterly goal setting, using Agile principles and with one eye on the dysfunctions that can arise, is an effective way to meet organisational needs while protecting team agility and engineering culture.&lt;/p&gt;
-&lt;h2 id=&quot;What-needs-are-we-trying-to-meet&quot;&gt;&lt;a href=&quot;#What-needs-are-we-trying-to-meet&quot; class=&quot;headerlink&quot; title=&quot;What needs are we trying to meet?&quot;&gt;&lt;/a&gt;What needs are we trying to meet?&lt;/h2&gt;&lt;p&gt;Senior leaders in an organisation need confidence that the creativity, intelligence, skills and knowledge of their employees are directed most effectively towards delivering long term business objectives. Ensuring that teams are aligned around those business objectives is traditionally called governance.&lt;/p&gt;
-&lt;p&gt;The top-down command-and-control connotations of that term do not sit comfortably in modern software development and rightly so. The responsibility for organisational alignment should rest with teams and individuals. &lt;/p&gt;
-&lt;p&gt;A bottom-up approach to organisational alignment relies on transparency. Everyone in the business needs to know the business objectives and what all teams are doing to meet the objectives. Arguably the primary output of all product development and engineering teams is a statement of intent and a narrative of their progress.&lt;/p&gt;
-&lt;p&gt;Put another way, the first output of all knowledge work is shared, actionable knowledge - we can then decide how best to utilise that knowledge. Teams need to know that the decisions that they are making right now are the right decisions for the business. Without full transparency this is not possible. &lt;/p&gt;
+&lt;h2 id=&quot;What-needs-are-we-trying-to-meet&quot;&gt;&lt;a href=&quot;#What-needs-are-we-trying-to-meet&quot; class=&quot;headerlink&quot; title=&quot;What needs are we trying to meet?&quot;&gt;&lt;/a&gt;What needs are we trying to meet?&lt;/h2&gt;
     
     </summary>
     
@@ -366,7 +429,7 @@
     <link href="http://tech.opentable.co.uk//blog/2016/11/18/testing-node-apps-with-docker-compose/"/>
     <id>http://tech.opentable.co.uk//blog/2016/11/18/testing-node-apps-with-docker-compose/</id>
     <published>2016-11-18T16:40:22.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2016-11-21T10:26:40.264Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Contents-of-this-post"><a href="#Contents-of-this-post" class="headerlink" title="Contents of this post"></a>Contents of this post</h2><ul>
 <li><a href="#purpose">Purpose</a>: the reason for this blog post.</li>
@@ -413,7 +476,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FROM node:4-onbuild</div><div class="line">EXPOSE 3000</div><div class="line">ENTRYPOINT [&quot;/usr/local/bin/node&quot;, &quot;index.js&quot;]</div></pre></td></tr></table></figure>
 <p>Let’s take a look at what this set of instructions mean. We are building a container with our app, taking the base image from the Node.js official image (the environment where the app will run), exposing the port that the app will use for serving requests, and running the server at last. This, by the way, is a pretty standard way of using a Node.js within Docker.</p>
 <p>Now, to spin up the app and hit it with tests, let’s use docker-compose. This will come in useful later, when we will add another container (the database) linked with our app. For now it will run a single container. To do it, all we need to do is create a <a href="https://github.com/federicomaffei/soul-compose/blob/faca99d02178407f3ffa9bfd932bcb8932dfd2e0/docker-compose.yml" target="_blank" rel="external">docker-compose.yml</a> file in our root folder:</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">'2'</span></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  soul-compose:</span></div><div class="line"><span class="attr">    build:</span></div><div class="line"><span class="attr">      context:</span> <span class="string">.</span></div><div class="line"><span class="attr">    ports:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">"3001:3000"</span></div></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">'2'</span></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  soul-compose:</span></div><div class="line"><span class="attr">    build:</span></div><div class="line"><span class="attr">      context:</span> .</div><div class="line"><span class="attr">    ports:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">"3001:3000"</span></div></pre></td></tr></table></figure>
 <p>This is a standard way of adding a service to a docker-compose configuration file. We are declaring that the context of the container is the top folder (where the Dockerfile that will be used to build it lives), and mapping port 3000 of the container to port 3001 of our local environment. This will allow the container to run in parallel with the app running locally, without the risk of having port allocation issues.<br>Now, let’s build and run our one-container composition:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker-compose up -d</div></pre></td></tr></table></figure>
 <p>The interesting detail here is the -d option: it basically allows the container to run detached from the command line (in background mode, if you wish). This means we can stay on the same terminal and just run the tests again.</p>
@@ -428,9 +491,9 @@
 <p>I am going to add some boilerplate code that serves the purpose of having a connection to the db and perform reads and writes (<a href="https://github.com/federicomaffei/soul-compose/blob/bfe5d89c907cc2dc55acfbd4a763fdc56f9763b8/index.js" target="_blank" rel="external">find it here</a>). The important detail is the fact that now it is actually used in the endpoints we are testing. We are ready to re-run our tests.</p>
 <h5 id="Code-example-at-this-point-3"><a href="#Code-example-at-this-point-3" class="headerlink" title="Code example at this point."></a><a href="https://github.com/federicomaffei/soul-compose/tree/bfe5d89c907cc2dc55acfbd4a763fdc56f9763b8" target="_blank" rel="external">Code example at this point.</a></h5><p>The tests will fail, the reason being that our app is unable to connect to the database in its Docker environment at this point. So let’s take advantage of the features of docker-compose, and add a fully-featured MongoDB instance ready to be used, adding it to our <a href="https://github.com/federicomaffei/soul-compose/blob/2962d28e33366a92801f0ef2c18ef3dc7dd9f9db/docker-compose.yml" target="_blank" rel="external">docker-compose.yml</a> file.</p>
 <p>Let’s go through the code. First and foremost, we added an entry for the MongoDB image to be built and run:</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="attr">mongodb:</span></div><div class="line"><span class="attr">  image:</span> <span class="attr">mongo:3.0.11</span></div><div class="line"><span class="attr">  ports:</span></div><div class="line"><span class="bullet">    -</span> <span class="string">"27018:27017"</span></div><div class="line"><span class="attr">  command:</span> <span class="bullet">--smallfiles</span></div></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="attr">mongodb:</span></div><div class="line"><span class="attr">  image:</span> mongo:<span class="number">3.0</span><span class="number">.11</span></div><div class="line"><span class="attr">  ports:</span></div><div class="line"><span class="bullet">    -</span> <span class="string">"27018:27017"</span></div><div class="line"><span class="attr">  command:</span> --smallfiles</div></pre></td></tr></table></figure>
 <p>To make sure that the app and MongoDB load up in the right order (mongo, then app) we can also specify a <em>depends_on</em> property, meaning the app will wait for Mongo to start, and then will be able to access it through the hostname <em>mongodb</em>.</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="attr">soul-compose:</span></div><div class="line"><span class="attr">  build:</span></div><div class="line"><span class="attr">    context:</span> <span class="string">.</span></div><div class="line"><span class="attr">  ports:</span></div><div class="line"><span class="bullet">    -</span> <span class="string">"3001:3000"</span></div><div class="line"><span class="attr">  environment:</span></div><div class="line"><span class="bullet">    -</span> <span class="string">NODE_ENV=test</span></div><div class="line"><span class="attr">  depends_on:</span></div><div class="line"><span class="bullet">    -</span> <span class="string">mongodb</span></div></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="attr">soul-compose:</span></div><div class="line"><span class="attr">  build:</span></div><div class="line"><span class="attr">    context:</span> .</div><div class="line"><span class="attr">  ports:</span></div><div class="line"><span class="bullet">    -</span> <span class="string">"3001:3000"</span></div><div class="line"><span class="attr">  environment:</span></div><div class="line"><span class="bullet">    -</span> NODE_ENV=test</div><div class="line"><span class="attr">  depends_on:</span></div><div class="line"><span class="bullet">    -</span> mongodb</div></pre></td></tr></table></figure>
 <p>This means we will also have to change the code in the app to take that into account. One way to do it is by exporting an environment variable in the application container using docker-compose (as you can see above), and set the MongoDB hostname depending on it <a href="https://github.com/federicomaffei/soul-compose/blob/2962d28e33366a92801f0ef2c18ef3dc7dd9f9db/index.js" target="_blank" rel="external">in our index.js file</a>. A small but important change.</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> mongoHost = process.env.NODE_ENV === <span class="string">'test'</span> ? <span class="string">'mongodb'</span> : <span class="string">'localhost'</span>;</div></pre></td></tr></table></figure>
 <p>And this covers what we had in scope. You should be able to re-run the tests to watch them going green. Pat yourself on the back!</p>
@@ -464,9 +527,7 @@
 &lt;h2 id=&quot;Purpose&quot;&gt;&lt;a href=&quot;#Purpose&quot; class=&quot;headerlink&quot; title=&quot;Purpose&quot;&gt;&lt;/a&gt;&lt;a name=&quot;purpose&quot;&gt;&lt;/a&gt;Purpose&lt;/h2&gt;&lt;p&gt;As I am sure the audience of this post knows to some extent, &lt;a href=&quot;https://www.docker.com/what-docker&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Docker&lt;/a&gt; is a technology that has grown to become popular over the last few years, allowing developers to deploy pieces of software by packaging them into standardized containers, in a number of various ecosystems (Apache Mesos, Amazon Web Services and many more).&lt;/p&gt;
 &lt;p&gt;So we can use Docker for our deployment needs, awesome. But let’s pay attention to a key word I used above. Docker grants &lt;em&gt;isolation&lt;/em&gt;. And what do we like to perform on our application in isolation? Yeah, you guessed right &amp;ndash; testing!&lt;/p&gt;
 &lt;p&gt;Specifically, with this post, I aim to dig deeper into how to use &lt;a href=&quot;https://docs.docker.com/compose/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;docker-compose&lt;/a&gt; (a specific Docker-based tool that enables creation of multi-container Docker applications) to build and run a Node.js application connected to MongoDB, to test their interaction and the interaction of the app with the external world, all inside containers running on your machine. All isolated and testable thanks to the usage of containers that we can spin up, hit with tests, and clean up with little effort. &lt;/p&gt;
-&lt;p&gt;Interested? Let’s go!&lt;/p&gt;
-&lt;h2 id=&quot;Scenario&quot;&gt;&lt;a href=&quot;#Scenario&quot; class=&quot;headerlink&quot; title=&quot;Scenario&quot;&gt;&lt;/a&gt;&lt;a name=&quot;scenario&quot;&gt;&lt;/a&gt;Scenario&lt;/h2&gt;&lt;p&gt;In this scenario we will use Docker and one of its functionalities, docker-compose, to build a container and spin up our app.  Then we build another container with a copy of the database where we can freely create and manipulate data, and finally we perform all the integration testing we want against those self-contained entities, which we can clean up after the tests ran. Total isolation and, very importantly, no need to pollute our development or pre-production environment with superfluous test data.&lt;/p&gt;
-&lt;p&gt;Let’s imagine an app that we can build and test, for example a directory of soul music artists.&lt;/p&gt;
+
     
     </summary>
     
@@ -486,7 +547,7 @@
     <link href="http://tech.opentable.co.uk//blog/2016/11/09/falcor-postman/"/>
     <id>http://tech.opentable.co.uk//blog/2016/11/09/falcor-postman/</id>
     <published>2016-11-09T16:40:22.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2016-11-09T22:17:22.286Z</updated>
     
     <content type="html"><![CDATA[<p>At OpenTable, we have an engineering culture that empowers us to research, experiment and learn. </p>
 <p>In an effort to foster innovation and to try new ideas, <a href="/blog/authors/ccartlidge.html">Chris Cartlidge</a>, <a href="https://twitter.com/nickbalestra" target="_blank" rel="external">Nick Balestra</a>, <a href="https://twitter.com/tpgmartin" target="_blank" rel="external">Tom Martin</a> and <a href="/blog/authors/mrichetto.html">myself</a> started to work on a side project nicknamed big-mars. Our project is a mobile-first, responsive web application that uses Falcor by Netflix.</p>
@@ -519,19 +580,16 @@
 &lt;p&gt;Falcor, a JavaScript library for efficient data fetching, is an implementation of the Backend for Frontend (BFF) or the API Gateway pattern.&lt;/p&gt;
 &lt;p&gt;One powerful concept that Falcor has is its query model, in which you access your data as if it was a single JSON model in memory.  You can navigate your data structure the way you would navigate a JSON object; either with a “dot notation” (e.g. restaurant.address.city) or with an “array notation” (e.g. restaurant[‘address’][‘city’]). &lt;/p&gt;
 &lt;p&gt;Really easy and intuitive.&lt;/p&gt;
-&lt;p&gt;However, while experimenting and learning how to properly use its query model, we noticed that it was quite hard to “visualise” the expected result from the API calls without using, for instance, our beloved in-browser Developer Tools console.&lt;/p&gt;
-&lt;h2 id=&quot;falcor-postman&quot;&gt;&lt;a href=&quot;#falcor-postman&quot; class=&quot;headerlink&quot; title=&quot;falcor-postman&quot;&gt;&lt;/a&gt;falcor-postman&lt;/h2&gt;&lt;p&gt;The Falcor project released many additional packages in order to facilitate developers who are willing to use this technology (e.g. falcor-express) but in this ecosystem we noticed a lack of tools with a GUI on top.&lt;/p&gt;
-&lt;p&gt;We also noticed that the GraphQL, another project that shares with Falcor the same core concepts, has tools with visual interfaces (e.g. express-graphql and GraphiQL).&lt;/p&gt;
-&lt;p&gt;So as a spin-off of our big-mars project, Nick and I decided to build a tool with a nice and intuitive GUI responsible for exercising the Falcor endpoint in order to help us to validate our queries, and we named this tool &lt;a href=&quot;https://github.com/opentable/falcor-postman&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;falcor-postman&lt;/a&gt;.&lt;/p&gt;
+
     
     </summary>
     
     
-      <category term="OSS" scheme="http://tech.opentable.co.uk/blog/categories/OSS/"/>
-    
       <category term="JavaScript" scheme="http://tech.opentable.co.uk/blog/categories/JavaScript/"/>
     
       <category term="Falcor" scheme="http://tech.opentable.co.uk/blog/categories/Falcor/"/>
+    
+      <category term="OSS" scheme="http://tech.opentable.co.uk/blog/categories/OSS/"/>
     
   </entry>
   
@@ -540,7 +598,7 @@
     <link href="http://tech.opentable.co.uk//blog/2016/04/27/opencomponents-microservices-in-the-front-end-world/"/>
     <id>http://tech.opentable.co.uk//blog/2016/04/27/opencomponents-microservices-in-the-front-end-world/</id>
     <published>2016-04-27T11:10:00.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2016-10-24T12:49:12.467Z</updated>
     
     <content type="html"><![CDATA[<p>Many engineers work every day on opentable.com from our offices located in Europe, America, and Asia, pushing changes to production multiple times a day. Usually, this is very hard to achieve, in fact it took years for us to get to this point. <a href="/blog/2015/02/09/dismantling-the-monolith-microsites-at-opentable/">I described in a previous article</a> how we dismantled our monolith in favour of a Microsites architecture. Since the publication of that blog post we have been working on something I believe to be quite unique, called <strong>OpenComponents</strong>.</p>
 <h3 id="Another-front-end-framework"><a href="#Another-front-end-framework" class="headerlink" title="Another front-end framework?"></a>Another front-end framework?</h3><p>OpenComponents is a system to facilitate code sharing, reduce dependencies, and easily approach new features and experiments from the back-end to the front-end. To achieve this, it is based on the concept of using services as interfaces - enabling pages to render partial content that is located, executed and deployed independently.</p>
@@ -607,17 +665,7 @@ undefined
 &lt;h3 id=&quot;Another-front-end-framework&quot;&gt;&lt;a href=&quot;#Another-front-end-framework&quot; class=&quot;headerlink&quot; title=&quot;Another front-end framework?&quot;&gt;&lt;/a&gt;Another front-end framework?&lt;/h3&gt;&lt;p&gt;OpenComponents is a system to facilitate code sharing, reduce dependencies, and easily approach new features and experiments from the back-end to the front-end. To achieve this, it is based on the concept of using services as interfaces - enabling pages to render partial content that is located, executed and deployed independently.&lt;/p&gt;
 &lt;p&gt;OpenComponents is not &lt;em&gt;another SPA JS framework&lt;/em&gt;; it is a set of conventions, patterns and tools to develop and quickly deploy fragments of front-end. In this perspective, it plays nicely with any existing architecture and framework in terms of front-end and back-end. Its purpose is to &lt;strong&gt;serve as delivery mechanism for a more modularised end-result in the front-end&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;OC is been in production for more than a year at OpenTable and it is &lt;a href=&quot;https://github.com/opentable/oc&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;fully open-sourced&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;Overview&quot;&gt;&lt;a href=&quot;#Overview&quot; class=&quot;headerlink&quot; title=&quot;Overview&quot;&gt;&lt;/a&gt;Overview&lt;/h2&gt;&lt;p&gt;OpenComponents involves two parts:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The &lt;strong&gt;consumers&lt;/strong&gt; are web pages that need fragments of HTML for rendering partial contents. Sometimes they need some content during server-side rendering, somethings when executing code in the browser.&lt;/li&gt;
-&lt;li&gt;The &lt;strong&gt;components&lt;/strong&gt; are small units of isomorphic code mainly consisting of HTML, Javascript and CSS. They can optionally contain some logic, allowing a server-side Node.js closure to compose a model that is used to render the view. When rendered they are pieces of HTML, ready to be injected in any web page.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The framework consists of three parts:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The &lt;strong&gt;cli&lt;/strong&gt; allows developers to create, develop, test, and publish components.&lt;/li&gt;
-&lt;li&gt;The &lt;strong&gt;library&lt;/strong&gt; is where the components are stored after the publishing. When components depend on static resources (such as images, CSS files, etc.) these are stored, during packaging and publishing, in a publicly-exposed part of the library that serves as a CDN.&lt;/li&gt;
-&lt;li&gt;The &lt;strong&gt;registry&lt;/strong&gt; is a REST API that is used to consume components. It is the entity that handles the traffic between the library and the consumers.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h2 id=&quot;Overview&quot;&gt;&lt;a href=&quot;#Overview&quot; class=&quot;headerlink&quot; title=&quot;Overview&quot;&gt;&lt;/a&gt;Overview&lt;/h2&gt;
     
     </summary>
     
@@ -639,7 +687,7 @@ undefined
     <link href="http://tech.opentable.co.uk//blog/2016/01/07/react-testing/"/>
     <id>http://tech.opentable.co.uk//blog/2016/01/07/react-testing/</id>
     <published>2016-01-07T11:00:00.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2017-06-21T08:44:55.581Z</updated>
     
     <content type="html"><![CDATA[<p>At OpenTable it’s becoming an increasingly popular trend to use <em><a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a></em>.<br>One of the reasons for this is the ability for it  to server-side render whilst still<br>giving us the client side flexibility that we all crave!</p>
 <p>We all know to have stable, reliable software you need to have well written tests. Facebook knows this and<br>provides the handy <em><a href="https://facebook.github.io/react/docs/test-utils.html" target="_blank" rel="external">Test Utilities</a></em> library to make<br>our lives easier.</p>
@@ -700,13 +748,7 @@ undefined
 &lt;p&gt;Cool — I hear you all say! But what is the best approach to testing React components?&lt;/p&gt;
 &lt;p&gt;Well unfortunately this is something that is not very well documented and if not approached in&lt;br&gt;the correct way can lead to brittle tests.&lt;/p&gt;
 &lt;p&gt;Therefore I have written this blog post to discuss the different approaches we have available to us.&lt;/p&gt;
-&lt;p&gt;All code used in this post is avaliable on my &lt;em&gt;&lt;a href=&quot;https://github.com/chriscartlidge/React-Testing-Blog-Code&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;&lt;/em&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;The-Basics&quot;&gt;&lt;a href=&quot;#The-Basics&quot; class=&quot;headerlink&quot; title=&quot;The Basics&quot;&gt;&lt;/a&gt;The Basics&lt;/h2&gt;&lt;p&gt;To make our lives a lot easier when writing test it’s best to use a couple of basic tools. Below is&lt;br&gt;the absolute minimum required to start testing React components.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;&lt;a href=&quot;https://mochajs.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Mocha&lt;/a&gt;&lt;/em&gt; - This is a testing framework that runs in the browser or Node.JS (others are available).&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;&lt;a href=&quot;https://facebook.github.io/react/docs/test-utils.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ReactTestUtils&lt;/a&gt;&lt;/em&gt; - This is the basic testing framework that Facebook provides to go testing with React.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;The-Scenario&quot;&gt;&lt;a href=&quot;#The-Scenario&quot; class=&quot;headerlink&quot; title=&quot;The Scenario&quot;&gt;&lt;/a&gt;The Scenario&lt;/h2&gt;
+
     
     </summary>
     
@@ -724,7 +766,7 @@ undefined
     <link href="http://tech.opentable.co.uk//blog/2015/05/06/puppet-community/"/>
     <id>http://tech.opentable.co.uk//blog/2015/05/06/puppet-community/</id>
     <published>2015-05-06T09:00:00.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2017-06-21T08:44:05.697Z</updated>
     
     <content type="html"><![CDATA[<p>Puppet is an important tool to us at OpenTable; we couldn’t operate as efficiently without it but Puppet is more than a tool or a vendor, it is a community of people trying to help<br>each other operate increasing complex and sophisticated infrastructures.</p>
 <p>The Puppet community and the open source efforts that drive that community have always been important to us which is why we want to take a step further in our efforts and introduce<br>you to the “Puppet-community” project.</p>
@@ -752,9 +794,6 @@ undefined
 &lt;h2 id=&quot;What-is-Puppet-community&quot;&gt;&lt;a href=&quot;#What-is-Puppet-community&quot; class=&quot;headerlink&quot; title=&quot;What is Puppet-community&quot;&gt;&lt;/a&gt;What is Puppet-community&lt;/h2&gt;&lt;p&gt;Puppet-community is a GitHub organisation of like-minded individuals from across the wider Puppet ecosystem and from a diverse set of companies. Its principle aims are to allow the community to synchronise its efforts and to provide a GitHub organisation and Puppet Forge namespace not affiliated with any company.&lt;/p&gt;
 &lt;p&gt;Its wider aims are to provide a place for module and tool authors to share their code and the burden of maintaining it.&lt;/p&gt;
 &lt;p&gt;I would like to say that this was our idea, as it’s an excellent one, but actually all credit goes to its founders: &lt;a href=&quot;https://github.com/igalic&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Igor Galić&lt;/a&gt;, &lt;a href=&quot;https://github.com/daenney&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Daniele Sluijters&lt;/a&gt; and &lt;a href=&quot;https://github.com/nibalizer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Spencer Krum&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;Why-communities-matter&quot;&gt;&lt;a href=&quot;#Why-communities-matter&quot; class=&quot;headerlink&quot; title=&quot;Why communities matter&quot;&gt;&lt;/a&gt;Why communities matter&lt;/h2&gt;&lt;p&gt;So why all the fuss about this? Why does it even matter where your code lives?&lt;/p&gt;
-&lt;p&gt;Well these are the some questions that I asked myself when I first heard about this project at PuppetConf 2014. The answer is that is really does matter and it’s a pattern that is&lt;br&gt;developing elsewhere (see: &lt;a href=&quot;https://github.com/packer-community&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;packer-community&lt;/a&gt;, &lt;a href=&quot;https://github.com/terraform-community-modules&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;terraform-community-modules&lt;/a&gt;,&lt;br&gt;&lt;a href=&quot;https://github.com/cloudfoundry-community&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;cloudfoundry-community&lt;/a&gt;) to deal with the problems you’ll face with a large amount of open source code.&lt;/p&gt;
-&lt;p&gt;Stepping back slightly, if you look at open source then there are three types: product-based (think open-core), corporate/individual sponsored,  and community-driven.&lt;/p&gt;
     
     </summary>
     
@@ -770,7 +809,7 @@ undefined
     <link href="http://tech.opentable.co.uk//blog/2015/03/05/the-dns-abc/"/>
     <id>http://tech.opentable.co.uk//blog/2015/03/05/the-dns-abc/</id>
     <published>2015-03-05T15:00:00.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2016-10-24T10:27:03.848Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Introduction-to-DNS"><a href="#Introduction-to-DNS" class="headerlink" title="Introduction to DNS"></a>Introduction to DNS</h2><p>Before joining OpenTable I was looking for a software engineer job and I’ve done my fair share of interviews. A question that has popped out a lot, and when I say a lot I mean <em>always</em>, is:</p>
 <p><em>Could you tell me what happens when I type an URL in a web browser on my computer and press enter?</em></p>
@@ -829,10 +868,6 @@ undefined
 &lt;p&gt;Of course the possible answers could range from “MMMHHH, wellll, I’m not sure where to start…” to a whole book on computer networks.&lt;/p&gt;
 &lt;p&gt;After a number of attempts to answer briefly and correctly, I’ve concluded that mentioning &lt;strong&gt;DNS&lt;/strong&gt; can make a reasonable start.&lt;/p&gt;
 &lt;p&gt;Let’s think about it. When we type the address of the resource we want to browse, we use the alphabet, right? With letters and names easily readable and retainable by a human being.&lt;/p&gt;
-&lt;p&gt;But a machine needs an &lt;strong&gt;IP address&lt;/strong&gt; to recognize another machine connected to a network. An IP address is numerical, for example 192.168.0.1. Less readable, it seems.&lt;/p&gt;
-&lt;p&gt;And here is where DNS comes to play. DNS stands for &lt;strong&gt;Domain Name System&lt;/strong&gt;, and that represents exactly what it is: a system that translates &lt;strong&gt;domain names&lt;/strong&gt; (e.g &lt;em&gt;www.opentable.co.uk&lt;/em&gt;), into IP addresses. I think of it as a phone book. It is queried with a domain name and, after a lookup, returns an IP.&lt;/p&gt;
-&lt;p&gt;How does the magic happen? Let’s look into it.&lt;/p&gt;
-&lt;h2 id=&quot;The-ABC&quot;&gt;&lt;a href=&quot;#The-ABC&quot; class=&quot;headerlink&quot; title=&quot;The ABC&quot;&gt;&lt;/a&gt;The ABC&lt;/h2&gt;
     
     </summary>
     
@@ -850,7 +885,7 @@ undefined
     <link href="http://tech.opentable.co.uk//blog/2015/02/16/hapi-js-and-sigterm/"/>
     <id>http://tech.opentable.co.uk//blog/2015/02/16/hapi-js-and-sigterm/</id>
     <published>2015-02-16T10:32:42.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2016-10-24T10:24:17.470Z</updated>
     
     <content type="html"><![CDATA[<p>When we first stood up our hapi.js APIs, we wrote init scripts to start/stop them. Stopping the server, was simply a case of sending SIGKILL (causing the app to immediately exit).</p>
 <p>Whilst this is fine for most cases, if we want our apps to be good Linux citizens, then they should terminate gracefully. Hapi.js has the handy <code>server.stop(...)</code> command (see docs <a href="http://hapijs.com/api#serverstopoptions-callback" target="_blank" rel="external">here</a>) which will terminate the server gracefully. It will cause the server to respond to new connections with a 503 (server unavailable), and wait for existing connections to terminate (up to some specified timeout), before stopping the server and allowing the node.js process to exit. Perfect.</p>
@@ -885,15 +920,7 @@ undefined
 &lt;p&gt;This makes our graceful shutdown code really simple:&lt;/p&gt;
 &lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;process.on(&lt;span class=&quot;string&quot;&gt;&#39;SIGTERM&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  server.stop(&amp;#123; &lt;span class=&quot;attr&quot;&gt;timeout&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;1000&lt;/span&gt;&amp;#125;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    process.exit(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;When we see a SIGTERM, call &lt;code&gt;server.stop()&lt;/code&gt;, then once the server has stopped, call &lt;code&gt;process.exit(0)&lt;/code&gt;. Easy peasy.&lt;/p&gt;
-&lt;h3 id=&quot;Throw-a-spanner-in-the-works&quot;&gt;&lt;a href=&quot;#Throw-a-spanner-in-the-works&quot; class=&quot;headerlink&quot; title=&quot;Throw a spanner in the works&quot;&gt;&lt;/a&gt;Throw a spanner in the works&lt;/h3&gt;&lt;p&gt;Whilst &lt;code&gt;server.stop()&lt;/code&gt; is really useful, it has the problem that it immediately prevents the server from responding to new requests. In our case, that isn’t particularly desirable. We use service-discovery, which means that the graceful termination of our app should run like this:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SIGTERM&lt;/li&gt;
-&lt;li&gt;Unannounce from Service-Discovery&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;server.stop(...)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;process.exit(0)&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Ideally we want the unannounce to happen before the server starts rejecting connections, in order to reduce the likelihood that clients will hit a server that is shutting down.&lt;/p&gt;
-&lt;h3 id=&quot;Plugins-to-the-rescue&quot;&gt;&lt;a href=&quot;#Plugins-to-the-rescue&quot; class=&quot;headerlink&quot; title=&quot;Plugins to the rescue!&quot;&gt;&lt;/a&gt;Plugins to the rescue!&lt;/h3&gt;
+
     
     </summary>
     
@@ -911,7 +938,7 @@ undefined
     <link href="http://tech.opentable.co.uk//blog/2015/02/09/dismantling-the-monolith-microsites-at-opentable/"/>
     <id>http://tech.opentable.co.uk//blog/2015/02/09/dismantling-the-monolith-microsites-at-opentable/</id>
     <published>2015-02-09T09:43:03.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2016-10-24T10:18:01.451Z</updated>
     
     <content type="html"><![CDATA[<p>A couple of years ago we started to break-up the code-base behind our consumer site <a href="http://www.opentable.com" target="_blank" rel="external">opentable.com</a>, to smaller units of code, in order to improve our productivity. New teams were created with the goal of splitting up the logic that was powering the back-end and then bring to life new small services. Then, we started working on what we call <em>Microsites</em>.</p>
 <h3 id="Microsites"><a href="#Microsites" class="headerlink" title="Microsites"></a>Microsites</h3><p>A microsite is a very small set of web-pages, or even a single one, that takes care of handling a very specific part of the system’s domain logic. Examples are the <em>Search Results</em> page or the <em>Restaurant’s Profile</em> page. Every microsite is an independently deployable unit of code, so it is easier to test, to deploy, and in consequence more resilient. Microsites are then all connected by a front-door service that handles the routing.</p>
@@ -955,13 +982,7 @@ undefined
 &lt;li&gt;&lt;em&gt;Diversity&lt;/em&gt; on tech stacks: teams were finally able to pick their own favourite web-stack, as soon as they were capable of deploying their code and taking care of it in terms of reliability and performance.&lt;/li&gt;
 &lt;li&gt;Robustness: when something was wrong with a microsite, everything else was fine.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;On the other hand, we soon realised that we introduced new problems on the system:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Duplication: teams started duplicating a lot of code, specifically front-end components such as the header, the footer, etc.&lt;/li&gt;
-&lt;li&gt;Coordination: when we needed to change something on the header, for example, we were expecting to see the change live in different time frames, resulting in inconsistencies.&lt;/li&gt;
-&lt;li&gt;Performance: every microsite was hosting its own duplicated css, javascript libraries, and static resources; resulting as a big disadvantage for the end-user in terms of performance.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;SRS-aka-Site-Resources-Service&quot;&gt;&lt;a href=&quot;#SRS-aka-Site-Resources-Service&quot; class=&quot;headerlink&quot; title=&quot;SRS - aka Site Resources Service&quot;&gt;&lt;/a&gt;SRS - aka Site Resources Service&lt;/h3&gt;&lt;p&gt;To solve some of these problems we created a REST api to serve html snippets, that soon we started to call &lt;em&gt;components&lt;/em&gt;. Main characteristics of the system are:&lt;/p&gt;
+
     
     </summary>
     
@@ -983,7 +1004,7 @@ undefined
     <link href="http://tech.opentable.co.uk//blog/2015/02/02/a-beginners-guide-to-rest-services/"/>
     <id>http://tech.opentable.co.uk//blog/2015/02/02/a-beginners-guide-to-rest-services/</id>
     <published>2015-02-02T11:53:25.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2016-10-24T10:22:42.792Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Why-this-post"><a href="#Why-this-post" class="headerlink" title="Why this post?"></a>Why this post?</h2><p>As a junior, I always find it easier to just sit and write code than actually stop to think about the theoretical basis that lie under the applications I work on. <strong>REST</strong>  is one of those terms I heard a lot about, so I decided to try to sum up what it means and how it affects the choices we make everyday as software engineers.</p>
 <h2 id="Introduction-to-REST"><a href="#Introduction-to-REST" class="headerlink" title="Introduction to REST"></a>Introduction to REST</h2><p>REST stands for Representational State Transfer, and it can be defined as an architectural style used to build Web Services that are lightweight, maintainable, and scalable. A service that is designed by REST principles can be called a <strong>RESTful service</strong>.</p>
@@ -1057,18 +1078,7 @@ undefined
 &lt;h2 id=&quot;Introduction-to-REST&quot;&gt;&lt;a href=&quot;#Introduction-to-REST&quot; class=&quot;headerlink&quot; title=&quot;Introduction to REST&quot;&gt;&lt;/a&gt;Introduction to REST&lt;/h2&gt;&lt;p&gt;REST stands for Representational State Transfer, and it can be defined as an architectural style used to build Web Services that are lightweight, maintainable, and scalable. A service that is designed by REST principles can be called a &lt;strong&gt;RESTful service&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;It has been described first in 2000 by Roy Fielding, in a &lt;a href=&quot;http://www.ics.uci.edu/~fielding/pubs/webarch_icse2000.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;dissertation&lt;/a&gt; called “Architectural Styles and the Design of Network-based Software Architectures”. The basic idea was to describe the interactions between the components of a distributed system, putting constraints on them and emphasizing the importance of an uniform interface, that is abstracted from the single components.&lt;/p&gt;
 &lt;p&gt;REST is often applied to the design and development of web services, which is the scenario I’ll try to address in this post.&lt;/p&gt;
-&lt;p&gt;The purpose of a web service can be summed up as follows: it exposes &lt;strong&gt;resources&lt;/strong&gt; to a &lt;strong&gt;client&lt;/strong&gt; so that it can have access to them (examples of typical resources include pictures, video files, web pages and business data).&lt;/p&gt;
-&lt;p&gt;Common features of a service that is built in a REST style are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Representations&lt;/li&gt;
-&lt;li&gt;Messages&lt;/li&gt;
-&lt;li&gt;URIs&lt;/li&gt;
-&lt;li&gt;Uniform Interface&lt;/li&gt;
-&lt;li&gt;Statelessness&lt;/li&gt;
-&lt;li&gt;Links between resources&lt;/li&gt;
-&lt;li&gt;Caching&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;Representations-what-are-they&quot;&gt;&lt;a href=&quot;#Representations-what-are-they&quot; class=&quot;headerlink&quot; title=&quot;Representations - what are they?&quot;&gt;&lt;/a&gt;Representations - what are they?&lt;/h2&gt;
+
     
     </summary>
     
@@ -1090,7 +1100,7 @@ undefined
     <link href="http://tech.opentable.co.uk//blog/2015/01/23/on-strongly-typed-logging/"/>
     <id>http://tech.opentable.co.uk//blog/2015/01/23/on-strongly-typed-logging/</id>
     <published>2015-01-23T13:13:13.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2016-10-24T10:25:29.166Z</updated>
     
     <content type="html"><![CDATA[<p>Logging is a crucial element of monitoring highly available systems. It allows not only to find out about errors but also quickly identify their cause. Logs are often used to generate metrics that help business and engineering make informative decisions on future development directions. </p>
 <p>At OpenTable we have a central logging infrastructure, that means all logs are stored in the same shared database (ElasticSearch for us). And everybody can access any logs they want without having very specialized knowledge (thanks Kibana!).</p>
@@ -1124,10 +1134,6 @@ undefined
 &lt;p&gt;ElasticSearch, though living in a NoSQL world, is not actually a schema-free database. Sure, you do not need to provide schema to it but instead ES will infer schema for you from documents you send to it. This is very similar to type inference you can find in many programming languages. You do not need to specify type of field, but if you later on try to assign inappropriate value to it you will get an exception.&lt;/p&gt;
 &lt;p&gt;This trait of our database goes all the way to the root of our logging system design. Let me explain why I say that we have ‘strongly typed logs’.&lt;/p&gt;
 &lt;h2 id=&quot;In-The-Beginning-There-Was-String&quot;&gt;&lt;a href=&quot;#In-The-Beginning-There-Was-String&quot; class=&quot;headerlink&quot; title=&quot;In The Beginning There Was String&quot;&gt;&lt;/a&gt;In The Beginning There Was String&lt;/h2&gt;&lt;p&gt;Before centralization we just logged a single message along with its importance. In code it looked something like:&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;logger.ERROR(“Kaboom!”)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;which resulted in logline on disk having timestamp, severity and message.&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;2014-10-10T07:33:04Z [ERROR] Kaboom!&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;That worked pretty well. As time passed we often started making log messages more generic to hold relevant data:&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;logger.INFO(string.Format(“Received &amp;#123;0&amp;#125; from &amp;#123;1&amp;#125;. Status: &amp;#123;2&amp;#125;. Took &amp;#123;3&amp;#125;”, httpMethod, sourceIp, statusCode, durationms));&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;When we decided to centralize logs we moved the same logs from local disk to a central database. Suddenly things that used to live on single server in a file called ‘application.log’ become part of one huge lump of data. Instead of easing access to logs they were really hard to filter, without even speaking about aggregation, or any simple form of operations to find the source of the problem. ElasticSearch is really good at free text searching, but frankly speaking FTS is never as precise as a good filter.&lt;/p&gt;
-&lt;h2 id=&quot;Then-There-Was-Dictionary-Of-Strings&quot;&gt;&lt;a href=&quot;#Then-There-Was-Dictionary-Of-Strings&quot; class=&quot;headerlink&quot; title=&quot;Then There Was Dictionary Of Strings&quot;&gt;&lt;/a&gt;Then There Was Dictionary Of Strings&lt;/h2&gt;
     
     </summary>
     
@@ -1147,7 +1153,7 @@ undefined
     <link href="http://tech.opentable.co.uk//blog/2015/01/19/building-a-living-styleguide-at-opentable/"/>
     <id>http://tech.opentable.co.uk//blog/2015/01/19/building-a-living-styleguide-at-opentable/</id>
     <published>2015-01-19T17:00:00.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2016-10-24T10:23:10.745Z</updated>
     
     <content type="html"><![CDATA[<p>If you’re reading this you’ve probably built yourself a website.  A site - large or small - that’s thrown together or crafted over many months.  And if you have, you’ve probably kept all your CSS class names in your head, or at least been able to go straight to the relevant stylesheets to retrieve them.</p>
 <p>Well OpenTable is unsurprisingly built by many engineering teams across multiple continents, and was completely redesigned last year.  And as soon as you have more than a handful of people working on your front-end you will quickly find a well-intentioned developer causing one or both of these problems:</p>
@@ -1202,10 +1208,6 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
 &lt;/ul&gt;
 &lt;p&gt;Despite these risks, a single front-end dev (or a team of them) cannot check every new piece of code or they will quickly become a bottleneck.&lt;/p&gt;
 &lt;h3 id=&quot;You-need-some-guidelines&quot;&gt;&lt;a href=&quot;#You-need-some-guidelines&quot; class=&quot;headerlink&quot; title=&quot;You need some guidelines&quot;&gt;&lt;/a&gt;You need some guidelines&lt;/h3&gt;&lt;p&gt;Offline designers regularly create ‘brand guidelines’ or ‘design standards’ to document the precise way their brand or product should be recreated when outside of their control.  Online, such guidelines are similarly invaluable for maintaining brand and code consistency with multiple engineers and designers, but it is blindingly obvious that a printed or ‘static’ set of guidelines is completely unsuitable for a constantly changing website.&lt;/p&gt;
-&lt;p&gt;Step forward a ‘living’ styleguide.&lt;/p&gt;
-&lt;p&gt;A living styleguide gives a visual representation of a site’s UI elements using &lt;strong&gt;the exact same code&lt;/strong&gt; as on the website, in most cases via the live CSS.  A living styleguide may also provide reusable CSS and HTML code examples and they are not just for engineers new to the code; I frequently use ours at OpenTable and I wrote the stylesheets in the first place (I can’t be expected to remember everything).&lt;/p&gt;
-&lt;p&gt;Providing reusable code improves collaboration, consistency and standards, and reduces design and development time - but like most documentation it is essential your guide is always up-to-date and trustworthy.  So if a living styleguide is (theoretically) always up-to-date, how did we build ours?&lt;/p&gt;
-&lt;h2 id=&quot;How-we-built-our-styleguide&quot;&gt;&lt;a href=&quot;#How-we-built-our-styleguide&quot; class=&quot;headerlink&quot; title=&quot;How we built our styleguide&quot;&gt;&lt;/a&gt;How we built our styleguide&lt;/h2&gt;
     
     </summary>
     
@@ -1227,7 +1229,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     <link href="http://tech.opentable.co.uk//blog/2015/01/01/explaining-flux-architecture-with-macgyver-dot-js/"/>
     <id>http://tech.opentable.co.uk//blog/2015/01/01/explaining-flux-architecture-with-macgyver-dot-js/</id>
     <published>2015-01-01T15:33:46.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2016-10-24T10:23:48.351Z</updated>
     
     <content type="html"><![CDATA[<h2 id="What-is-Flux"><a href="#What-is-Flux" class="headerlink" title="What is Flux?"></a>What is Flux?</h2><p><a href="https://github.com/facebook/flux" target="_blank" rel="external">Flux</a> is an application architectural pattern developed by Facebook. It was developed to solve some of the complexities of the MVC pattern when used at scale by favouring a uni-directional approach. It is a pattern and not a technology or framework.</p>
 <p><img src="/images/posts/mvc-scale.png" alt="MVC scale issue"></p>
@@ -1259,10 +1261,6 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
 &lt;p&gt;When applications that use the model-view-controller (MVC) pattern at any scale it becomes difficult to maintain consistent data across multiple views. In particular the case whereby flow between models and views is not uni-directional and may require increasing logic to maintain parity between views when model data is updated. Facebook hit this issue several times and in particular with their unseen count (an incremented value of unseen messages which is updated by several UI chat components). It wasn’t until they realised that the MVC pattern accomodated the complexity that they stepped back from the problem and addressed the architecture.&lt;/p&gt;
 &lt;p&gt;Flux is intentionally unidirectional.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/images/posts/flux.png&quot; alt=&quot;flux&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Key to this architecture is the dispatcher. The dispatcher forms the gatekeeper that all actions must go through. When a view, or views, wish to do something they fire an action which the dispatcher correctly routes via registered callbacks made by the stores. &lt;/p&gt;
-&lt;p&gt;Stores are responsible for the data and respond to callbacks from the dispatcher. When data is changed they emit change events that views listen to to notify them that data has changed. The view can then respond accordingly (for example to update/rebind).&lt;/p&gt;
-&lt;p&gt;This will become more obvious when we go through the macgyver.js example.&lt;/p&gt;
-&lt;h2 id=&quot;What-is-macgyver-js&quot;&gt;&lt;a href=&quot;#What-is-macgyver-js&quot; class=&quot;headerlink&quot; title=&quot;What is macgyver.js?&quot;&gt;&lt;/a&gt;What is macgyver.js?&lt;/h2&gt;
     
     </summary>
     
@@ -1280,7 +1278,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     <link href="http://tech.opentable.co.uk//blog/2014/12/08/supporting-ie8-in-the-opentable-redesign/"/>
     <id>http://tech.opentable.co.uk//blog/2014/12/08/supporting-ie8-in-the-opentable-redesign/</id>
     <published>2014-12-08T21:14:57.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2016-10-24T10:26:47.220Z</updated>
     
     <content type="html"><![CDATA[<p>We’re really <a href="http://blog.opentable.com/2014/opentables-website-re-designed-re-architected-re-imagined/" target="_blank" rel="external">proud to have released</a> last week our redesigned <a href="http://www.opentable.co.uk" target="_blank" rel="external">OpenTable</a> site, the culmination of months of hard work from many talented people here in London and in San Francisco.</p>
 <p>However despite killing off our old site and its 2004 design, 2.8% of our visitors could have been crying into their keyboard as a far worse opentable.co.uk filled their screen.</p>
@@ -1327,10 +1325,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
 &lt;p&gt;That version of OpenTable was our new responsive site viewed in Internet Explorer 8.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/images/posts/redesign-ie8.png&quot; alt=&quot;Our redesign before we optimised for IE8&quot;&gt;&lt;/p&gt;
 &lt;p&gt;The fundamental issue is that IE8 doesn’t support media queries so the age-old browser would try to stretch our &lt;em&gt;mobile-first&lt;/em&gt; responsive design as wide as it could go - not great across a 27” Thunderbolt.&lt;/p&gt;
-&lt;p&gt;To solve the problem we first tried the &lt;a href=&quot;https://github.com/scottjehl/Respond&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Respond.js&lt;/a&gt; polyfill but this didn’t work as we’d hoped.  The main issue appeared to be that because we serve our CSS and JS on a separate sub-domain we fell foul of the browser’s cross-domain security.  We followed the Respond.js instructions to solve this but having no luck we looked for alternatives.&lt;/p&gt;
-&lt;h2 id=&quot;Legacssy&quot;&gt;&lt;a href=&quot;#Legacssy&quot; class=&quot;headerlink&quot; title=&quot;Legacssy&quot;&gt;&lt;/a&gt;Legacssy&lt;/h2&gt;&lt;p&gt;Further Googling lead us to &lt;a href=&quot;https://github.com/robinpokorny/grunt-legacssy&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Legacssy&lt;/a&gt;. With this Grunt task we could create a IE8-only stylesheet and not have to serve extra JS and cross-domain proxy files to all visitors.&lt;/p&gt;
-&lt;p&gt;Our existing process is to create our core CSS with an &lt;code&gt;app.scss&lt;/code&gt; file and &lt;a href=&quot;https://github.com/sindresorhus/grunt-sass&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;grunt-sass&lt;/a&gt;.  Our additional step was to create an &lt;code&gt;app_ie8.scss&lt;/code&gt; file, parse it with &lt;code&gt;grunt-sass&lt;/code&gt; like before, but then also run it through Legacssy.&lt;/p&gt;
-&lt;h3 id=&quot;Our-app-scss-file&quot;&gt;&lt;a href=&quot;#Our-app-scss-file&quot; class=&quot;headerlink&quot; title=&quot;Our app.scss file&quot;&gt;&lt;/a&gt;Our app.scss file&lt;/h3&gt;
+
     
     </summary>
     
@@ -1354,7 +1349,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
     <link href="http://tech.opentable.co.uk//blog/2014/11/28/proxying-with-hapi/"/>
     <id>http://tech.opentable.co.uk//blog/2014/11/28/proxying-with-hapi/</id>
     <published>2014-11-28T10:32:42.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
+    <updated>2016-10-24T10:25:57.012Z</updated>
     
     <content type="html"><![CDATA[<p>I’ve raved in the past about how awesome <a href="http://hapijs.com" target="_blank" rel="external">hapi.js</a> is, but I’m going to talk about just a specific case today.</p>
 <p>We started off with just a couple of hapi.js apis. This was at a time when standing up new infrastructure was still a bit painful, so inevitably those apis ended up having more functionality in them than they should have. Now it’s easy for us to get infrastructure, so we want to do more of it.</p>
@@ -1385,17 +1380,7 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
 &lt;p&gt;Our goal is to have lots of small(er) apis that just look after one specific piece (skillfully avoiding using the buzzword ‘microservices’).&lt;/p&gt;
 &lt;p&gt;When you want to split out functionality from one api to another, it can be a pain, especially if you have a lot of consumers who aren’t particularly fast-moving or communicative. Or maybe you don’t know all your consumers up front.&lt;/p&gt;
 &lt;p&gt;You’ve got a couple of options here:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Maintain the functionality in two places and slowly migrate consumers across&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Use a proxy or routing layer in-front of the api to rewrite or redirect requests&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Write code in your api to proxy requests to a different server&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The first two options are pretty icky, and frankly the third isn’t all that great either. It all depends on you having the right framework. Do you see where I’m going here?&lt;/p&gt;
-&lt;h3 id=&quot;Enter-Hapi-js&quot;&gt;&lt;a href=&quot;#Enter-Hapi-js&quot; class=&quot;headerlink&quot; title=&quot;Enter Hapi.js&quot;&gt;&lt;/a&gt;Enter Hapi.js&lt;/h3&gt;&lt;p&gt;Hapi.js has the concept of a ‘proxy’ handler, which can transparently proxy requests to a different server.&lt;/p&gt;
-&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;server.route([&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;method&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;GET&#39;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;path&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;/foo&#39;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;handler&lt;/span&gt;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;proxy&lt;/span&gt;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;host&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;my-other-service.mydomain.com&#39;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;port&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;80&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;protocol&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;http&#39;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;passThrough&lt;/span&gt;: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;xforward&lt;/span&gt;: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;]);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
     
     </summary>
     
@@ -1405,51 +1390,6 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
       <category term="Hapi.js" scheme="http://tech.opentable.co.uk/blog/categories/Hapi-js/"/>
     
       <category term="Proxy" scheme="http://tech.opentable.co.uk/blog/categories/Proxy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hobknob v2.0: A new dimension</title>
-    <link href="http://tech.opentable.co.uk//blog/2014/11/26/hobknob-v2-dot-0-a-new-dimension/"/>
-    <id>http://tech.opentable.co.uk//blog/2014/11/26/hobknob-v2-dot-0-a-new-dimension/</id>
-    <published>2014-11-26T10:11:37.000Z</published>
-    <updated>2017-06-30T14:50:16.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Sometimes there is the requirement for more granularity when toggling a feature switch.<br>Version 2.0 of <a href="https://github.com/opentable/hobknob" target="_blank" rel="external">Hobknob</a> hopes to address this with feature categories.</p>
-<h3 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR."></a>TL;DR.</h3><p>Hobknob now allows you to define categories of features that have multiple toggles per feature.</p>
-<p>For example, you can define the ‘Domain Features’ category which allows you to toggle a feature OFF in <code>your-website.com</code>, but ON in <code>your-website.co.uk</code>.</p>
-<p><img src="/images/posts/hobknob-domain-features.png" alt="Domain Features"></p>
-<h2 id="Categories"><a href="#Categories" class="headerlink" title="Categories"></a>Categories</h2><p>Feature categories are configured with a few pieces of information. For example:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"categories"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="attr">"id"</span>: <span class="number">0</span>,</div><div class="line">      <span class="attr">"name"</span>: <span class="string">"Simple Features"</span>,</div><div class="line">      <span class="attr">"description"</span>: <span class="string">"Use when you want your feature to be either on or off"</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="attr">"id"</span>: <span class="number">1</span>,</div><div class="line">      <span class="attr">"name"</span>: <span class="string">"Domain Features"</span>,</div><div class="line">      <span class="attr">"description"</span>: <span class="string">"Use when you want your features to be toggled separately for different domains"</span>,</div><div class="line">      <span class="attr">"values"</span>: [<span class="string">"com"</span>, <span class="string">"couk"</span>, <span class="string">"de"</span>, <span class="string">"commx"</span>, <span class="string">"jp"</span>, <span class="string">"ca"</span>]</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="attr">"id"</span>: <span class="number">2</span>,</div><div class="line">      <span class="attr">"name"</span>: <span class="string">"Locale Features"</span>,</div><div class="line">      <span class="attr">"description"</span>: <span class="string">"Use when you want your features to be toggled separately for different locales"</span>,</div><div class="line">      <span class="attr">"values"</span>: [<span class="string">"en-GB"</span>, <span class="string">"en-US"</span>, <span class="string">"fr-CA"</span>, <span class="string">"de-DE"</span>, <span class="string">"ja-JP"</span>, <span class="string">"es-MX"</span>]</div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Notice that each category (except the simple feature category) provides an array of accepted toggle values.</p>
-<p>All non-simple feature toggles will have the key <code>application-name/feature-name/toggle-name</code>.<br>For example, <code>main-website/show-user-section/com</code>.</p>
-<p>Simple features will continue to have the key <code>application-name/feature-name</code>.</p>
-<h2 id="Setting-Toggles"><a href="#Setting-Toggles" class="headerlink" title="Setting Toggles"></a>Setting Toggles</h2><p>Both simple and non-simple features are added via the application view (which is accessed via the left-hand navigation menu). Simple features are automatically set to false, this value can be changed in the feature view (by clicking the feature name).</p>
-<p>A newly added non-simple feature will be initialised with no toggles values. You can add a toggle by clicking the Add Toggle button in the feature view, and choosing which toggle to add. </p>
-<p><img src="/images/posts/hobknob-adding-toggle.png" alt="Adding a toggle"></p>
-<p>New toggles are initially set to OFF. The toggle can be switched in the usual way by clicking the toggle button. You should also see an audit of the change in the panel below.</p>
-<h2 id="Getting-Toggles"><a href="#Getting-Toggles" class="headerlink" title="Getting Toggles"></a>Getting Toggles</h2><p>All of the Hobknob <a href="https://github.com/opentable/hobknob#hobknob-clients" target="_blank" rel="external">clients</a> now support getting non-simple features toggles. The only requirement is to pass the name of the toggle, so for example in node:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> nonSimpleFeatureInCom = hobknobClient.getOrDefault(<span class="string">'feature-name'</span>, <span class="string">'com'</span>, <span class="literal">false</span>);</div></pre></td></tr></table></figure>
-<p>It is highly reccommended that you use the get or default methods when accessing non-simple features. Getting a toggle that does not exist for a non-simple feature could be a likely scenario, since you might want to only set a feature for a few toggles explicitly (e.g. com and couk) and then use the default value for the rest (e.g. jp and de).</p>
-<p>The behaviour for simple features has not changed, and is backwards compatible in all client libraries.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> simpleFeature = hobknobClient.getOrDefault(<span class="string">'simple-feature'</span>, <span class="literal">true</span>);</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Sometimes there is the requirement for more granularity when toggling a feature switch.&lt;br&gt;Version 2.0 of &lt;a href=&quot;https://github.com/opentable/hobknob&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hobknob&lt;/a&gt; hopes to address this with feature categories.&lt;/p&gt;
-&lt;h3 id=&quot;TL-DR&quot;&gt;&lt;a href=&quot;#TL-DR&quot; class=&quot;headerlink&quot; title=&quot;TL;DR.&quot;&gt;&lt;/a&gt;TL;DR.&lt;/h3&gt;&lt;p&gt;Hobknob now allows you to define categories of features that have multiple toggles per feature.&lt;/p&gt;
-&lt;p&gt;For example, you can define the ‘Domain Features’ category which allows you to toggle a feature OFF in &lt;code&gt;your-website.com&lt;/code&gt;, but ON in &lt;code&gt;your-website.co.uk&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/posts/hobknob-domain-features.png&quot; alt=&quot;Domain Features&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;Categories&quot;&gt;&lt;a href=&quot;#Categories&quot; class=&quot;headerlink&quot; title=&quot;Categories&quot;&gt;&lt;/a&gt;Categories&lt;/h2&gt;&lt;p&gt;Feature categories are configured with a few pieces of information. For example:&lt;/p&gt;
-&lt;figure class=&quot;highlight json&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;&quot;categories&quot;&lt;/span&gt;: [&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;&quot;id&quot;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;&quot;name&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;Simple Features&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;&quot;description&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;Use when you want your feature to be either on or off&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;&quot;id&quot;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;&quot;name&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;Domain Features&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;&quot;description&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;Use when you want your features to be toggled separately for different domains&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;&quot;values&quot;&lt;/span&gt;: [&lt;span class=&quot;string&quot;&gt;&quot;com&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;couk&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;de&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;commx&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;jp&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;ca&quot;&lt;/span&gt;]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;&quot;id&quot;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;&quot;name&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;Locale Features&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;&quot;description&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;Use when you want your features to be toggled separately for different locales&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;&quot;values&quot;&lt;/span&gt;: [&lt;span class=&quot;string&quot;&gt;&quot;en-GB&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;en-US&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;fr-CA&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;de-DE&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;ja-JP&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;es-MX&quot;&lt;/span&gt;]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  ]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;Notice that each category (except the simple feature category) provides an array of accepted toggle values.&lt;/p&gt;
-&lt;p&gt;All non-simple feature toggles will have the key &lt;code&gt;application-name/feature-name/toggle-name&lt;/code&gt;.&lt;br&gt;For example, &lt;code&gt;main-website/show-user-section/com&lt;/code&gt;.&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Hobknob" scheme="http://tech.opentable.co.uk/blog/categories/Hobknob/"/>
     
   </entry>
   
