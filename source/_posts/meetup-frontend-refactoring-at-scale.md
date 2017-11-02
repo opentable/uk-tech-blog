@@ -3,7 +3,7 @@ layout: post
 title: 'Meetup: Frontend Refactoring at Scale'
 date: 2017-09-04 15:20:03
 author: tmartin
-tags: [meetup, culture]
+tags: [Meetup, Culture]
 ---
 
 OpenTable is delighted to host the tenth WEBdeLDN monthly meetup with talks by [Jack Franklin](https://twitter.com/Jack_Franklin) (Frontend Engineer at Thread) and [Nick Balestra](https://twitter.com/nickbalestra) (Senior Engineer at OpenTable - Delivery Tools Team at OpenTable).

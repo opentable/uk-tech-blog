@@ -4,7 +4,7 @@ title: "Circuit Breakers and Application Resilience"
 date: 2017-11-02 12:00:00 +0000
 comments: true
 author: dgiddins
-tags: []
+tags: [Polly, Application Resilience, Microservices, Error Handling]
 ---
 
 For most people circuit breakers are a concept that belong in the world of electricity. They are usually a box of fuses under the stairs that prevents the tangle of extension cords from turning into an unexpected open fireplace behind the TV. But the concept of a circuit breakers is something that we can apply to software and software services. 
