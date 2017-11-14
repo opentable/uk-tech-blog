@@ -10,6 +10,8 @@ OpenTable is delighted to host the tenth WEBdeLDN monthly meetup with talks by [
 
 This month's WEBdeLDN talks will be about frontend refactoring at scale with two real use cases: refactoring a monolith frontend application, as well as migrating a large, business critical application from Angular 1 to React.
 
+<!-- This is hack comment to ensure the post preview is shown on the homepage -->
+
 ## Schedule of the evening
 18:30 - Doors will open. Welcoming drinks and pizza
 19:00 - Dismantling the frontend monolith together - Nick Balestra 

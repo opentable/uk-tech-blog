@@ -10,6 +10,8 @@ Wednesday the 22nd of November, OpenTable is delighted to host the twelfth appoi
 
 Tammie's and Cristiano's talks are linked by a common fil-rouge: storytelling. In fact, each talk is a story, told by a first-hand protagonist, of two big business-critical projects. The first one is about the complete redesign of one of the core parts of WordPress, the content editor (which involves UI/UX design, the introduction of a new tech stack, a very strict backward compatibility, and much more). The second one is about the introduction (by a developer!) of a design system in a design-driven company, and all the complexities, the failures (the "dragons") and the wins of this quest.
 
+<!-- This is hack comment to ensure the post preview is shown on the homepage -->
+
 ## Schedule of the evening
 18:30 - Doors will open. Welcoming drinks and pizza
 19:00 - Getting to know Gutenberg - Tammie Lister
