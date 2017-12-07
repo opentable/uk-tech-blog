@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tech.opentable.co.uk/"/>
-  <updated>2017-11-14T14:09:44.592Z</updated>
+  <updated>2017-12-07T12:13:22.597Z</updated>
   <id>http://tech.opentable.co.uk/</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Meetup: New Ideas for the New Year</title>
+    <link href="http://tech.opentable.co.uk//blog/2017/12/07/meetup-new-ideas-for-the-new-year/"/>
+    <id>http://tech.opentable.co.uk//blog/2017/12/07/meetup-new-ideas-for-the-new-year/</id>
+    <published>2017-12-07T12:00:00.000Z</published>
+    <updated>2017-12-07T12:13:22.597Z</updated>
+    
+    <content type="html"><![CDATA[<p>Tuesday the 12th of December, OpenTable is delighted to host the thirteenth appointment with the <a href="https://twitter.com/webdeldn" target="_blank" rel="external">WEBdeLDN</a> meetup.</p>
+<p>To celebrate the end of the year, and welcome the new one with new and fresh ideas, we’ll be listening to different speakers (many of them first-time speakers!) giving lightning talks about the most diverse topics: from personal stories to hardware projects, from 101s on computer science to accessibility and design.</p>
+<!-- This is hack comment to ensure the post preview is shown on the homepage -->
+<h2 id="Schedule-of-the-evening"><a href="#Schedule-of-the-evening" class="headerlink" title="Schedule of the evening"></a>Schedule of the evening</h2><p>18:30 - Doors will open. Welcoming drinks and pizza<br>19:00 - Lighning talks - Part 1<br>19:45 - Some more pizza and drinks<br>20:00 - Lighning talks - Part 2<br>20:45 - End of the meetup</p>
+<p><a href="https://www.eventbrite.co.uk/e/webdeldn-13-new-ideas-for-the-new-year-tickets-39570547573" target="_blank" rel="external">Registration and full details are available here</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Tuesday the 12th of December, OpenTable is delighted to host the thirteenth appointment with the &lt;a href=&quot;https://twitter.com/webdeldn&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;WEBdeLDN&lt;/a&gt; meetup.&lt;/p&gt;
+&lt;p&gt;To celebrate the end of the year, and welcome the new one with new and fresh ideas, we’ll be listening to different speakers (many of them first-time speakers!) giving lightning talks about the most diverse topics: from personal stories to hardware projects, from 101s on computer science to accessibility and design.&lt;/p&gt;
+&lt;!-- This is hack comment to ensure the post preview is shown on the homepage --&gt;
+    
+    </summary>
+    
+    
+      <category term="Culture" scheme="http://tech.opentable.co.uk/blog/categories/Culture/"/>
+    
+      <category term="Meetup" scheme="http://tech.opentable.co.uk/blog/categories/Meetup/"/>
+    
+  </entry>
   
   <entry>
     <title>Meetup: Bedtime stories</title>
@@ -1302,77 +1331,6 @@ Primary buttons are only used when there is an exceedingly distinct and clear ca
       <category term="Macgyver" scheme="http://tech.opentable.co.uk/blog/categories/Macgyver/"/>
     
       <category term="Flux" scheme="http://tech.opentable.co.uk/blog/categories/Flux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Supporting IE8 in the OpenTable redesign</title>
-    <link href="http://tech.opentable.co.uk//blog/2014/12/08/supporting-ie8-in-the-opentable-redesign/"/>
-    <id>http://tech.opentable.co.uk//blog/2014/12/08/supporting-ie8-in-the-opentable-redesign/</id>
-    <published>2014-12-08T21:14:57.000Z</published>
-    <updated>2016-10-24T10:26:47.220Z</updated>
-    
-    <content type="html"><![CDATA[<p>We’re really <a href="http://blog.opentable.com/2014/opentables-website-re-designed-re-architected-re-imagined/" target="_blank" rel="external">proud to have released</a> last week our redesigned <a href="http://www.opentable.co.uk" target="_blank" rel="external">OpenTable</a> site, the culmination of months of hard work from many talented people here in London and in San Francisco.</p>
-<p>However despite killing off our old site and its 2004 design, 2.8% of our visitors could have been crying into their keyboard as a far worse opentable.co.uk filled their screen.</p>
-<p>That version of OpenTable was our new responsive site viewed in Internet Explorer 8.</p>
-<p><img src="/images/posts/redesign-ie8.png" alt="Our redesign before we optimised for IE8"></p>
-<p>The fundamental issue is that IE8 doesn’t support media queries so the age-old browser would try to stretch our <em>mobile-first</em> responsive design as wide as it could go - not great across a 27” Thunderbolt.</p>
-<p>To solve the problem we first tried the <a href="https://github.com/scottjehl/Respond" target="_blank" rel="external">Respond.js</a> polyfill but this didn’t work as we’d hoped.  The main issue appeared to be that because we serve our CSS and JS on a separate sub-domain we fell foul of the browser’s cross-domain security.  We followed the Respond.js instructions to solve this but having no luck we looked for alternatives.</p>
-<h2 id="Legacssy"><a href="#Legacssy" class="headerlink" title="Legacssy"></a>Legacssy</h2><p>Further Googling lead us to <a href="https://github.com/robinpokorny/grunt-legacssy" target="_blank" rel="external">Legacssy</a>. With this Grunt task we could create a IE8-only stylesheet and not have to serve extra JS and cross-domain proxy files to all visitors.</p>
-<p>Our existing process is to create our core CSS with an <code>app.scss</code> file and <a href="https://github.com/sindresorhus/grunt-sass" target="_blank" rel="external">grunt-sass</a>.  Our additional step was to create an <code>app_ie8.scss</code> file, parse it with <code>grunt-sass</code> like before, but then also run it through Legacssy.</p>
-<h3 id="Our-app-scss-file"><a href="#Our-app-scss-file" class="headerlink" title="Our app.scss file"></a>Our app.scss file</h3><pre><code>@import &apos;normalize&apos;;
-
-@import &apos;components/global&apos;;
-
-@import
-  &apos;components/icons&apos;,
-  &apos;components/buttons&apos;,
-  &apos;components/calendar&apos;,
-  &apos;components/forms&apos;,
-  &apos;components/pagination&apos;,
-  &apos;components/star-rating&apos;;
-
-@import
-  &apos;partials/footer&apos;,
-  &apos;partials/header&apos;,
-  &apos;partials/location-picker&apos;;
-</code></pre><h3 id="And-our-app-ie8-scss-file"><a href="#And-our-app-ie8-scss-file" class="headerlink" title="And our app_ie8.scss file"></a>And our app_ie8.scss file</h3><pre><code>@import ‘app&apos;;
-@import &apos;browsers/_ie8.scss&apos;;
-</code></pre><p>This process left us with a duplicate of the main site CSS that would be IE8 friendly - and as you can see we are also able to merge in an IE8 specific stylesheet with further overrides.  All we now needed to was serve this inside conditional comments after the main stylesheet, and CSS specificity would ensure our IE rules overwrite the media queries.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;!--[if lte IE 8]&gt;</div><div class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;//eu-srs.opentable.com/content/static/css/app_ie8.css&quot; /&gt;</div><div class="line">&lt;![endif]—&gt;</div></pre></td></tr></table></figure>
-<h2 id="Drawbacks"><a href="#Drawbacks" class="headerlink" title="Drawbacks"></a>Drawbacks</h2><p>We are very happy with this solution as it generates the IE8 fixes as part of our automated build with no extra effort.  The only obvious negative is for the IE8 visitors who will effectively be downloading the same stylesheet twice, but if they are routinely browsing the web with IE8 this could be the least of their worries.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>We’re really proud of our new site; we’re still ironing out some kinks but we hope that it’s good enough for those of you who visit us with Internet Explorer 8 (probably through no fault of your own).</p>
-<p>For the record, here a couple of other issues we found which may help other intrepid developers with their IE debugging in 2015 and beyond.</p>
-<h3 id="Other-IE8-issues"><a href="#Other-IE8-issues" class="headerlink" title="Other IE8 issues"></a>Other IE8 issues</h3><ul>
-<li>The other unsupported CSS values were rem units and RGBA colours.  After running Legacssy we used <a href="https://github.com/robwierzbowski/grunt-pixrem" target="_blank" rel="external">pixrem.js</a> to replace rems with pixels and a custom task to replace RGBA values with their HEX equivalents.</li>
-<li>IE11’s F12 developer tools don’t render identically to native IE8. We used Microsoft’s excellent <a href="http://www.modern.ie" target="_blank" rel="external">modern.ie</a> site to download virtual machines with Windows 7 and IE8.</li>
-<li>We only tested on Windows 7 as this makes up 66% of our IE8 visitors. The remainder are on different operating systems which collectively only make up 0.95% of our total visitors; this is below our threshold for support.</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;We’re really &lt;a href=&quot;http://blog.opentable.com/2014/opentables-website-re-designed-re-architected-re-imagined/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;proud to have released&lt;/a&gt; last week our redesigned &lt;a href=&quot;http://www.opentable.co.uk&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;OpenTable&lt;/a&gt; site, the culmination of months of hard work from many talented people here in London and in San Francisco.&lt;/p&gt;
-&lt;p&gt;However despite killing off our old site and its 2004 design, 2.8% of our visitors could have been crying into their keyboard as a far worse opentable.co.uk filled their screen.&lt;/p&gt;
-&lt;p&gt;That version of OpenTable was our new responsive site viewed in Internet Explorer 8.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/posts/redesign-ie8.png&quot; alt=&quot;Our redesign before we optimised for IE8&quot;&gt;&lt;/p&gt;
-&lt;p&gt;The fundamental issue is that IE8 doesn’t support media queries so the age-old browser would try to stretch our &lt;em&gt;mobile-first&lt;/em&gt; responsive design as wide as it could go - not great across a 27” Thunderbolt.&lt;/p&gt;
-
-    
-    </summary>
-    
-    
-      <category term="Design" scheme="http://tech.opentable.co.uk/blog/categories/Design/"/>
-    
-      <category term="OpenTable" scheme="http://tech.opentable.co.uk/blog/categories/OpenTable/"/>
-    
-      <category term="CSS" scheme="http://tech.opentable.co.uk/blog/categories/CSS/"/>
-    
-      <category term="Grunt" scheme="http://tech.opentable.co.uk/blog/categories/Grunt/"/>
-    
-      <category term="Sass" scheme="http://tech.opentable.co.uk/blog/categories/Sass/"/>
-    
-      <category term="Internet Explorer" scheme="http://tech.opentable.co.uk/blog/categories/Internet-Explorer/"/>
     
   </entry>
   
