@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/nbalestra.html</loc>
+    
+    <lastmod>2017-12-07T12:13:22.599Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk//blog/2017/12/07/meetup-new-ideas-for-the-new-year/</loc>
+    
+    <lastmod>2017-12-07T12:13:22.597Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tech.opentable.co.uk//blog/2017/09/04/meetup-frontend-refactoring-at-scale/</loc>
     
     <lastmod>2017-11-14T14:09:57.058Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>http://tech.opentable.co.uk//blog/2017/11/14/meetup-bedtime-stories/</loc>
     
     <lastmod>2017-11-14T14:09:44.592Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/nbalestra.html</loc>
-    
-    <lastmod>2017-11-14T14:02:43.665Z</lastmod>
     
   </url>
   
