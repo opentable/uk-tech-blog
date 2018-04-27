@@ -13,6 +13,8 @@ title: Authors
 
 <a href="/blog/authors/dgiddins.html">Dafydd Giddins</a>
 
+<a href="/blog/authors/dmistry.html">Dipun Mistry</a>
+
 <a href="/blog/authors/fmaffei.html">Federico Maffei</a>
 
 <a href="/blog/authors/jcatterfeld.html">John Catterfeld</a>
