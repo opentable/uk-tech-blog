@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tech.opentable.co.uk//blog/2018/05/10/monads-explained-by-a-imperitive-programmer/</loc>
+    
+    <lastmod>2018-05-10T21:21:10.455Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/index.html</loc>
+    
+    <lastmod>2018-04-27T15:10:50.599Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/dmistry.html</loc>
+    
+    <lastmod>2018-04-27T15:10:27.453Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tech.opentable.co.uk/blog/authors/nbalestra.html</loc>
     
     <lastmod>2017-12-07T12:13:22.599Z</lastmod>
@@ -40,13 +61,6 @@
     <loc>http://tech.opentable.co.uk/blog/authors/dgiddins.html</loc>
     
     <lastmod>2017-11-01T21:24:58.511Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/index.html</loc>
-    
-    <lastmod>2017-11-01T09:19:21.252Z</lastmod>
     
   </url>
   
