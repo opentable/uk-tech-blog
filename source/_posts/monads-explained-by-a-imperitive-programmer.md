@@ -1,8 +1,9 @@
 ---
 layout: post
 title: "Monads explained by a imperitive programmer - with examples"
-date: 2018-05-01 16:00:00 +0100
+date: 2018-05-10 16:00:00 +0100
 author: dmistry
+tags: [Monads, Functional programming, Design patterns]
 ---
 
 A monad is any type construct that follows a specific pattern; it works in the same way as other design patterns. The .NET `ApplicationContext` is a `singleton` in the same way that `Array` is a `Monad`. Something being a monad does not define its purpose; in the same way that a `class` can implement many interfaces, a monadic type can also conform to many patterns to increase its usefulness.
