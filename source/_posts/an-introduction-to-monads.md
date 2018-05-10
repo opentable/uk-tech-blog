@@ -1,25 +1,28 @@
 ---
 layout: post
-title: "An introduction to monads"
+title: "Monads explained by a imperitive programmer - with examples"
 date: 2018-05-01 16:00:00 +0100
 author: dmistry
 ---
 
 A monad is any type construct that follows a specific pattern; it works in the same way as other design patterns. The .NET `ApplicationContext` is a `singleton` in the same way that `Array` is a `Monad`. Something being a monad does not define its purpose; in the same way that a `class` can implement many interfaces, a monadic type can also conform to many patterns to increase its usefulness.
 
-Monads are hard to get our heads around because they are very generic. They are defined by having two methods:
+Monads are hard to get our heads around because they are very generic. They are defined by having two methods: the `bind` method (also commonly called `fmap`), and the `unit` method (also commonly known as `pure` or `from`).
 
 ## A `bind`/`fmap` method.
 The fmap method follows this signature:
 ```typescript
-// Given a monadic type TMonad with value V1,
-// and a method that takes V1 and returns the same 
-// monadic type TMonad but with value V2,
-// Produce a monadic type TMonad with value V2.
+// Given a monadic type TMonad with value type V1,
+// and a method that takes a value of type V1 and 
+// returns the same monadic type TMonad but with 
+// a value type of V2, produce a monadic type 
+// TMonad with value V2.
 function (TMonad<V1> m, Func<V1, TMonad<V2>> f) => TMonad<V2>
 ```
 
-From the signature, it appears that we should give the value V1 to the function `f` and return the TMonad from that call. The ability to control the usage of that function and the ability to intercept the return value is where it gets interesting.
+A quick breakdown of the method signature in plain english: _given a monadic type `TMonad` with value type `V1`, followed by a method that takes a value of type `V1` and returns the **same** monadic type `TMonad` but with a value type of `V2`, produce a monadic type `TMonad` with value `V2`._
+
+From the signature, it appears that we should give the value V1 from the first monad to the function `f` and simply return the TMonad from that call. The ability to control the usage of that function and the ability to intercept the return value is where it gets interesting.
 
 The resulting monad will usually be a composition of the original monad, and the new monad produced by `f`. That means the "state" held by the two monads are `merged` and the specifics of how is up to the developer.
 
@@ -42,6 +45,7 @@ Yes laws; it turns out that function signatures aren't enough to describe this p
 
 ### Left Identity
 `from x >>= f ≡ f x`
+
 Given a monad of `x` created with the `from` method, when bound to the function `f`, the resulting monad should be identical to simply providing `x` to the function `f`.
 
 Keep in mind that `f` will return a Monad, the monad that `f` produces should be no different than the monad that is a composition of what `from` produced, and what `f` produces.
@@ -57,6 +61,7 @@ posAndNeg(10); //=[10, -10];
 
 ### Right Identity
 `m >>= from ≡ m`
+
 Given a monad `m`, when bound to the function `from`, the resulting monad should be identical to `m`. This is the same law written in reverse and is designed to ensure that the merge logic works bi-directionally.
 ```ts 
 monad.fmap(from);
@@ -69,6 +74,7 @@ monad;
 
 ### Associativity
 `(m >>= f) >>= g ≡ m >>= (\x -> f x >>= g)`
+
 This one is a little harder to stomach, but it enforces the same rules we saw above, but this time from the point of view that you are working with monads that are more complex than the `from` monad.
 
 ```ts 
@@ -100,6 +106,8 @@ function map(monad, fn) {
 }
 ```
 
+If you have read about functors, this is significant because this is proof that any monad, is also a functor. If you haven't read about functors, rest assured that it is not important to understand for this article.
+
 ## Examples!
 ### List
 The list monad is quite interesting because to understand it, you have to limit your view of it to a subset of its functionality. Remember you can do a lot with lists:
@@ -123,14 +131,14 @@ By now we have determined that one of the things that a `Monad` can do, is contr
 
 The `Maybe` monad has two factory methods: `Just(x)` which takes a parameter `x`, and `Nothing()` which takes no parameters. It can hold either one value, or zero values. Even though `Nothing` takes no values, it still represents a `Monad`; it's a monad of 0 values of type `T`. You may need to let that sink in a bit.
 
-So how does the `Maybe` monad merge? Just like the array, we take each value we have and send it to the `f` function. For each monad we get back, we merge them. Fortunately, we can only ever get back a monad with one or less values, so we never have to worry about merging multiple monads. The maybe monad does this:
+So how does the `Maybe` monad merge? Just like the array, we take each value we have and send it to the `f` function. For each monad we get back, we merge them. Fortunately, we can only ever get back a monad with one or less values, so we never have to worry about merging a maybe with multiple values. The maybe monad does this:
 
 - If the new monad is `Just x` we just return it.
 - If the new monad is `Nothing` we still just return it.
 
 The moment we have `Nothing`, any function `f` provided to the `fmap` function becomes uncallable; we have no value to give to it. At this point, we just return a new `Nothing` that returns a nothing of type `T2` where `TMonad<T2>` represents the type that `f` would have returned (assuming we are in a typed language).
 
-That was the mechanics of a `Maybe`, but what is it useful for? Due to its nature, it is very good at taking a sequence of computations, each that could fail to produce a value and `fail-fast` or terminate early as soon as it gets a `Nothing`. None of the following `f` in `fmap(f)` are ever executed which can save computation time.
+That is the mechanics of a `Maybe`; but what is it useful for? Due to its nature, it is very good at taking a sequence of computations, each that could fail to produce a value and `fail-fast` or terminate early as soon as it gets a `Nothing`. None of the following `f` in `fmap(f)` are ever executed which can save computation time.
 
 Here is an example of a typical use of the `Maybe` monad:
 
@@ -142,6 +150,8 @@ const specialLetter = Maybe.from(x)
 
 // note: the use of Maybe.from here allows us to take a non monadic value 
 // and convert it into a monadic value to be merged by the fmap method.
+// this helps us to avoid re-writing simple methods into Maybe specific
+// methods unnecessarily.
     .fmap(x => Maybe.from(uppercase(x))); // nothing to uppercase.
 
 
@@ -154,7 +164,7 @@ if(specialLetter.hasValue) {
 
 Notice that at the end, we use two properties: `hasValue` and `Value`. These are not part of its monadic properties in the same way that `length` is not a part of the monadic properties of `List`. They are, however very useful.
 
-In Haskell, there is a convenience syntax called the `do` notation. This allows us to write our code in a somewhat procedural looking way. The closest thing to this in Javascript is the generator function syntax. I won't go into detail about what we need to do to get this code working in a real application, but I will show what a monadic code could look like.
+In Haskell, there is a convenience syntax called the `do` notation. This allows us to write our code in a somewhat procedural looking way. The closest thing to this in Javascript is the generator function syntax. I won't go into detail about what we need to do to get this code working in a real application, but I will show what monadic code could look like.
 
 ```ts 
 function* getSpecialLetter(greetingMessage) {
@@ -162,6 +172,12 @@ function* getSpecialLetter(greetingMessage) {
     const char = yield get10thChar(name);
     const specialValue = uppercase(char);
     return Maybe.from(specialValue);
+}
+
+const letter = _do(getSpecialLetter,['hello micheal']);
+if (letter.hasValue) {
+  ...
+  ...
 }
 ```
 
@@ -207,8 +223,6 @@ if(total.isLeft()) {
 }
 ```
 
-_So why was it called `isLeft` instead of `hasError` or something like that? Because mathematicians and functional programmers._ `¯\_(ツ)_/¯`
-
 ### Future
 First of all, this is not a `Promise`, even though it looks and feels like one; the main difference is that this type is lazy and `Promises` are eager.
 
@@ -218,7 +232,7 @@ This monad never holds a value, this is true, but just like the `Either` monad, 
 
 _I won't talk about how the types compose too much here, because it gets pretty confusing as it is and types actually make it harder to wrap your head around it. :(_
 
-The simplest `thunk` we can make is something like: `() => "hello"`; you call it, and you get a value. The return value of the thunk is the type `A` that was mentioned just above. The point of a future is that it is lazy; it won't try to execute any thunk until it is finally evaluated. Just like `Either` has an `isLeft()` method, a `Future` would expose a `run()` method and calling this, will cause the thunk to execute and the final value to be revealed. This operation would be a thread blocking operation if called directly in a thread handling language; in `Haskell`, the closest monad of its type is the `IO` monad and the compiler will handle the execution for you provided that your `main` function returns an `IO` monad.
+The simplest `thunk` we can make is something like: `() => "hello"`; you call it, and you get a value. The return value of the thunk is the type `A` that was mentioned just above. The point of a future is that it is lazy; it won't try to execute any thunk until you explicitly tell it to execute. Just like `Either` has an `isLeft()` method, a `Future` would expose a `run()` method and calling this, will cause the thunk to execute and the final value to be revealed. This operation would be a thread blocking operation if called directly in a thread handling language; in `Haskell`, the closest monad of its type is the `IO` monad and the compiler will handle the execution for you provided that your `main` function returns an `IO` monad.
 
 A more complicated thunk could be something like this:
 ```ts
@@ -283,6 +297,8 @@ When executed, the program will recursively call the old thunks until it gets it
 
 # A monad of my own!
 In order to demonstrate the purpose of a monad, I decided to recreate a function that I made in a previous company, that I was unable to improve at the time, and see if I could create or use a monad to improve it.
+
+**NOTE:** Before we continue, I would like to clarify that I made a large monad for the sake of solving a specific problem. This is probably considered a bad monad in the same way an OOP developer could create a [god object](https://en.wikipedia.org/wiki/God_object). That being said, it follows the monadic signature and laws, and can probably still help to showcase how monads allow better separation of concerns.
 
 Here is a recreation of the original method in javascript:
 ```ts 
@@ -393,16 +409,18 @@ class MonadicSolrClient extends SolrClient {
 }
 ```
 
-The `cursor` change is pretty simple, we return the value wrapped in a Tracker monad, or if there was an error, then we use the `Errored` function to return a new monad in its error state; this state has no value and will fast track the execution like the `Either` monad.
+The `cursor` change is pretty simple, we return the value wrapped in my custom `Tracker` monad, or if there was an error, then we use the `Errored` function to return a new monad in its error state; this state has no value and will fast track the execution like the `Either` monad would.
 
-The `solrClient` change looks more complicated, and that is because by design, the solrClient was built to return a boolean that represented if it was successful instead of throwing an error. Instead of relying on `catch` to split the logic, we use an `if` statement. If successful, we track information about what happened, if not, we indicate Errored without any context (we have none ourselves because any internal exceptions would be handled).
+The `solrClient` change looks more complicated, and that is because by design, the solrClient was built to return a boolean that represented if it was successful instead of throwing an error. Instead of relying on `catch` to split the logic, we use an `if` statement. If successful, we track information about what happened, if not, we indicate Errored without any context (we have none ourselves because any internal exceptions would have been handled).
 
-The final step for both cases is to use the `from` method (here called `of`) to ensure our function returns the correct value inside the Tracker monad.
+The final step for both cases is to use the `from` method (here called `of`) to ensure our function returns the correct value inside the `Tracker` monad.
 
 # Promises and Monads in Javascript
 **Promises are not `monads`;** you can quote me on that. They have the required methods (namely `resolve` and `then`) and they follow the rules to a certain extent, but they were never created with the intention of being `monadic`. They were created with the intention of easing imperative style asynchronous code. [[source]](https://github.com/promises-aplus/promises-spec/issues/94#issuecomment-366157872)
 
-Even so, promises are useful. If we need to or want to create agnostic, reusable code, we can choose to use another library, or to monkey patch promises to make them conform. That being said, we will also have to monkey patch other non-conforming would-be-monads, and it is unlikely that Javascript will build convenient keywords that could help legibility any time soon.
+**Note:** Thanks to [Jon Schapiro](https://github.com/JonSchapiro) who pointed out that since Promises are eager, they may be breaking the associativity law. A good example of this, would be to create two promises, one that writes "hello" onto the page, and the other writes "world". If you wanted to compose it in reverse: `worldPromise.then(() => helloPromise);`, the program will not swap the order of execution because it already executed the promises.
+
+Even so, promises are useful. If we need to or want to create agnostic, reusable code, we can choose to use another library, or to monkey patch promises to make them conform better. That being said, we will also have to monkey patch other non-conforming would-be-monads, and it is unlikely that Javascript will build convenient keywords that could help legibility any time soon.
 
 There are a lot of articles that discuss Promises and their impurity, but one article highlights a few pretty interesting side effects due to having eager execution. [[source]](https://staltz.com/promises-are-not-neutral-enough.html)
 
