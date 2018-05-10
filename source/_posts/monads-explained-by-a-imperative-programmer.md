@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Monads explained by a imperitive programmer - with examples"
+title: "Monads explained by a imperative programmer - with examples"
 date: 2018-05-10 16:00:00 +0100
 author: dmistry
 tags: [Monads, Functional programming, Design patterns]

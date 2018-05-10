@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tech.opentable.co.uk/"/>
-  <updated>2018-05-10T21:21:10.455Z</updated>
+  <updated>2018-05-10T21:30:42.926Z</updated>
   <id>http://tech.opentable.co.uk/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Monads explained by a imperitive programmer - with examples</title>
-    <link href="http://tech.opentable.co.uk//blog/2018/05/10/monads-explained-by-a-imperitive-programmer/"/>
-    <id>http://tech.opentable.co.uk//blog/2018/05/10/monads-explained-by-a-imperitive-programmer/</id>
+    <title>Monads explained by a imperative programmer - with examples</title>
+    <link href="http://tech.opentable.co.uk//blog/2018/05/10/monads-explained-by-a-imperative-programmer/"/>
+    <id>http://tech.opentable.co.uk//blog/2018/05/10/monads-explained-by-a-imperative-programmer/</id>
     <published>2018-05-10T16:00:00.000Z</published>
-    <updated>2018-05-10T21:21:10.455Z</updated>
+    <updated>2018-05-10T21:30:42.926Z</updated>
     
     <content type="html"><![CDATA[<p>A monad is any type construct that follows a specific pattern; it works in the same way as other design patterns. The .NET <code>ApplicationContext</code> is a <code>singleton</code> in the same way that <code>Array</code> is a <code>Monad</code>. Something being a monad does not define its purpose; in the same way that a <code>class</code> can implement many interfaces, a monadic type can also conform to many patterns to increase its usefulness.</p>
 <p>Monads are hard to get our heads around because they are very generic. They are defined by having two methods: the <code>bind</code> method (also commonly called <code>fmap</code>), and the <code>unit</code> method (also commonly known as <code>pure</code> or <code>from</code>).</p>
