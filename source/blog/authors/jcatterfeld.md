@@ -5,6 +5,7 @@ twitter: jcatterfeld
 ---
 
 
+* <a href="/blog/2018/10/08/starting-your-career-as-a-software-developer/">Starting your career as a software developer</a>
 * <a href="/blog/2017/06/01/opentables-global-hackathon-2017/">OpenTable's Global Hackathon 2017</a>
 * <a href="/blog/2015/01/19/building-a-living-styleguide-at-opentable/">Building a living styleguide at OpenTable</a>
 * <a href="/blog/2014/12/08/supporting-ie8-in-the-opentable-redesign/">Supporting IE8 in the OpenTable redesign</a>
