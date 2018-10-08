@@ -19,7 +19,7 @@
 /* --- General --- */
 
 body {
-  font-family: 'source sans pro', 'Times New Roman', serif;
+  font-family: BrandonText, 'Times New Roman', serif;
   font-size: 18px;
   color: #404040;
   position: relative;
@@ -35,7 +35,7 @@ p a {
   color: #DA3743;
 }
 h1,h2,h3,h4,h5,h6 {
-  font-family: 'rooney-web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: BrandonText, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 800;
 }
 a {
