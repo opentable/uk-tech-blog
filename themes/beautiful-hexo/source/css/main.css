@@ -1,9 +1,25 @@
 /*@import url("pygment_highlights.css");*/
 
+@font-face {
+ font-family:BrandonText;
+ src:url(https://cdn.otstatic.com/common/font/Brandon/Brandon_txt_reg-webfont.woff2) format("woff2"),url(https://cdn.otstatic.com/common/font/Brandon/Brandon_txt_reg-webfont.woff) format("woff")
+}
+@font-face {
+ font-family:BrandonText;
+ src:url(https://cdn.otstatic.com/common/font/Brandon/Brandon_txt_med-webfont.woff2) format("woff2"),url(https://cdn.otstatic.com/common/font/Brandon/Brandon_txt_med-webfont.woff) format("woff");
+ font-weight:500
+}
+@font-face {
+ font-family:BrandonText;
+ src:url(https://cdn.otstatic.com/common/font/Brandon/Brandon_txt_bld-webfont.woff2) format("woff2"),url(https://cdn.otstatic.com/common/font/Brandon/Brandon_txt_bld-webfont.woff) format("woff");
+ font-weight:700
+}
+
+
 /* --- General --- */
 
 body {
-  font-family: 'source sans pro', 'Times New Roman', serif;
+  font-family: BrandonText, 'Times New Roman', serif;
   font-size: 18px;
   color: #404040;
   position: relative;
@@ -19,7 +35,7 @@ p a {
   color: #DA3743;
 }
 h1,h2,h3,h4,h5,h6 {
-  font-family: 'rooney-web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: BrandonText, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 800;
 }
 a {
