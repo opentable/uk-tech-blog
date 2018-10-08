@@ -10,22 +10,22 @@
 <h2 id="Initial-ideas-to-investigate"><a href="#Initial-ideas-to-investigate" class="headerlink" title="Initial ideas to investigate"></a>Initial ideas to investigate</h2><p>We brainstormed a few things to investigate and assess as potential performance improvements. As we were still relatively new to Elastic Search (ES), a lot of these were related to the configuration of ES itself.</p>
 <ul>
 <li>Improved sharding strategy (we were using the default)</li>
-<li>Check we were <a href="http://elasticsearch-users.115913.n3.nabble.com/Elasticsearch-Filter-And-Query-td4027675.html" target="_blank" rel="external">filtering before querying</a></li>
-<li>Check the <a href="http://elasticsearch-users.115913.n3.nabble.com/Performance-of-term-query-with-sorting-td4032901.html" target="_blank" rel="external">sorting was efficient</a></li>
-<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-optimize.html" target="_blank" rel="external">Optimise the index</a> as part of the indexing process</li>
-<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-optimize.html" target="_blank" rel="external">Slow log</a> checking</li>
-<li>Check how we were using the <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/mapping-source-field.html" target="_blank" rel="external">source</a> in the index</li>
+<li>Check we were <a href="http://elasticsearch-users.115913.n3.nabble.com/Elasticsearch-Filter-And-Query-td4027675.html" target="_blank" rel="noopener">filtering before querying</a></li>
+<li>Check the <a href="http://elasticsearch-users.115913.n3.nabble.com/Performance-of-term-query-with-sorting-td4032901.html" target="_blank" rel="noopener">sorting was efficient</a></li>
+<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-optimize.html" target="_blank" rel="noopener">Optimise the index</a> as part of the indexing process</li>
+<li><a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-optimize.html" target="_blank" rel="noopener">Slow log</a> checking</li>
+<li>Check how we were using the <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/mapping-source-field.html" target="_blank" rel="noopener">source</a> in the index</li>
 <li>Warm-up the index after it is built</li>
 <li>Gzip between API boxes and ES</li>
 <li>Check connection pool is a singleton, internal detail</li>
 <li>Delete old indexes more rigorously (we have a new index each release)</li>
-<li>Check <a href="http://grokbase.com/t/gg/elasticsearch/13bezebw1p/garbage-collector-issues" target="_blank" rel="external">garbage collection</a> on ES boxes</li>
-<li>Check <a href="https://groups.google.com/forum/#!topic/logstash-users/gfTTbRABk1M" target="_blank" rel="external">swappiness</a> settings on ES boxes</li>
+<li>Check <a href="http://grokbase.com/t/gg/elasticsearch/13bezebw1p/garbage-collector-issues" target="_blank" rel="noopener">garbage collection</a> on ES boxes</li>
+<li>Check <a href="https://groups.google.com/forum/#!topic/logstash-users/gfTTbRABk1M" target="_blank" rel="noopener">swappiness</a> settings on ES boxes</li>
 <li>Split different search types to different hardware</li>
 </ul>
 <h2 id="Now-we-learned-we-were-a-bit-stupid"><a href="#Now-we-learned-we-were-a-bit-stupid" class="headerlink" title="Now, we learned, we were a bit stupid."></a>Now, we learned, we were a bit stupid.</h2><p>Once we worked through a few things, our main findings showed that we had made some rookie errors.</p>
 <p>We had a sharding policy that is great for large indexes but we only needed one shard replicated on each ES server in the cluster. Changing that helped reduce the load across servers as each server could do our queries entirely.</p>
-<p>Through Elastic HQ (<a href="http://www.elastichq.org/" target="_blank" rel="external">the useful plugin to ES</a>) we got the rather crude red boxes for various metrics on the diagnostics page. The two that stood out were high Garbage Collection and disk swaps. The main thing causing this was that we were using OpenJDK instead of the Oracle JVM. If you are using OpenJDK, change it now! The swappiness setting was less impactful but resolved some of the issues caused by the frequent writing to disk.</p>
+<p>Through Elastic HQ (<a href="http://www.elastichq.org/" target="_blank" rel="noopener">the useful plugin to ES</a>) we got the rather crude red boxes for various metrics on the diagnostics page. The two that stood out were high Garbage Collection and disk swaps. The main thing causing this was that we were using OpenJDK instead of the Oracle JVM. If you are using OpenJDK, change it now! The swappiness setting was less impactful but resolved some of the issues caused by the frequent writing to disk.</p>
 <p>Now we increased scale well, until we moved our bottleneck from our Elastic Search cluster to our API boxes.</p>
 <h2 id="And-some-things-are-limits-of-the-technology"><a href="#And-some-things-are-limits-of-the-technology" class="headerlink" title="And some things are limits of the technology"></a>And some things are limits of the technology</h2><p>Now the API boxes were the problem we realised that basically serialisation and deserialisation is the bottleneck. The number of boxes can be scaled out (more servers) or serialisation removed. Also your programming language can be the limiting factor here. So we are now looking around at the best language as an option for speeding things up.</p>
 <h2 id="So-what-now"><a href="#So-what-now" class="headerlink" title="So what now"></a>So what now</h2><p>We have tweaked the ES set-up and scaled out our API servers and our benchmark improved (the amount of traffic can we serve). We have a roadmap for how to take more and more traffic but the response time is probably as fast as we can go if we keep the same methodology. As a result we are actually looking at using Elastic Search a lot less than we originally planned. We need to take serialisation out of the game where possible, using in-memory filtering seems a candidate again.</p>
