@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tech.opentable.co.uk/blog/2018/10/08/starting-your-career-as-a-software-developer/</loc>
+    
+    <lastmod>2018-10-16T13:08:59.386Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tech.opentable.co.uk/blog/authors/tmartin.html</loc>
     
     <lastmod>2018-10-08T16:35:26.217Z</lastmod>
@@ -16,13 +23,6 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/rtomlinson.html</loc>
-    
-    <lastmod>2018-10-08T16:35:26.216Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://tech.opentable.co.uk/blog/authors/rluong.html</loc>
     
     <lastmod>2018-10-08T16:35:26.216Z</lastmod>
@@ -30,14 +30,21 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/rhopton.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/pstack.html</loc>
     
     <lastmod>2018-10-08T16:35:26.216Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/pstack.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/rtomlinson.html</loc>
+    
+    <lastmod>2018-10-08T16:35:26.216Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/rhopton.html</loc>
     
     <lastmod>2018-10-08T16:35:26.216Z</lastmod>
     
@@ -65,13 +72,6 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/pharrington.html</loc>
-    
-    <lastmod>2018-10-08T16:35:26.215Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://tech.opentable.co.uk/blog/authors/mbazydlo.html</loc>
     
     <lastmod>2018-10-08T16:35:26.215Z</lastmod>
@@ -79,7 +79,14 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/lbennett.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/pharrington.html</loc>
+    
+    <lastmod>2018-10-08T16:35:26.215Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/jflowers.html</loc>
     
     <lastmod>2018-10-08T16:35:26.214Z</lastmod>
     
@@ -93,14 +100,14 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/jcatterfeld.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/lbennett.html</loc>
     
     <lastmod>2018-10-08T16:35:26.214Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/jflowers.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/jcatterfeld.html</loc>
     
     <lastmod>2018-10-08T16:35:26.214Z</lastmod>
     
@@ -114,13 +121,6 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/dmistry.html</loc>
-    
-    <lastmod>2018-10-08T16:35:26.213Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://tech.opentable.co.uk/blog/authors/index.html</loc>
     
     <lastmod>2018-10-08T16:35:26.213Z</lastmod>
@@ -128,9 +128,9 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/dgiddins.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/dmistry.html</loc>
     
-    <lastmod>2018-10-08T16:35:26.212Z</lastmod>
+    <lastmod>2018-10-08T16:35:26.213Z</lastmod>
     
   </url>
   
@@ -156,9 +156,9 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/ametcalfe.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/dgiddins.html</loc>
     
-    <lastmod>2018-10-08T16:35:26.211Z</lastmod>
+    <lastmod>2018-10-08T16:35:26.212Z</lastmod>
     
   </url>
   
@@ -170,7 +170,14 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2013/06/14/windows-feature-management-with-powershell/</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/ametcalfe.html</loc>
+    
+    <lastmod>2018-10-08T16:35:26.211Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/2014/08/08/what-can-i-do/</loc>
     
     <lastmod>2018-10-08T16:35:26.210Z</lastmod>
     
@@ -184,7 +191,7 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/08/08/what-can-i-do/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2013/06/14/windows-feature-management-with-powershell/</loc>
     
     <lastmod>2018-10-08T16:35:26.210Z</lastmod>
     
@@ -233,14 +240,14 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-3-testing-roles/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-2-the-windows-story/</loc>
     
     <lastmod>2018-10-08T16:35:26.204Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-2-the-windows-story/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-3-testing-roles/</loc>
     
     <lastmod>2018-10-08T16:35:26.204Z</lastmod>
     
@@ -255,13 +262,6 @@
   
   <url>
     <loc>http://tech.opentable.co.uk/blog/2014/12/08/supporting-ie8-in-the-opentable-redesign/</loc>
-    
-    <lastmod>2018-10-08T16:35:26.202Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/2018/10/08/starting-your-career-as-a-software-developer/</loc>
     
     <lastmod>2018-10-08T16:35:26.202Z</lastmod>
     
