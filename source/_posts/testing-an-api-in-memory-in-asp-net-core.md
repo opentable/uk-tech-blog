@@ -9,15 +9,15 @@ tags: [Testing, DotNetCore, ASP.Net, NUnit]
 ## TL;DR
 This is long post that describes how to setup a in-memory test harness for testing an entire ASP.NET Core API with lots of code examples. 
 
-## Testing and Brocoli
+## Testing and broccoli
 
-Unit testing, like brocoli, is something we all know we should do, but actually we just want to tuck into the meat and potatoes of production code. One reason you might resist writing unit tests is that you are writing an API which is mostly a CRUD layer over a database (where most of the code is right-to-left copying from a DTO to an API response), or you are writing framework plugins for which you just can't write meaningful tests (for instance ActionFilters or Binder). 
+Unit testing, like broccoli, is something we all know we should do, but actually we just want to tuck into the meat and potatoes of production code. One reason you might resist writing unit tests is that you are writing an API which is mostly a CRUD layer over a database (where most of the code is right-to-left copying from a DTO to an API response), or you are writing framework plugins for which you just can't write meaningful tests (for instance ActionFilters or Binder). 
 
 Well I understand, I've been in the same situation, but I have a way of dealing with this problem. What I prefer to do is test at the level of http all the way through the API to the database. But wait, you may cry, that's not a unit test! Well yes you have a point there, I'm touching lots of different classes when I test like this. I would argue however that the word "unit" is a bit ambiguous; my definition of unit is not 'a single class'. 
 
 I prefer to classify tests as either **Isolated**, **Integration**, or **End-to-End**. When I say isolated, what I mean is that the test can be run without worrying about external dependencies, whether they are your databases or an external API or other system. This means you can test anything from a single class up to the whole API, reliably and repeatably. Integration tests then focus on integrations with your database, external APIs etc. These tests are simple and limited in scope so when they break your integration code is broken or the system is down. End-to-End tests end up being more akin to smoke tests or sanity tests and any break in these should be reflected in your Isolated and Integration tests. 
 
-Given these definitions let's look at how you can test your API end-to-end in an isolated fashion. Or put another way, let's cook that brocoli in butter and chilli and season with salt, pepper and a little grated parmesan (you're welcome!)
+Given these definitions let's look at how you can test your API end-to-end in an isolated fashion. Or put another way, let's cook that broccoli in butter and chilli and season with salt, pepper and a little grated parmesan (you're welcome!)
 
 In order to test an ASP.NET Core application we need to be able to spin up our whole application in a test harness (i.e. your unit test/test fixture). Microsoft provide a NuGet package that lets us do just that; [Microsoft.AspNetCore.TestHost](https://www.nuget.org/packages/Microsoft.AspNetCore.TestHost/) contains a class called TestServer. Once you create an instance of the TestServer you can get an instance of a HttpClient with which you can then make http calls to your API. 
 
