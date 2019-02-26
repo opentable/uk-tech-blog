@@ -2,21 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2019/01/28/testing-an-api-in-memory-in-asp-net-core/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2019/02/26/structuring-large-asp-net-projects-for-testing-and-readability/</loc>
     
-    <lastmod>2019-01-31T14:12:21.957Z</lastmod>
+    <lastmod>2019-02-25T01:02:48.154Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://tech.opentable.co.uk/blog/authors/dgiddins.html</loc>
     
-    <lastmod>2019-01-28T16:32:51.310Z</lastmod>
+    <lastmod>2019-02-25T00:46:42.384Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2018/10/08/starting-your-career-as-a-software-developer/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2019/01/28/testing-an-api-in-memory-in-asp-net-core/</loc>
+    
+    <lastmod>2019-02-04T09:49:55.251Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/2018/10/07/starting-your-career-as-a-software-developer/</loc>
     
     <lastmod>2018-10-16T13:14:23.538Z</lastmod>
     
@@ -33,13 +40,6 @@
     <loc>http://tech.opentable.co.uk/blog/authors/ssalisbury.html</loc>
     
     <lastmod>2018-10-08T16:35:26.217Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/rluong.html</loc>
-    
-    <lastmod>2018-10-08T16:35:26.216Z</lastmod>
     
   </url>
   
@@ -65,14 +65,21 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/mfigus.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/rluong.html</loc>
+    
+    <lastmod>2018-10-08T16:35:26.216Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/mbazydlo.html</loc>
     
     <lastmod>2018-10-08T16:35:26.215Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/mbazydlo.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/mfigus.html</loc>
     
     <lastmod>2018-10-08T16:35:26.215Z</lastmod>
     
@@ -86,13 +93,6 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/mrichetto.html</loc>
-    
-    <lastmod>2018-10-08T16:35:26.215Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://tech.opentable.co.uk/blog/authors/nbalestra.html</loc>
     
     <lastmod>2018-10-08T16:35:26.215Z</lastmod>
@@ -100,21 +100,14 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/jflowers.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/mrichetto.html</loc>
     
-    <lastmod>2018-10-08T16:35:26.214Z</lastmod>
+    <lastmod>2018-10-08T16:35:26.215Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://tech.opentable.co.uk/blog/authors/mbarrett.html</loc>
-    
-    <lastmod>2018-10-08T16:35:26.214Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/jcatterfeld.html</loc>
     
     <lastmod>2018-10-08T16:35:26.214Z</lastmod>
     
@@ -128,9 +121,16 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/dmistry.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/jcatterfeld.html</loc>
     
-    <lastmod>2018-10-08T16:35:26.213Z</lastmod>
+    <lastmod>2018-10-08T16:35:26.214Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/jflowers.html</loc>
+    
+    <lastmod>2018-10-08T16:35:26.214Z</lastmod>
     
   </url>
   
@@ -149,7 +149,14 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/aroyle.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/dmistry.html</loc>
+    
+    <lastmod>2018-10-08T16:35:26.213Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/authors/criddle.html</loc>
     
     <lastmod>2018-10-08T16:35:26.212Z</lastmod>
     
@@ -163,7 +170,7 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/authors/criddle.html</loc>
+    <loc>http://tech.opentable.co.uk/blog/authors/aroyle.html</loc>
     
     <lastmod>2018-10-08T16:35:26.212Z</lastmod>
     
@@ -184,7 +191,14 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/08/08/what-can-i-do/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2013/06/14/windows-feature-management-with-powershell/</loc>
+    
+    <lastmod>2018-10-08T16:35:26.210Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/2014/08/07/what-can-i-do/</loc>
     
     <lastmod>2018-10-08T16:35:26.210Z</lastmod>
     
@@ -192,13 +206,6 @@
   
   <url>
     <loc>http://tech.opentable.co.uk/blog/2014/03/20/when-to-performance-test-in-production/</loc>
-    
-    <lastmod>2018-10-08T16:35:26.210Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/2013/06/14/windows-feature-management-with-powershell/</loc>
     
     <lastmod>2018-10-08T16:35:26.210Z</lastmod>
     
@@ -247,14 +254,14 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-3-testing-roles/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/08/31/testing-puppet-with-beaker-pt-dot-2-the-windows-story/</loc>
     
     <lastmod>2018-10-08T16:35:26.204Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/09/01/testing-puppet-with-beaker-pt-dot-2-the-windows-story/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/08/31/testing-puppet-with-beaker-pt-dot-3-testing-roles/</loc>
     
     <lastmod>2018-10-08T16:35:26.204Z</lastmod>
     
@@ -275,6 +282,13 @@
   </url>
   
   <url>
+    <loc>http://tech.opentable.co.uk/blog/2014/04/28/remote-worker-notes-tools-and-setup/</loc>
+    
+    <lastmod>2018-10-08T16:35:26.201Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tech.opentable.co.uk/blog/2013/09/25/resolving-domains-to-areas-in-asp-dot-net-mvc/</loc>
     
     <lastmod>2018-10-08T16:35:26.201Z</lastmod>
@@ -282,14 +296,7 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/04/29/remote-worker-notes-tools-and-setup/</loc>
-    
-    <lastmod>2018-10-08T16:35:26.201Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/2016/01/07/react-testing/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2016/01/06/react-testing/</loc>
     
     <lastmod>2018-10-08T16:35:26.200Z</lastmod>
     
@@ -303,35 +310,35 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/10/06/puppetconf-2014-part-3/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/10/05/puppetconf-2014-part-2/</loc>
     
     <lastmod>2018-10-08T16:35:26.198Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/10/06/puppetconf-2014-part-2/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/10/05/puppetconf-2014-part-3/</loc>
     
     <lastmod>2018-10-08T16:35:26.198Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/10/06/puppetconf-2014-part-1/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2015/05/05/puppet-community/</loc>
     
     <lastmod>2018-10-08T16:35:26.197Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/11/28/proxying-with-hapi/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/10/05/puppetconf-2014-part-1/</loc>
     
     <lastmod>2018-10-08T16:35:26.197Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2015/05/06/puppet-community/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/11/27/proxying-with-hapi/</loc>
     
     <lastmod>2018-10-08T16:35:26.197Z</lastmod>
     
@@ -366,23 +373,16 @@
   </url>
   
   <url>
+    <loc>http://tech.opentable.co.uk/blog/2016/04/26/opencomponents-microservices-in-the-front-end-world/</loc>
+    
+    <lastmod>2018-10-08T16:35:26.194Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tech.opentable.co.uk/blog/2013/07/24/one-gun-many-enemies/</loc>
     
     <lastmod>2018-10-08T16:35:26.194Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/2016/04/27/opencomponents-microservices-in-the-front-end-world/</loc>
-    
-    <lastmod>2018-10-08T16:35:26.194Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/2015/01/23/on-strongly-typed-logging/</loc>
-    
-    <lastmod>2018-10-08T16:35:26.193Z</lastmod>
     
   </url>
   
@@ -394,9 +394,9 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2018/05/10/monads-explained-by-a-imperative-programmer/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2015/01/22/on-strongly-typed-logging/</loc>
     
-    <lastmod>2018-10-08T16:35:26.192Z</lastmod>
+    <lastmod>2018-10-08T16:35:26.193Z</lastmod>
     
   </url>
   
@@ -408,16 +408,9 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2017/12/07/meetup-new-ideas-for-the-new-year/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2018/05/10/monads-explained-by-a-imperative-programmer/</loc>
     
-    <lastmod>2018-10-08T16:35:26.191Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/2017/09/04/meetup-frontend-refactoring-at-scale/</loc>
-    
-    <lastmod>2018-10-08T16:35:26.191Z</lastmod>
+    <lastmod>2018-10-08T16:35:26.192Z</lastmod>
     
   </url>
   
@@ -436,9 +429,16 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2013/07/08/managing-windows-certificates-with-powershell/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2017/09/04/meetup-frontend-refactoring-at-scale/</loc>
     
-    <lastmod>2018-10-08T16:35:26.190Z</lastmod>
+    <lastmod>2018-10-08T16:35:26.191Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/2017/12/07/meetup-new-ideas-for-the-new-year/</loc>
+    
+    <lastmod>2018-10-08T16:35:26.191Z</lastmod>
     
   </url>
   
@@ -457,9 +457,9 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/04/16/look-ma-no-unit-tests/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2013/07/08/managing-windows-certificates-with-powershell/</loc>
     
-    <lastmod>2018-10-08T16:35:26.189Z</lastmod>
+    <lastmod>2018-10-08T16:35:26.190Z</lastmod>
     
   </url>
   
@@ -471,9 +471,9 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/04/02/internationalisation-in-a-restful-world/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/04/16/look-ma-no-unit-tests/</loc>
     
-    <lastmod>2018-10-08T16:35:26.188Z</lastmod>
+    <lastmod>2018-10-08T16:35:26.189Z</lastmod>
     
   </url>
   
@@ -485,7 +485,14 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/11/08/interacting-with-elasticsearch-using-hubot/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/04/02/internationalisation-in-a-restful-world/</loc>
+    
+    <lastmod>2018-10-08T16:35:26.188Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/2014/11/07/interacting-with-elasticsearch-using-hubot/</loc>
     
     <lastmod>2018-10-08T16:35:26.188Z</lastmod>
     
@@ -499,21 +506,21 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/11/26/hobknob-v2-dot-0-a-new-dimension/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/11/25/hobknob-v2-dot-0-a-new-dimension/</loc>
     
     <lastmod>2018-10-08T16:35:26.187Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/10/22/hobknob-v1-dot-0-now-with-authorization/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/10/21/hobknob-v1-dot-0-now-with-authorization/</loc>
     
     <lastmod>2018-10-08T16:35:26.186Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2015/02/16/hapi-js-and-sigterm/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2015/02/15/hapi-js-and-sigterm/</loc>
     
     <lastmod>2018-10-08T16:35:26.186Z</lastmod>
     
@@ -530,13 +537,6 @@
     <loc>http://tech.opentable.co.uk/blog/2013/08/16/grunt-plus-vagrant-equals-acceptance-test-heaven/</loc>
     
     <lastmod>2018-10-08T16:35:26.185Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/2016/11/09/falcor-postman/</loc>
-    
-    <lastmod>2018-10-08T16:35:26.184Z</lastmod>
     
   </url>
   
@@ -562,23 +562,23 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/04/28/effective-prioritisation/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2016/11/09/falcor-postman/</loc>
+    
+    <lastmod>2018-10-08T16:35:26.184Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/2014/04/27/effective-prioritisation/</loc>
     
     <lastmod>2018-10-08T16:35:26.183Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2015/02/09/dismantling-the-monolith-microsites-at-opentable/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2015/02/08/dismantling-the-monolith-microsites-at-opentable/</loc>
     
     <lastmod>2018-10-08T16:35:26.183Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/05/19/continuous-delivery-automating-deployment-visibility/</loc>
-    
-    <lastmod>2018-10-08T16:35:26.182Z</lastmod>
     
   </url>
   
@@ -590,9 +590,9 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2014/10/31/coach-dont-rescue/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/05/19/continuous-delivery-automating-deployment-visibility/</loc>
     
-    <lastmod>2018-10-08T16:35:26.181Z</lastmod>
+    <lastmod>2018-10-08T16:35:26.182Z</lastmod>
     
   </url>
   
@@ -604,7 +604,14 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2017/11/02/circuit-breakers-and-application-resilience/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2014/10/30/coach-dont-rescue/</loc>
+    
+    <lastmod>2018-10-08T16:35:26.181Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tech.opentable.co.uk/blog/2017/11/01/circuit-breakers-and-application-resilience/</loc>
     
     <lastmod>2018-10-08T16:35:26.180Z</lastmod>
     
@@ -639,14 +646,14 @@
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2015/02/02/a-beginners-guide-to-rest-services/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2013/05/31/about-this-blog/</loc>
     
     <lastmod>2018-10-08T16:35:26.175Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://tech.opentable.co.uk/blog/2013/06/01/about-this-blog/</loc>
+    <loc>http://tech.opentable.co.uk/blog/2015/02/01/a-beginners-guide-to-rest-services/</loc>
     
     <lastmod>2018-10-08T16:35:26.175Z</lastmod>
     

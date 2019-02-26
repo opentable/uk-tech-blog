@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><meta name="author" content="OpenTable"><link rel="icon" href="/favicon.png"><title>OpenTable Tech UK Blog</title><meta name="description"><link rel="alternate" type="application/rss+xml" title="OpenTable Tech UK Blog" href="/atom.xml"><link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" href="/css/bootstrap.min.css"><link rel="stylesheet" href="/css/main.css"><script src="//fonts.otstatic.com/zys4lfz.js"></script><link rel="stylesheet" href="/css/highlight.css">
+</head><body><nav class="navbar navbar-default navbar-fixed-top navbar-custom"><div class="container-fluid"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#main-navbar" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">OpenTable Tech UK Blog</a></div><div id="main-navbar" class="collapse navbar-collapse"><ul class="nav navbar-nav navbar-right"><li><a href="/about/">About</a></li><li><a href="/archives/">Archive</a></li><li><a href="/blog/authors/">Authors</a></li></ul></div><div class="avatar-container"><div class="avatar-img-border"><a href="/"><img src="/opentable.png" class="avatar-img"></a></div></div></div></nav><header class="header-section"><div class="intro-header no-img"><div class="container"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><div class="post-heading"><h1>Hobknob v1.0: Now with authorization</h1><p class="post-meta">Posted by <a href="/blog/authors/criddle.html">criddle</a>, 22 October 2014 · <a href="/blog/categories/Hobknob/" class="tag post-meta">Hobknob</a></p></div></div></div></div></div></header><div class="container"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><article role="main" class="blog-post"><p>We are pleased to announce the version 1.0 release of <a href="https://github.com/opentable/hobknob" target="_blank" rel="noopener">Hobknob</a>, our open-source feature toggle management system. With it comes a few additions and several improvements. </p>
+<p>This post will expand on some of the changes, in particular, authorisation via access control lists.<br>For an introduction to Hobknob, see our previous post: <a href="/blog/2014/09/04/introducing-hobknob-feature-toggling-with-etcd/">Introducing Hobknob: Feature toggling with etcd</a>.</p>
+<h2 id="Authorisation-with-ACLs"><a href="#Authorisation-with-ACLs" class="headerlink" title="Authorisation with ACLs"></a>Authorisation with ACLs</h2><p>A much requested feature was the ability to control who can add/update/delete toggles on an application by application basis. We achieve this via the use if an Access Control List for each application. Users that are part of the ACL for an application are known as application owners.</p>
+<p><img src="/images/posts/hobknob-owners.png" alt="Hobknob Owner List"></p>
+<p>Application owners can (for an owned application):</p>
+<ul>
+<li>Add toggles</li>
+<li>Set the value of a toggle</li>
+<li>Delete toggles</li>
+<li>Add additional owners</li>
+<li>Remove owners</li>
+</ul>
+<p>Everyone can:</p>
+<ul>
+<li>Add an application</li>
+<li>See toggles</li>
+<li>See application owners</li>
+<li>See the audit trail for a toggle</li>
+</ul>
+<p>When a user creates an new application, they are automatically added as an owner for that application.<br>The user can then add other application owners by clicking the ‘Add user’ button in the Owners panel and entering the users email address.</p>
+<p><strong>Note:</strong> this feature is only available when authentication is enabled. If Hobknob is not configured to require authentication, everyone has owner permissions to all applications. See the <a href="https://github.com/opentable/hobknob#configuring-authentication" target="_blank" rel="noopener">readme</a> for more information on how to configure authentication.</p>
+<h2 id="Deleting-Toggles"><a href="#Deleting-Toggles" class="headerlink" title="Deleting Toggles"></a>Deleting Toggles</h2><p>Feature toggles can now be deleted. This ability is available on the toggle view (get there by clicking a toggle name in the application view).</p>
+<p><img src="/images/posts/hobknob-delete.png" alt="Hobknob Toggle Delete"></p>
+<p>You’ll notice the delete toggle button in the Danger Zone panel (we didn’t steal that idea from Github, honest). You’ll need to confirm the delete by clicking the delete button a second time.</p>
+<p><strong>Warning:</strong> Deleting a toggle will perform a ‘hard’ delete, that is, the key is deleted in etcd. The audit will persist however, and can be accessed via this route: <code>/#!/applications/app-name/toggle-name</code>. You are also allowed to re-add a toggle, and the audit will be appended to an existing audit for that toggle name.</p>
+<p><strong>Note:</strong> If authentication is enabled, you must be an application owner to delete a toggle.</p>
+<h2 id="Makeover"><a href="#Makeover" class="headerlink" title="Makeover"></a>Makeover</h2><p>Gone is the ‘Add Toggle’ modal dialog from the previous version. This is replaced by two separate inline forms.</p>
+<p>Applications are now added by clicking ‘Add’ in the sidebar.</p>
+<p><img src="/images/posts/hobknob-newapplication.png" alt="Hobknob New Application"></p>
+<p>Toggles are added by clicking ‘New Toggle’ in the Toggles panel for an application.</p>
+<p><img src="/images/posts/hobknob-newtoggle-v2.png" alt="Hobknob New Toggle"></p>
+</article><ul class="pager blog-pager"><li class="previous"><a href="/blog/2014/10/30/coach-dont-rescue/" data-toggle="tooltip" data-placement="top" title="Coach don't rescue">← Previous Post</a></li><li class="next"><a href="/blog/2014/10/05/puppetconf-2014-part-3/" data-toggle="tooltip" data-placement="top" title="PuppetConf 2014 - Part 3">Next Post →</a></li></ul></div></div></div><footer><div class="container beautiful-jekyll-footer"><div class="row"><div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"><ul class="list-inline text-center footer-links"><li><a href="https://github.com/opentable" title="GitHub"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-github"></i></span></a></li><li><a href="https://twitter.com/opentabletechuk" title="Twitter"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-twitter"></i></span></a></li><li><a href="https://www.linkedin.com/company/12181" title="LinkedIn"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-linkedin"></i></span></a></li><li><a href="http://stackoverflow.com/jobs/companies/opentable" title="StackOverflow"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse fa-stack-overflow"></i></span></a></li></ul><p class="copyright text-muted">© OpenTable • 2019 • <a href="mailto:undefined"></a>
+</p><p class="theme-by text-muted">Theme by
+<a href="https://github.com/twoyao/beautiful-hexo">beautiful-hexo</a></p></div></div></div></footer><script src="/js/jquery-1.11.2.min.js"></script><script src="/js/bootstrap.min.js"></script><script src="/js/main.js"></script><script src="/js/highlight.min.js"></script><script>hljs.initHighlightingOnLoad();</script><script>(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+ga('create', 'UA-2621903-16', 'auto');
+ga('send', 'pageview');</script></body></html>
