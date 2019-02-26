@@ -7,7 +7,7 @@ tags: [Testing, DotNetCore, ASP.Net, NUnit]
 ---
 
 ## TL;DR
-This is long post that describes how to setup a in-memory test harness for testing an entire ASP.NET Core API with lots of code examples. 
+This is long post that describes how to setup an in-memory test harness for testing an entire ASP.NET Core API with lots of code examples. 
 
 ## Testing and broccoli
 
